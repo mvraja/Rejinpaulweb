@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "990003212270",
+    "firebase_url": "https://rejinpaul-c8196.firebaseio.com",
+    "project_id": "rejinpaul-c8196",
+    "storage_bucket": "rejinpaul-c8196.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990003212270:android:b71b3f4559d3d284",
+        "android_client_info": {
+          "package_name": "org.reginpaul"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "990003212270-56a5rl001f3bpvmqv7mvlavcjrca2mm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0BlhxMzVHle23M-9qw6xDPEYkooqKbdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "990003212270-56a5rl001f3bpvmqv7mvlavcjrca2mm5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
