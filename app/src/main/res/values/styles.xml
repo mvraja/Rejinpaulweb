@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- Base application theme. -->
@@ -7,5 +8,82 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <!-- no title bar -->
+    <style name="AppTheme.NoTitleBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- no title bar & full screen -->
+    <style name="AppTheme.NoTitleBar.FullScreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="wh_mm">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="wh_mw">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="wh_ww">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="buttonStyle" parent="wh_mw">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:background">@drawable/rounded_button_bg</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:minHeight">30dp</item>
+    </style>
+
+    <style name="imageViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:src">@drawable/logo1</item>
+    </style>
+
+    <style name="textViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorYellow</item>
+    </style>
+
+    <style name="layoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/logonbg</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="editTextStyle" parent="wh_mw">
+        <item name="android:background">@drawable/round_edit_text</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="spinnerTheme" parent="android:Widget.Holo.Light.Spinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/spinner_background</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <style name="timePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textColor">@color/colorBlue</item>
+    </style>
+
 
 </resources>

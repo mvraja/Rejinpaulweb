@@ -1,3 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Rejinpaulweb</string>
+	<string name="app_name">Authentication</string>
+    <string name="authenticate">Authentication</string>
+
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="loading">Loading…</string>
+    <string name="signed_out">Signed Out</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_photo">Photo URL</string>
+
+    <string name="logout">Logout</string>
+    <string name="verify">Verify</string>
+    <string name="drawer_close">Close</string>
+    <string name="drawer_open">Open</string>
+    <string name="login">Login</string>
+    <string name="newacc">Dont have an account? Create New Account</string>
+    <string name="orlogin">or Login with</string>
+    <string name="home">Home</string>
+    <string name="materials">Study Materials</string>
+    <string name="notification">Notifications</string>
+    <string name="result">Results</string>
+    <string name="syllabus">Syllabus</string>
+    <string name="save">Save</string>
+    <string name="choose">Select your Department</string>
+    <string name="create">Create Account</string>
+    <string name="username">Username</string>
+    <string name="question">Quetion Papers</string>
+
 </resources>

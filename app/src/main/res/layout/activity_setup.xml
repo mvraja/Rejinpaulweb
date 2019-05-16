@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/logonbg"
+    android:padding="10dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/profile"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/setup_profile_image"/>
+    <EditText
+        style="@style/editTextStyle"
+        android:id="@+id/setup_username"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/setup_profile_image"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:drawableStart="@drawable/username"/>
+    <EditText
+        style="@style/editTextStyle"
+        android:id="@+id/setup_full_name"
+        android:layout_below="@id/setup_username"
+        android:hint="Fullname"
+        android:inputType="textPersonName"
+        android:layout_marginTop="10dp"
+        android:drawableStart="@drawable/name"/>
+    <EditText
+        android:id="@+id/setup_dob"
+        style="@style/editTextStyle"
+        android:layout_below="@id/setup_full_name"
+        android:layout_marginTop="10dp"
+        android:hint="DOB"
+        android:focusable="false"
+        android:drawableStart="@drawable/country"/>
+
+    <TextView
+        android:id="@+id/choose"
+        style="@style/textViewStyle"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/setup_dob"
+        android:layout_marginTop="10dp"
+        android:text="@string/choose" />
+
+    <Spinner
+        android:id="@+id/setup_dept"
+        style="@style/spinnerTheme"
+        android:layout_below="@id/choose"
+        android:layout_marginTop="10dp" />
+    <Button
+        style="@style/buttonStyle"
+        android:layout_width="200dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/setup_information_button"
+        android:layout_below="@id/setup_dept"
+        android:layout_centerHorizontal="true"
+        android:text="@string/save"/>
+</RelativeLayout>

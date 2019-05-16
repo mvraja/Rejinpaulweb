@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/nav_syllabus"
+        android:icon="@drawable/syllabus"
+        android:title="@string/syllabus" />
+    <item
+        android:id="@+id/nav_materials"
+        android:icon="@drawable/study"
+        android:title="@string/materials" />
+    <item
+        android:id="@+id/nav_questions"
+        android:icon="@drawable/ic_question"
+        android:title="@string/question" />
+    <item
+        android:id="@+id/nav_notification"
+        android:icon="@drawable/messages"
+        android:title="@string/notification" />
+    <item
+        android:id="@+id/nav_result"
+        android:icon="@drawable/result"
+        android:title="@string/result" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/logout"
+        android:title="@string/logout" />
+
+</menu>
