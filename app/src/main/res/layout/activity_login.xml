@@ -66,12 +66,14 @@
         android:weightSum="3">
 
         <ImageView
+            android:id="@+id/fb_signin_button"
             android:layout_width="100dp"
             android:layout_height="55dp"
             android:layout_weight="1"
             android:src="@drawable/facebook" />
 
         <ImageView
+            android:id="@+id/twit_signin_button"
             android:layout_width="100dp"
             android:layout_height="65dp"
             android:layout_weight="1"
