@@ -36,10 +36,10 @@ public class RegisterActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
 
 
-        UserEmail = (EditText) findViewById(R.id.register_email);
-        UserPassword = (EditText) findViewById(R.id.register_password);
-        UserConfirmPassword = (EditText) findViewById(R.id.register_confirm_password);
-        CreateAccountButton = (Button) findViewById(R.id.register_create_account);
+        UserEmail = findViewById(R.id.register_email);
+        UserPassword = findViewById(R.id.register_password);
+        UserConfirmPassword = findViewById(R.id.register_confirm_password);
+        CreateAccountButton =  findViewById(R.id.register_create_account);
         loadingBar = new ProgressDialog(this);
 
 
@@ -86,11 +86,11 @@ public class RegisterActivity extends AppCompatActivity
 
         if(TextUtils.isEmpty(email))
         {
-            Toast.makeText(this, "Please write your email...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your email...", Toast.LENGTH_SHORT).show();
         }
         else if(TextUtils.isEmpty(password))
         {
-            Toast.makeText(this, "Please write your password...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your password...", Toast.LENGTH_SHORT).show();
         }
         else if(TextUtils.isEmpty(confirmPassword))
         {
@@ -98,12 +98,12 @@ public class RegisterActivity extends AppCompatActivity
         }
         else if(!password.equals(confirmPassword))
         {
-            Toast.makeText(this, "your password do not match with your confirm password...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Your password did not match with confirm password...", Toast.LENGTH_SHORT).show();
         }
         else
         {
             loadingBar.setTitle("Creating New Account");
-            loadingBar.setMessage("Please wait, while we are creating your new Account...");
+            loadingBar.setMessage("Please wait for a while...");
             loadingBar.show();
             loadingBar.setCanceledOnTouchOutside(true);
 
@@ -116,7 +116,7 @@ public class RegisterActivity extends AppCompatActivity
                             {
                                 SendUserToSetupActivity();
 
-                                Toast.makeText(RegisterActivity.this, "you are authenticated successfully...", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(RegisterActivity.this, "you are authenticated successfully...", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                             }
                             else

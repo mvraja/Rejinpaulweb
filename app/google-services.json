@@ -15,8 +15,12 @@
       },
       "oauth_client": [
         {
-          "client_id": "990003212270-56a5rl001f3bpvmqv7mvlavcjrca2mm5.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "990003212270-n2bf1vu9m77ieaja0m4rum5t4shrvrc3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.reginpaul",
+            "certificate_hash": "51cd072450deec78cf7604d079e4e164b377a08f"
+          }
         }
       ],
       "api_key": [
@@ -28,7 +32,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "990003212270-56a5rl001f3bpvmqv7mvlavcjrca2mm5.apps.googleusercontent.com",
+              "client_id": "990003212270-7hiqjo7ho5q2p9ccr21f6189v7nih1ok.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

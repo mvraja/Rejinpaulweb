@@ -23,20 +23,20 @@
         android:drawableStart="@drawable/username"/>
     <EditText
         style="@style/editTextStyle"
-        android:id="@+id/setup_full_name"
+        android:id="@+id/setup_ph_number"
         android:layout_below="@id/setup_username"
-        android:hint="Fullname"
-        android:inputType="textPersonName"
+        android:hint="Phone Number"
+        android:inputType="phone"
         android:layout_marginTop="10dp"
-        android:drawableStart="@drawable/name"/>
+        android:drawableStart="@drawable/phone"/>
     <EditText
         android:id="@+id/setup_dob"
         style="@style/editTextStyle"
-        android:layout_below="@id/setup_full_name"
+        android:layout_below="@id/setup_ph_number"
         android:layout_marginTop="10dp"
         android:hint="DOB"
         android:focusable="false"
-        android:drawableStart="@drawable/country"/>
+        android:drawableStart="@drawable/birthday"/>
 
     <TextView
         android:id="@+id/choose"

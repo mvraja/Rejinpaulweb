@@ -28,10 +28,12 @@
     <string name="result">Results</string>
     <string name="syllabus">Syllabus</string>
     <string name="save">Save</string>
-    <string name="choose">Select your Department</string>
+    <string name="choose">Select a Category</string>
     <string name="create">Create Account</string>
     <string name="username">Username</string>
     <string name="question">Question Papers</string>
     <string name="google_id">990003212270-7hiqjo7ho5q2p9ccr21f6189v7nih1ok.apps.googleusercontent.com</string>
 
+    <string name="notification_channel_id">default</string>
+    <string name="forget">Forgot Password?</string>
 </resources>

@@ -22,6 +22,7 @@
         style="@style/textViewStyle"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
         android:layout_marginBottom="28dp"
         android:text="@string/username"
         android:textSize="18sp"

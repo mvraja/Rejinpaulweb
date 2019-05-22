@@ -13,7 +13,10 @@ public class NotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_notification, container, false);
+
         return rootView;
 
     }
+
+
 }

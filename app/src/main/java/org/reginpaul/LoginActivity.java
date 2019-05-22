@@ -44,15 +44,25 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.TwitterAuthProvider;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterApiClient;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterConfig;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity
 {
     private Button LoginButton;
-    private ImageView googleSignInButton, fbSignInButton;
+    private ImageView googleSignInButton, fbSignInButton, twitterSignInButton;
     private EditText UserEmail, UserPassword;
-    private TextView NeedNewAccountLink;
+    private TextView NeedNewAccountLink, ForgetPassword;
     private ProgressDialog loadingBar;
 
     private FirebaseAuth mAuth;
@@ -60,6 +70,7 @@ public class LoginActivity extends AppCompatActivity
     private static final int RC_SIGN_IN = 1;
     private GoogleApiClient mGoogleSignInClient;
     private CallbackManager callbackManager;
+    private TwitterAuthClient twitterAuthClient;
     private static final String TAG = "LoginActivity";
 
 
@@ -85,11 +96,13 @@ public class LoginActivity extends AppCompatActivity
 
 
             NeedNewAccountLink =  findViewById(R.id.register_account_link);
+            ForgetPassword = findViewById(R.id.forgot_password);
             UserEmail =  findViewById(R.id.login_email);
             UserPassword =  findViewById(R.id.login_password);
             LoginButton =  findViewById(R.id.login_button);
             googleSignInButton =  findViewById(R.id.google_signin_button);
             fbSignInButton = findViewById(R.id.fb_signin_button);
+            twitterSignInButton = findViewById(R.id.twit_signin_button);
             loadingBar = new ProgressDialog(this);
 
 
@@ -124,13 +137,21 @@ public class LoginActivity extends AppCompatActivity
                     })
                     .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                     .build();
+            //end google sign in
 
 
             //configure FB Sign In
             FacebookSdk.sdkInitialize(this.getApplicationContext());
             callbackManager = CallbackManager.Factory.create();
             setFacebookLoginCallBack();
+            //end fb sign in
 
+            //Configure Twitter Sign In
+            TwitterAuthConfig twitterAuthConfig = new TwitterAuthConfig(getResources().getString(R.string.twitter_consumer_key),getResources().getString(R.string.twitter_consumer_secret));
+            TwitterConfig twitterConfig = new TwitterConfig.Builder(this).twitterAuthConfig(twitterAuthConfig).build();
+            Twitter.initialize(twitterConfig);
+
+            //end Twitter sign in
 
             googleSignInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -145,10 +166,35 @@ public class LoginActivity extends AppCompatActivity
                     fSignIn();
                 }
             });
+
+            twitterSignInButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    twitSignIn();
+                }
+            });
         }
         else {
             Toast.makeText(getApplicationContext(),"Check your internet Connection",Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    private void twitSignIn() {
+        twitterAuthClient = new TwitterAuthClient();
+        twitterAuthClient.authorize(this, new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                Log.d(TAG, "twitterLogin:success" + result);
+                handleTwitterSession(result.data);
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                Log.d(TAG, "twitterLogin:failure" + exception);
+            }
+        });
+
     }
 
 
@@ -189,16 +235,39 @@ public class LoginActivity extends AppCompatActivity
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-            //                updateUI(user);
                             SendUserToMainActivity();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-              //              updateUI(null);
                             SendUserToLoginActivity();
                         }
+                    }
+                });
+    }
+
+    private void handleTwitterSession(TwitterSession session) {
+        Log.d(TAG, "handleTwitterSession:" + session);
+
+        AuthCredential credential = TwitterAuthProvider.getCredential(
+                session.getAuthToken().token,
+                session.getAuthToken().secret);
+
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            SendUserToMainActivity();
+                        } else {
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+                            SendUserToLoginActivity();
+                        }
+
                     }
                 });
     }
@@ -219,8 +288,8 @@ public class LoginActivity extends AppCompatActivity
 
         if (requestCode == RC_SIGN_IN)
         {
-            loadingBar.setTitle("google Sign In");
-            loadingBar.setMessage("Please wait, while we are allowing you to login using your Google Account...");
+            loadingBar.setTitle("Google Sign In");
+            loadingBar.setMessage("Please wait for a while...");
             loadingBar.setCanceledOnTouchOutside(true);
             loadingBar.show();
 
@@ -230,7 +299,7 @@ public class LoginActivity extends AppCompatActivity
             {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-                Toast.makeText(this, "Please wait, while we are getting your auth result...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please wait for a while...", Toast.LENGTH_SHORT).show();
             }
             else
             {
@@ -241,6 +310,8 @@ public class LoginActivity extends AppCompatActivity
         else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
+        if (twitterAuthClient!=null)
+            twitterAuthClient.onActivityResult(requestCode, resultCode, data);
 
     }
 
@@ -308,17 +379,17 @@ public class LoginActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted1");
+                Log.v(TAG,"Permission is granted");
                 return true;
             } else {
 
-                Log.v(TAG,"Permission is revoked1");
+                Log.v(TAG,"Permission is revoked");
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 3);
                 return false;
             }
         }
         else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted1");
+            Log.v(TAG,"Permission is granted");
             return true;
         }
     }
@@ -327,17 +398,17 @@ public class LoginActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted2");
+                Log.v(TAG,"Permission is granted");
                 return true;
             } else {
 
-                Log.v(TAG,"Permission is revoked2");
+                Log.v(TAG,"Permission is revoked");
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
                 return false;
             }
         }
         else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted2");
+            Log.v(TAG,"Permission is granted");
             return true;
         }
     }
@@ -350,16 +421,16 @@ public class LoginActivity extends AppCompatActivity
 
         if(TextUtils.isEmpty(email))
         {
-            Toast.makeText(this, "Please write your email...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your email...", Toast.LENGTH_SHORT).show();
         }
         else if(TextUtils.isEmpty(password))
         {
-            Toast.makeText(this, "Please write your password...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your password...", Toast.LENGTH_SHORT).show();
         }
         else
         {
             loadingBar.setTitle("Login");
-            loadingBar.setMessage("Please wait, while we are allowing you to login into your Account...");
+            loadingBar.setMessage("Please wait for a while...");
             loadingBar.setCanceledOnTouchOutside(true);
             loadingBar.show();
 
@@ -373,7 +444,7 @@ public class LoginActivity extends AppCompatActivity
                             {
                                 SendUserToMainActivity();
 
-                                Toast.makeText(LoginActivity.this, "you are Logged In successfully.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Logged In successfully.", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
                             }
                             else

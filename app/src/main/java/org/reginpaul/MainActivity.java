@@ -2,6 +2,8 @@ package org.reginpaul;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,11 +16,13 @@ import android.os.Bundle;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,9 +30,26 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.graphics.Color;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -46,8 +67,9 @@ public class MainActivity extends AppCompatActivity implements
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
 
-    String currentUserID, department;
+    String currentUserID, department, firebaseToken;
 
+    private static final String AUTH_KEY = "key=AAAA5oDKL-4:APA91bEVqeEYD7lkC0EnNmFyV3qHSZcNcoFGCNSZvB0QmeO-rJJDzfzuAyRhf7tmJkYzHN7lDxma8ploBc9B8k2d8kGf85hhsu3PbpipemeCXl43yG7bEKvA-5r9DdHlbok47q7lwybR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +105,15 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    if (dataSnapshot.hasChild("fullname")) {
-                        String fullname = dataSnapshot.child("fullname").getValue().toString();
+                    if (dataSnapshot.hasChild("username")) {
+                        String fullname = dataSnapshot.child("username").getValue().toString();
                         NavProfileUserName.setText(fullname);
                     }
                     if (dataSnapshot.hasChild("profileimage")) {
                         String image = dataSnapshot.child("profileimage").getValue().toString();
+                        //String image = "https://firebasestorage.googleapis.com/v0/b/rejinpaul-c8196.appspot.com/o/Profile%20Images%2FJEtueCXwe6XHlZKv01YwVhBX23s1.jpg";
+                        //String image = "https://firebasestorage.googleapis.com/v0/b/rejinpaul-c8196.appspot.com/o/Profile%20Images%2FJEtueCXwe6XHlZKv01YwVhBX23s1.jpg?alt=media&token=4ebbc727-cd92-4700-afe7-c90305735559";
+
                         Picasso.with(MainActivity.this).load(image).placeholder(R.drawable.profile).into(NavProfileImage);
                     }
                     if (dataSnapshot.hasChild("dept")) {
@@ -120,8 +145,105 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+        //notification code
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( MainActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                firebaseToken = instanceIdResult.getToken();
+                //Log.e("Updated Token",updatedToken);
+            }
+        });
+        sendWithOtherThread("tokens");
+
+        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(Constants.CHANNEL_ID, Constants.CHANNEL_NAME, importance);
+            mChannel.setDescription(Constants.CHANNEL_DESCRIPTION);
+            mChannel.enableLights(true);
+            mChannel.setLightColor(Color.RED);
+            mChannel.enableVibration(true);
+            //mChannel.setSound();
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            mNotificationManager.createNotificationChannel(mChannel);
+        }*/
+
+        //MyNotificationManager.getInstance(this).displayNotification("Greetings", "Hello how are you?");
 
     }
+
+    private void sendWithOtherThread(final String type) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                pushNotification(type);
+            }
+        }).start();
+    }
+
+    private void pushNotification(String type) {
+        JSONObject jPayload = new JSONObject();
+        JSONObject jNotification = new JSONObject();
+        JSONObject jData = new JSONObject();
+        try {
+            jNotification.put("title", "Rejinpaul");
+            jNotification.put("body", "Testing App");
+            jNotification.put("sound", "default");
+            jNotification.put("badge", "1");
+            jNotification.put("click_action", "OPEN_ACTIVITY_1");
+            jNotification.put("icon", "ic_notification");
+
+            jData.put("picture", "http://opsbug.com/static/google-io.jpg");
+
+            switch(type) {
+                case "tokens":
+                    JSONArray ja = new JSONArray();
+                    ja.put(AUTH_KEY);
+                    ja.put(firebaseToken);
+                    jPayload.put("registration_ids", ja);
+                    break;
+                default:
+                    jPayload.put("to", firebaseToken);
+            }
+
+            jPayload.put("priority", "high");
+            jPayload.put("notification", jNotification);
+            jPayload.put("data", jData);
+
+            URL url = new URL("https://fcm.googleapis.com/fcm/send");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", AUTH_KEY);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+
+            // Send FCM message content.
+            OutputStream outputStream = conn.getOutputStream();
+            outputStream.write(jPayload.toString().getBytes());
+
+            // Read FCM response.
+            InputStream inputStream = conn.getInputStream();
+            final String resp = convertStreamToString(inputStream);
+
+            Handler h = new Handler(Looper.getMainLooper());
+            h.post(new Runnable() {
+                @Override
+                public void run() {
+                    String mTextView=resp;
+                }
+            });
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String convertStreamToString(InputStream is) {
+        Scanner s = new Scanner(is).useDelimiter("\\A");
+        return s.hasNext() ? s.next().replace(",", ",\n") : "";
+    }
+
 
     public String getDept() {
         return department;
