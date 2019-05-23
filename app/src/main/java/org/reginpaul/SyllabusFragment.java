@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,7 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class SyllabusFragment extends Fragment{
+public class SyllabusFragment extends Fragment implements AdapterView.OnItemClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -67,6 +69,9 @@ public class SyllabusFragment extends Fragment{
     private String folder;
     private boolean isDownloaded;
     String sDept;
+    String[] title = {"ECE", "EEE", "CSE", "IT", "E&IE", "CIVIL", "Mechanical", "BioTechnology"};
+    int[] icon = {R.drawable.syllabus, R.drawable.study, R.drawable.ic_question, R.drawable.friends, R.drawable.messages, R.drawable.result, R.drawable.result, R.drawable.result};
+    GridView grid;
 
     public SyllabusFragment() {
 
@@ -94,27 +99,93 @@ public class SyllabusFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View returnview = inflater.inflate(R.layout.fragment_syllabus, container, false);
-
+        grid = (GridView) returnview.findViewById(R.id.grid);
+        CustomGrid adapter = new CustomGrid();
+        grid.setAdapter(adapter);
+        grid.setOnItemClickListener(this);
         listView = returnview.findViewById(R.id.listView);
         materialList = new ArrayList<>();
 
-        MainActivity mainActivity = (MainActivity)getActivity();
+        MainActivity mainActivity = (MainActivity) getActivity();
         sDept = mainActivity.getDept();
-        String sDept1="\""+sDept+"\"";
+        String sDept1 = "\"" + sDept + "\"";
 
 
-        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_MATERIALS+sDept1, null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_MATERIALS + sDept1, null, CODE_GET_REQUEST);
         request.execute();
         MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
-        listView.setAdapter(materialAdapter);
+//        listView.setAdapter(materialAdapter);
         return returnview;
     }
+
+
+    class CustomGrid extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return 15;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+
+            LayoutInflater inflater = LayoutInflater
+                    .from(getContext());
+            Viewholder holder = null;
+            if (convertView == null) {
+                holder = new Viewholder();
+                convertView = inflater.inflate(R.layout.custom_list, parent,
+                        false);
+                holder.name = (TextView) convertView.findViewById(R.id.title);
+
+
+                holder.image = (ImageView) convertView.findViewById(R.id.image);
+                convertView.setTag(holder);
+
+            } else {
+                holder = (Viewholder) convertView.getTag();
+            }
+            holder.name.setText(title[position]);
+            holder.image.setImageResource(icon[position]);
+
+
+            return convertView;
+
+        }
+
+        class Viewholder {
+            ImageView image;
+            TextView name;
+
+        }
+    }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
-        listView.setAdapter(materialAdapter);
+//        listView.setAdapter(materialAdapter);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 
     /*private void readMaterial(String categ) {
