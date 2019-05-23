@@ -10,7 +10,7 @@
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="25dp"
-        android:src="@drawable/profile"
+        android:src="@drawable/logo1"
         android:layout_centerHorizontal="true"
         android:id="@+id/setup_profile_image"/>
     <EditText
@@ -37,12 +37,43 @@
         android:hint="DOB"
         android:focusable="false"
         android:drawableStart="@drawable/birthday"/>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/row1"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/setup_dob"
+        android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorYellow"
+        android:textSize="16sp"
+        android:text="Gender"
+        android:padding="5dp"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rg"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <RadioButton
+                style="@style/radioButtonStyle"
+                android:text="Male"
+                android:id="@+id/male"
+                android:checked="true"
+                android:layout_marginEnd="15dp"/>
+            <RadioButton
+                style="@style/radioButtonStyle"
+                android:text="Female"
+                android:id="@+id/female" />
+        </RadioGroup>
+    </LinearLayout>
     <TextView
         android:id="@+id/choose"
         style="@style/textViewStyle"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/setup_dob"
+        android:layout_below="@id/row1"
         android:layout_marginTop="10dp"
         android:text="@string/choose" />
 

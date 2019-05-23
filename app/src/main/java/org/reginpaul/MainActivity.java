@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
 
-    String currentUserID, department, firebaseToken;
+    String currentUserID, department, firebaseToken, userGender;
 
     private static final String AUTH_KEY = "key=AAAA5oDKL-4:APA91bEVqeEYD7lkC0EnNmFyV3qHSZcNcoFGCNSZvB0QmeO-rJJDzfzuAyRhf7tmJkYzHN7lDxma8ploBc9B8k2d8kGf85hhsu3PbpipemeCXl43yG7bEKvA-5r9DdHlbok47q7lwybR";
 
@@ -109,12 +109,22 @@ public class MainActivity extends AppCompatActivity implements
                         String fullname = dataSnapshot.child("username").getValue().toString();
                         NavProfileUserName.setText(fullname);
                     }
-                    if (dataSnapshot.hasChild("profileimage")) {
+                    /*if (dataSnapshot.hasChild("profileimage")) {
                         String image = dataSnapshot.child("profileimage").getValue().toString();
                         //String image = "https://firebasestorage.googleapis.com/v0/b/rejinpaul-c8196.appspot.com/o/Profile%20Images%2FJEtueCXwe6XHlZKv01YwVhBX23s1.jpg";
                         //String image = "https://firebasestorage.googleapis.com/v0/b/rejinpaul-c8196.appspot.com/o/Profile%20Images%2FJEtueCXwe6XHlZKv01YwVhBX23s1.jpg?alt=media&token=4ebbc727-cd92-4700-afe7-c90305735559";
 
                         Picasso.with(MainActivity.this).load(image).placeholder(R.drawable.profile).into(NavProfileImage);
+                    }*/
+
+                    if (dataSnapshot.hasChild("gender")) {
+                        userGender = dataSnapshot.child("gender").getValue().toString();
+                        if (userGender.equalsIgnoreCase("male")){
+                            NavProfileImage.setImageResource(R.drawable.male);
+                        }
+                        else {
+                            NavProfileImage.setImageResource(R.drawable.female);
+                        }
                     }
                     if (dataSnapshot.hasChild("dept")) {
                         department = dataSnapshot.child("dept").getValue().toString();

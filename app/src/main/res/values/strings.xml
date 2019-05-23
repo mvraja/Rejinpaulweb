@@ -36,4 +36,6 @@
 
     <string name="notification_channel_id">default</string>
     <string name="forget">Forgot Password?</string>
+    <string name="link_pass">Enter your registered Email below to send Password reset link</string>
+    <string name="send">Send</string>
 </resources>

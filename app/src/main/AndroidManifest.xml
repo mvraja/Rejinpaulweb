@@ -62,6 +62,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SetupActivity" />
         <activity android:name=".SecondActivity" />
+        <activity android:name=".PasswordActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

@@ -20,10 +20,10 @@
     <TextView
         android:id="@+id/nav_user_full_name"
         style="@style/textViewStyle"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginStart="25dp"
+        android:layout_below="@id/nav_profile_image"
+        android:layout_marginTop="10dp"
+        android:textAllCaps="true"
         android:text="@string/username"
         android:textSize="18sp"
         android:textStyle="bold" />

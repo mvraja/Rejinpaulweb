@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -16,12 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +30,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -40,7 +37,6 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.File;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -49,20 +45,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SetupActivity extends AppCompatActivity {
     private EditText userName, userPhoneNo, userDob;
     private Button saveInformationbutton;
-    private CircleImageView ProfileImage;
     private ProgressDialog loadingBar;
     private Spinner sDept;
+    private RadioButton rbMale, rbFemale;
 
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
-    private StorageReference UserProfileImageRef;
 
     String dept[] = {"ANNA UNIVERSITY", "JNTU", "SCHOOL BOARD", "COMPETITIVE EXAMS"};
     ArrayAdapter deptArray;
-    String currentUserID, firebaseToken, downloadUrl;
+    String currentUserID, firebaseToken, gender;
     int year, month, day;
-    Uri ImageUri;
-    final static int Gallery_Pick = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +65,16 @@ public class SetupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
-        UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
 
         userName = findViewById(R.id.setup_username);
         userPhoneNo = findViewById(R.id.setup_ph_number);
         userDob = findViewById(R.id.setup_dob);
         saveInformationbutton = findViewById(R.id.setup_information_button);
-        ProfileImage = findViewById(R.id.setup_profile_image);
         loadingBar = new ProgressDialog(this);
         sDept = findViewById(R.id.setup_dept);
+        rbMale = findViewById(R.id.male);
+        rbFemale = findViewById(R.id.female);
 
 
         deptArray = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, dept);
@@ -109,165 +102,20 @@ public class SetupActivity extends AppCompatActivity {
                 selectDate();
             }
         });
-
-        ProfileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent();
-                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                //startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"),Gallery_Pick);
-                startActivityForResult(galleryIntent, Gallery_Pick);
-            }
-        });
-
-
-        UsersRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    if (dataSnapshot.hasChild("profileimage")) {
-                        String image = dataSnapshot.child("profileimage").getValue().toString();
-                        Picasso.with(SetupActivity.this).load(image).placeholder(R.drawable.profile).into(ProfileImage);
-                    }
-                }
-                    else
-                    {
-                        Toast.makeText(SetupActivity.this, "Please select profile image first.", Toast.LENGTH_SHORT).show();
-                    }
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == Gallery_Pick && resultCode == RESULT_OK && data != null) {
-            ImageUri = data.getData();
-            CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1, 1)
-                    .start(this);
-        }
-
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-
-            if (resultCode == RESULT_OK) {
-                loadingBar.setTitle("Profile Image");
-                loadingBar.setMessage("Please wait for a while...");
-                loadingBar.show();
-                loadingBar.setCanceledOnTouchOutside(true);
-
-                Uri resultUri = result.getUri();
-                //final StorageReference filePath = UserProfileImageRef.child(ImageUri.getLastPathSegment()+currentUserID + ".jpg");
-                final StorageReference filePath = UserProfileImageRef.child(currentUserID + ".jpg");
-
-                //filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-/*                final UploadTask uploadTask = filePath.putFile(resultUri);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        String msg = e.toString();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                            @Override
-                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                                if (task.isSuccessful()) {
-                                    throw task.getException();
-                                }
-                                downloadUrl = filePath.getDownloadUrl().toString();
-                                return filePath.getDownloadUrl();
-                            }
-                        });
-                        UsersRef.child("profileimage").setValue(downloadUrl)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Intent selfIntent = new Intent(SetupActivity.this, SetupActivity.class);
-                                            startActivity(selfIntent);
-                                            Toast.makeText(getApplicationContext(), "Image uploaded", Toast.LENGTH_SHORT).show();
-                                            loadingBar.dismiss();
-                                        } else {
-                                            String message = task.getException().getMessage();
-                                            Toast.makeText(SetupActivity.this, "Error Occured: " + message, Toast.LENGTH_SHORT).show();
-                                            loadingBar.dismiss();
-                                        }
-                                    }
-                                });
-                    }
-                });*/
-
-
-                filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task)
-                    {
-                        if(task.isSuccessful())
-                        {
-                            //Task<Uri> firebaseUri = task.getResult().getStorage().getDownloadUrl();
-                            downloadUrl = task.getResult().getStorage().getDownloadUrl().toString();
-                            //final String downloadUrl = filePath.getDownloadUrl().toString();
-                            //final String downloadUrl = firebaseUri.toString();
-                            UsersRef.child("profileimage").setValue(downloadUrl)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task)
-                                        {
-                                            if(task.isSuccessful())
-                                            {
-                                                Intent selfIntent = new Intent(SetupActivity.this, SetupActivity.class);
-                                                startActivity(selfIntent);
-                                                Toast.makeText(getApplicationContext(),"Image uploaded",Toast.LENGTH_SHORT).show();
-                                                loadingBar.dismiss();
-                                            }
-                                            else
-                                            {
-                                                String message = task.getException().getMessage();
-                                                Toast.makeText(SetupActivity.this, "Error Occured: " + message, Toast.LENGTH_SHORT).show();
-                                                loadingBar.dismiss();
-                                            }
-                                        }
-                                    });
-                        }
-                    }
-                });
-            } else {
-                Toast.makeText(this, "Error Occured: Image can not be cropped. Try Again.", Toast.LENGTH_SHORT).show();
-                loadingBar.dismiss();
-            }
-        }
-    }
-
-    private String getPathFromURI(Uri imageUri) {
-        String res = null;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(imageUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            res = cursor.getString(column_index);
-        }
-        cursor.close();
-        return res;
-    }
 
     private void SaveAccountSetupInformation() {
         String username = userName.getText().toString();
         String phone = userPhoneNo.getText().toString();
         String dob = userDob.getText().toString();
         String dept = sDept.getSelectedItem().toString();
+        if (rbMale.isChecked()){
+            gender = "male";
+        }
+        else {
+            gender = "female";
+        }
 
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show();
@@ -289,6 +137,7 @@ public class SetupActivity extends AppCompatActivity {
             userMap.put("dob", dob);
             userMap.put("dept", dept);
             userMap.put("token", firebaseToken);
+            userMap.put("gender", gender);
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {

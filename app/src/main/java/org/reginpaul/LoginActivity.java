@@ -121,6 +121,13 @@ public class LoginActivity extends AppCompatActivity
                 }
             });
 
+            ForgetPassword.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(LoginActivity.this,PasswordActivity.class));
+                }
+            });
+
             // Configure Google Sign In
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.google_id))
