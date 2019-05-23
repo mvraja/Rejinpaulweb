@@ -69,8 +69,8 @@ public class SyllabusFragment extends Fragment implements AdapterView.OnItemClic
     private String folder;
     private boolean isDownloaded;
     String sDept;
-    String[] title = {"ECE", "EEE", "CSE", "IT", "E&IE", "CIVIL", "Mechanical", "BioTechnology"};
-    int[] icon = {R.drawable.syllabus, R.drawable.study, R.drawable.ic_question, R.drawable.friends, R.drawable.messages, R.drawable.result, R.drawable.result, R.drawable.result};
+    String[] title = {"Electronics and communication Engineering", "Electrical and Electronics Engineering", "Computer Science and Engineering", "Information and Technology", "Electrical &Instrumentation Engineering", "CIVIL Engineering", "Mechanical Engineering", "BioTechnology"};
+//    int[] icon = {R.drawable.syllabus, R.drawable.study, R.drawable.ic_question, R.drawable.friends, R.drawable.messages, R.drawable.result, R.drawable.result, R.drawable.result};
     GridView grid;
 
     public SyllabusFragment() {
@@ -103,7 +103,7 @@ public class SyllabusFragment extends Fragment implements AdapterView.OnItemClic
         CustomGrid adapter = new CustomGrid();
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(this);
-        listView = returnview.findViewById(R.id.listView);
+//        listView = returnview.findViewById(R.id.listView);
         materialList = new ArrayList<>();
 
         MainActivity mainActivity = (MainActivity) getActivity();
@@ -124,7 +124,7 @@ public class SyllabusFragment extends Fragment implements AdapterView.OnItemClic
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
-            return 15;
+            return 8;
         }
 
         @Override
@@ -149,19 +149,19 @@ public class SyllabusFragment extends Fragment implements AdapterView.OnItemClic
             Viewholder holder = null;
             if (convertView == null) {
                 holder = new Viewholder();
-                convertView = inflater.inflate(R.layout.custom_list, parent,
+                convertView = inflater.inflate(R.layout.custom_list_dept, parent,
                         false);
                 holder.name = (TextView) convertView.findViewById(R.id.title);
 
 
-                holder.image = (ImageView) convertView.findViewById(R.id.image);
+//                holder.image = (ImageView) convertView.findViewById(R.id.image);
                 convertView.setTag(holder);
 
             } else {
                 holder = (Viewholder) convertView.getTag();
             }
             holder.name.setText(title[position]);
-            holder.image.setImageResource(icon[position]);
+//            holder.image.setImageResource(icon[position]);
 
 
             return convertView;
@@ -169,7 +169,7 @@ public class SyllabusFragment extends Fragment implements AdapterView.OnItemClic
         }
 
         class Viewholder {
-            ImageView image;
+//            ImageView image;
             TextView name;
 
         }
