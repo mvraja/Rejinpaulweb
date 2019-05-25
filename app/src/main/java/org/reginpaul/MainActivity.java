@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Toolbar mToolbar;
     private FrameLayout fragmentPage;
+    private Fragment fragment = null;
 
     private CircleImageView NavProfileImage;
     private TextView NavProfileUserName;
@@ -346,6 +347,11 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportActionBar().setTitle("Question Papers");
                 break;
 
+            case R.id.nav_events:
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new EventsFragment()).commit();
+                getSupportActionBar().setTitle("Events");
+                break;
+
             case R.id.nav_notification:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new NotificationFragment()).commit();
                 getSupportActionBar().setTitle("Notifications");
@@ -361,5 +367,24 @@ public class MainActivity extends AppCompatActivity implements
                 SendUserToLoginActivity();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+        DrawerLayout drawerLayout = findViewById(R.id.drawable_layout);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else {
+            if (fragment instanceof HomeFragment){
+                super.onBackPressed();
+            }
+            else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
+                getSupportActionBar().setTitle("Home");
+            }
+        }
+
     }
 }

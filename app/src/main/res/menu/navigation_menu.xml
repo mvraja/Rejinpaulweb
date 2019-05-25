@@ -20,6 +20,11 @@
         android:icon="@drawable/ic_question"
         android:title="@string/question" />
     <item
+        android:id="@+id/nav_events"
+        android:icon="@drawable/friends"
+        android:title="@string/events"/>
+
+    <item
         android:id="@+id/nav_notification"
         android:icon="@drawable/messages"
         android:title="@string/notification" />

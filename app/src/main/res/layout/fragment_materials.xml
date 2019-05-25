@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <!--<ListView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:id="@+id/listView"-->
-        <!--android:dividerHeight="2dp"-->
-        <!--android:divider="@color/colorOrange"/>
-        -->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <GridView
-        android:id="@+id/grid"
+        android:id="@+id/grid_home"
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:stretchMode="columnWidth"
-        android:numColumns="2"
-        android:horizontalSpacing="1dp"
-        android:verticalSpacing="3dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_height="match_parent" >
-    </GridView>
+        android:horizontalSpacing="1dp"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="3dp"/>
 </RelativeLayout>
