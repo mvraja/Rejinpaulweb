@@ -3,9 +3,10 @@ package org.reginpaul;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
-public class SecondActivity extends AppCompatActivity{
+public class NotificationActivity extends AppCompatActivity{
 
     TextView titleView;
     TextView messageView;
@@ -24,7 +25,7 @@ public class SecondActivity extends AppCompatActivity{
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
         message = intent.getStringExtra("message");
-
+        Log.d("Notifactivity_title",title);
         titleView.setText(title);
         messageView.setText(message);
 

@@ -2,6 +2,7 @@ package org.reginpaul;
 
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -17,6 +19,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
 import java.io.IOException;
@@ -37,13 +40,16 @@ public class NotificationUtils {
 
     public NotificationUtils(Context mContext) {
         this.mContext = mContext;
+
     }
 
     public void showNotificationMessage(String title, String message, String timeStamp, Intent intent) {
         showNotificationMessage(title, message, timeStamp, intent, null);
+        Log.d("Notification","Foreground1");
     }
 
     public void showNotificationMessage(final String title, final String message, final String timeStamp, Intent intent, String imageUrl) {
+        Log.d("Notification","Foreground2");
         // Check for empty push message
         if (TextUtils.isEmpty(message))
             return;
@@ -51,6 +57,7 @@ public class NotificationUtils {
 
         // notification icon
         final int icon = R.mipmap.ic_launcher;
+        Log.d("Notificationtitle",title);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         final PendingIntent resultPendingIntent =
@@ -91,7 +98,14 @@ public class NotificationUtils {
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 
         inboxStyle.addLine(message);
-
+        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(Constants.CHANNEL_ID, Constants.CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(Constants.CHANNEL_DESCRIPTION);
+            channel.enableLights(true);
+            channel.setLightColor(Color.BLUE);
+            notificationManager.createNotificationChannel(channel);
+        }
         Notification notification;
         notification = mBuilder.setSmallIcon(icon).setTicker(title).setWhen(0)
                 .setAutoCancel(true)
@@ -102,10 +116,11 @@ public class NotificationUtils {
                 .setWhen(getTimeMilliSec(timeStamp))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message)).setChannelId(Constants.CHANNEL_ID)
                 .build();
 
-        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+
         notificationManager.notify(NotificationID.getID(), notification);
     }
 
@@ -128,6 +143,11 @@ public class NotificationUtils {
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("Default", "Default channel", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+
         notificationManager.notify(NotificationID.getID(), notification);
     }
 

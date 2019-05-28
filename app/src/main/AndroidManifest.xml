@@ -10,6 +10,7 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
 
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo1"
@@ -68,8 +69,13 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".SetupActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".SecondActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".NotificationActivity"
+            android:screenOrientation="portrait">
+        <intent-filter>
+            <action android:name="OPEN_ACTIVITY_1" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
         <activity android:name=".PasswordActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"/>

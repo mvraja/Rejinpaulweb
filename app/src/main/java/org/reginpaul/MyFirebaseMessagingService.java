@@ -36,6 +36,7 @@ import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -56,14 +57,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private int numMessages = 0;
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
     private NotificationUtils notificationUtils;
+    private String Notify_msg,Notify_title;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        /*RemoteMessage.Notification notification = remoteMessage.getNotification();
+        RemoteMessage.Notification notification = remoteMessage.getNotification();
         Map<String, String> data = remoteMessage.getData();
         Log.d("FROM", remoteMessage.getFrom());
-        sendNotification(notification, data);*/
+//        sendNotification(notification, data);
         if (remoteMessage == null)
             return;
 
@@ -71,8 +73,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             handleNotification(remoteMessage.getNotification().getBody());
+            Notify_msg=remoteMessage.getNotification().getBody();
+            Notify_title=remoteMessage.getNotification().getTitle();
+            Log.d("Notificationtitle",Notify_title);
+            Log.d("Notificationfg msg",Notify_msg);
         }
-
+        sendNotification(notification, data);
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
 
@@ -88,27 +94,30 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void handleNotification(String message) {
         if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
             // app is in foreground, broadcast the push message
-//            Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
-//            pushNotification.putExtra("message", message);
-//            LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
+            Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
+            pushNotification.putExtra("message", message);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
             // play notification sound
             NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+
             notificationUtils.playNotificationSound();
         }else{
             NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
             notificationUtils.playNotificationSound();
+            Log.d("Notification","background");
             // If the app is in background, firebase itself handles the notification
         }
     }
 
     private void handleDataMessage(JSONObject json) {
-        Log.e(TAG, "push json: " + json.toString());
+        Log.d(TAG, "push json: " + json.toString());
 
         try {
             JSONObject data = json.getJSONObject("data");
 
             String title = data.getString("title");
+            Log.d("Notification title",title);
             String message = data.getString("message");
             String imageUrl = data.getString("image");
             String timestamp = data.getString("timestamp");
@@ -136,9 +145,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //                resultIntent.putExtra("thumbUrl", thumbUrl);
 //                resultIntent.putExtra("fvrt",false);
 //            }
-            Intent resultIntent = new Intent(getApplicationContext(), SecondActivity.class);
-            resultIntent.putExtra("title",title);
-            resultIntent.putExtra("message",message);
+            if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
+                // app is in foreground, broadcast the push message
+                Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
+                pushNotification.putExtra("message", message);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
+
+                // play notification sound
+                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+                notificationUtils.playNotificationSound();
+            }
+            else {
+                Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                resultIntent.putExtra("title", title);
+                resultIntent.putExtra("message", message);
 
 
 
@@ -149,7 +169,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 // image is present, show notification with image
                 showNotificationMessageWithBigImage(getApplicationContext(), title, message, timestamp, resultIntent, imageUrl);
             }
-//            }
+            }
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());
         } catch (Exception e) {
@@ -172,12 +192,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationUtils.showNotificationMessage(title, message, timeStamp, intent, imageUrl);
     }
 
-    /*private void sendNotification(RemoteMessage.Notification notification, Map<String, String> data) {
+    private void sendNotification(RemoteMessage.Notification notification, Map<String, String> data) {
         Bundle bundle = new Bundle();
         bundle.putString(FCM_PARAM, data.get(FCM_PARAM));
 
-        Intent intent = new Intent(this, SecondActivity.class);
-        intent.putExtras(bundle);
+        Intent intent = new Intent(this, NotificationActivity.class);
+
+//        intent.putExtras(bundle);
+        intent.putExtra("title",Notify_title );
+        intent.putExtra("message", Notify_msg);
+//        Log.d("Notify",Notify_title);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -229,6 +253,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         assert notificationManager != null;
         notificationManager.notify(0, notificationBuilder.build());
-    }*/
+    }
 }
 
