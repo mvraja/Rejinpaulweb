@@ -1,5 +1,6 @@
 package org.reginpaul;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -65,7 +66,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                 break;
 
             case 4:
-                getFragmentManager().beginTransaction().replace(R.id.main_container, new NotificationFragment()).commit();
+//                getFragmentManager().beginTransaction().replace(R.id.main_container, new NotificationFragment()).commit();
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), NotificationActivity.class);
+                getActivity().startActivity(intent);
                 actionBar.setTitle("Notifications");
                 break;
 

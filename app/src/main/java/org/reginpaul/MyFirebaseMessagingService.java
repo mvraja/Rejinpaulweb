@@ -33,24 +33,48 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
     public static final String FCM_PARAM = "picture";
     private static final String CHANNEL_NAME = "FCM";
     private static final String CHANNEL_DESC = "Firebase Cloud Messaging";
@@ -58,6 +82,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
     private NotificationUtils notificationUtils;
     private String Notify_msg,Notify_title;
+    List<Notify> Notifylist;
+    ListView listView;
+    private static final int CODE_GET_REQUEST = 1024;
+    private static final int CODE_POST_REQUEST = 1025;
+
+    private View listViewItem;
+
+    ProgressBar p;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -219,7 +251,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setNumber(++numMessages)
                 .setSmallIcon(R.drawable.ic_notification);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("msgtype", Notify_title);
+        params.put("msg", Notify_msg);
 
+        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_MSG , params, CODE_POST_REQUEST);
+        request.execute();
         try {
             String picture = data.get(FCM_PARAM);
             if (picture != null && !"".equals(picture)) {
@@ -254,5 +291,69 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         assert notificationManager != null;
         notificationManager.notify(0, notificationBuilder.build());
     }
+    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
+        String url;
+        HashMap<String, String> params;
+        int requestCode;
+
+        PerformNetworkRequest(String url, HashMap<String, String> params, int requestCode) {
+            this.url = url;
+            this.params = params;
+            this.requestCode = requestCode;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                JSONObject object = new JSONObject(s);
+                if (!object.getBoolean("error")) {
+                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    Log.d("Syllabus", object.toString());
+//                    refreshList(object.getJSONArray("pfiles"));
+//                    object.put("msgtype",Notify_title);
+//                    object.put("msg",Notify_msg);
+                } else
+                    Log.d("Syllabus", object.toString());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            RequestHandler requestHandler = new RequestHandler();
+            if (requestCode == CODE_POST_REQUEST)
+                return requestHandler.sendPostRequest(url, params);
+
+
+            if (requestCode == CODE_GET_REQUEST) {
+                Log.d("Syllabus", url);
+                String getstring = requestHandler.sendGetRequest(url);
+
+                return requestHandler.sendGetRequest(url);
+            }
+            return null;
+        }
+    }
+//    private void refreshList(JSONArray pfiles) throws JSONException {
+//        Notifylist.clear();
+//        for (int i = 0; i < pfiles.length(); i++) {
+//            JSONObject obj = pfiles.getJSONObject(i);
+//            Notifylist.add(new Notify(obj.getInt("id"), obj.getString("msgtype"),obj.getString("msg")));
+//            Log.d("Notify list", String.valueOf(new Notify(obj.getInt("id"), obj.getString("msgtype"),obj.getString("msg"))));
+//        }
+//
+//
+//        SyllabusActivity.MaterialAdapter materialAdapter = new SyllabusActivity.MaterialAdapter(materialList);
+//        listView.setAdapter(materialAdapter);
+//    }
+
 }
 
