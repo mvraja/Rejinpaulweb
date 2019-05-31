@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentTop="true">
-    <TextView
-    android:text="Title"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:layout_margin="10dp"
-    android:id="@+id/title" />
-    <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="@android:color/background_dark"/>
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/img1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_logo" />
 
     <TextView
-    android:text="Message"
-    android:layout_margin="10dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="28dp"
-    android:id="@+id/message" />
+        style="@style/listViewTitle"
+        android:id="@+id/title"
+        android:layout_toEndOf="@id/img1"
+        android:layout_marginStart="5dp"
+        android:text="Title"
+        android:textStyle="bold"/>
 
-    </LinearLayout>
+    <TextView
+        style="@style/listViewText"
+        android:id="@+id/message"
+        android:text="Message"
+        android:layout_marginStart="5dp"
+        android:layout_below="@id/title"
+        android:layout_toEndOf="@id/img1"
+        android:layout_marginBottom="5dp"/>
+
+</RelativeLayout>
 
 

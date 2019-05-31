@@ -47,7 +47,7 @@ public class MaterialsActivity extends AppCompatActivity{
     private View listViewItem;
     ProgressBar p;
 
-    private String fileName, folder, category, temp_ctg;
+    private String fileName, folder, category, temp_ctg, stSemester;
     private Toolbar toolbar;
 
 
@@ -65,6 +65,7 @@ public class MaterialsActivity extends AppCompatActivity{
 
         savedInstanceState = getIntent().getExtras();
         category = savedInstanceState.getString("strtext");
+        stSemester = savedInstanceState.getString("strSem");
         if (category.equalsIgnoreCase("ece")){
             temp_ctg = "ECE";
         }

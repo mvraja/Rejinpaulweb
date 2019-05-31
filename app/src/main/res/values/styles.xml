@@ -7,6 +7,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
     <!-- no title bar -->
     <style name="AppTheme.NoTitleBar" parent="AppTheme">
@@ -20,6 +21,11 @@
     <style name="AppTheme.NoTitleBar.FullScreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/colorBrown</item>
     </style>
 
     <style name="wh_mm">
@@ -71,6 +77,12 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="textStyle" parent="wh_mw">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="radioButtonStyle" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -86,6 +98,25 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
+
+    <style name="listViewTitle" parent="wh_ww">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorBrown</item>
+    </style>
+
+    <style name="listViewText" parent="wh_ww">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorBlue</item>
+    </style>
+
+    <style name="brown_splitter">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/colorBrown</item>
+        <item name="android:alpha">0.2</item>
+    </style>
+
 
     <style name="spinnerTheme" parent="android:Widget.Holo.Light.Spinner">
         <item name="android:layout_width">match_parent</item>

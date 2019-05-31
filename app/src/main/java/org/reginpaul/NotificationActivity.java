@@ -5,13 +5,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +37,7 @@ public class NotificationActivity extends AppCompatActivity{
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
-    private ProgressBar p;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,12 @@ public class NotificationActivity extends AppCompatActivity{
 //        titleView.setText(title);
 //        messageView.setText(message);
         listView = findViewById(R.id.listView);
+        toolbar = findViewById(R.id.noti_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Notifications");
+
 
         notifylist = new ArrayList<Notify>();
         PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_MSG , null, CODE_GET_REQUEST);
@@ -149,8 +155,8 @@ public class NotificationActivity extends AppCompatActivity{
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             listViewItem = inflater.inflate(R.layout.layout_notify, null, true);
-            TextView title_txt=(TextView) listViewItem.findViewById(R.id.title);
-            TextView msg_txt=(TextView) listViewItem.findViewById(R.id.message);
+            TextView title_txt= listViewItem.findViewById(R.id.title);
+            TextView msg_txt= listViewItem.findViewById(R.id.message);
 //TextView show_title=listViewItem.findViewById(R.id.)
 //            TextView textViewName = listViewItem.findViewById(R.id.ti);
 

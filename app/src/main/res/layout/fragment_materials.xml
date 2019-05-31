@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/logonbg"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/chooseCourse"
+        style="@style/textViewStyle"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/row1"
+        android:layout_marginTop="10dp"
+        android:text="@string/course" />
+
+    <Spinner
+        android:id="@+id/setup_course"
+        style="@style/spinnerTheme"
+        android:layout_below="@id/chooseCourse"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/chooseSem"
+        style="@style/textViewStyle"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/setup_course"
+        android:layout_marginTop="10dp"
+        android:text="@string/semester" />
+
+    <Spinner
+        android:id="@+id/setup_sem"
+        style="@style/spinnerTheme"
+        android:layout_below="@id/chooseSem"
+        android:layout_marginTop="10dp" />
 
     <GridView
         android:id="@+id/grid_home"
@@ -11,6 +41,7 @@
         android:layout_marginTop="10dp"
         android:horizontalSpacing="1dp"
         android:numColumns="2"
+        android:layout_below="@id/setup_sem"
         android:stretchMode="columnWidth"
         android:verticalSpacing="3dp"/>
 </RelativeLayout>

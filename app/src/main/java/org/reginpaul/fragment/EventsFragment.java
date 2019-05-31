@@ -1,4 +1,4 @@
-package org.reginpaul;
+package org.reginpaul.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -15,6 +15,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import org.reginpaul.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

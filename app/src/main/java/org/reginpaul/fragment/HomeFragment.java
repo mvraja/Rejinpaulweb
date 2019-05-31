@@ -1,4 +1,4 @@
-package org.reginpaul;
+package org.reginpaul.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +14,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.reginpaul.NotificationActivity;
+import org.reginpaul.R;
+
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener{
 
-    String[] title = { "Syllabus","Study materials","Question papers","Events","Notification","Results" };
-    int[] icon={R.drawable.syllabus,R.drawable.study,R.drawable.ic_question,R.drawable.friends,R.drawable.messages,R.drawable.result};
+    String[] title = { "Syllabus","Study materials", "Profile", "Events","Notification","Results" };
+    int[] icon={R.drawable.syllabus,R.drawable.study, R.drawable.ic_user, R.drawable.friends,R.drawable.messages,R.drawable.result};
     GridView grid;
     AppCompatActivity activity;
     ActionBar actionBar;
@@ -56,9 +59,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                 break;
 
             case 2:
-                getFragmentManager().beginTransaction().replace(R.id.main_container, new QuestionsFragment()).commit();
-                actionBar.setTitle("Question Papers");
+                getFragmentManager().beginTransaction().replace(R.id.main_container, new ProfileFragment()).commit();
+                actionBar.setTitle("Profile");
                 break;
+
 
             case 3:
                 getFragmentManager().beginTransaction().replace(R.id.main_container, new EventsFragment()).commit();
@@ -66,11 +70,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                 break;
 
             case 4:
-//                getFragmentManager().beginTransaction().replace(R.id.main_container, new NotificationFragment()).commit();
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), NotificationActivity.class);
-                getActivity().startActivity(intent);
-                actionBar.setTitle("Notifications");
+                Intent intent = new Intent(getActivity(),NotificationActivity.class);
+                startActivity(intent);
                 break;
 
             case 5:
@@ -114,7 +115,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
                 name = convertView.findViewById(R.id.title);
                 image = convertView.findViewById(R.id.image);
-                convertView.setBackgroundResource(R.drawable.grid_items_border);
+                convertView.setBackgroundResource(R.drawable.grid_items_wborder);
                 name.setText(title[position]);
                 image.setImageResource(icon[position]);
             }

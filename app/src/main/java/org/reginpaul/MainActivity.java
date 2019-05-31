@@ -1,27 +1,16 @@
 package org.reginpaul;
 
-import android.app.Fragment;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -54,6 +43,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.reginpaul.fragment.EventsFragment;
+import org.reginpaul.fragment.HomeFragment;
+import org.reginpaul.fragment.MaterialsFragment;
+import org.reginpaul.fragment.ProfileFragment;
+import org.reginpaul.fragment.ResultFragment;
+import org.reginpaul.fragment.SyllabusFragment;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,13 +58,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import static org.reginpaul.Constants.CHANNEL_DESCRIPTION;
-import static org.reginpaul.Constants.CHANNEL_NAME;
-
 
 public class MainActivity extends AppCompatActivity implements
-        SyllabusFragment.OnFragmentInteractionListener,MaterialsFragment.OnFragmentInteractionListener,
-        QuestionsFragment.OnFragmentInteractionListener{
+        SyllabusFragment.OnFragmentInteractionListener, MaterialsFragment.OnFragmentInteractionListener{
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -114,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements
         navigationView = findViewById(R.id.navigation_view);
 
 
-
         View navView = navigationView.inflateHeaderView(R.layout.navigation_header);
         NavProfileImage = navView.findViewById(R.id.nav_profile_image);
         NavProfileUserName = navView.findViewById(R.id.nav_user_full_name);
@@ -138,10 +128,9 @@ public class MainActivity extends AppCompatActivity implements
 
                     if (dataSnapshot.hasChild("gender")) {
                         userGender = dataSnapshot.child("gender").getValue().toString();
-                        if (userGender.equalsIgnoreCase("male")){
+                        if (userGender.equalsIgnoreCase("male")) {
                             NavProfileImage.setImageResource(R.drawable.male);
-                        }
-                        else {
+                        } else {
                             NavProfileImage.setImageResource(R.drawable.female);
                         }
                     }
@@ -176,34 +165,33 @@ public class MainActivity extends AppCompatActivity implements
 
         //notification code
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( MainActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 firebaseToken = instanceIdResult.getToken();
                 //Log.e("Updated Token",updatedToken);
-                Log.d("Firebase reg id",firebaseToken);
+                Log.d("Firebase reg id", firebaseToken);
             }
         });
         sendWithOtherThread("tokens");
 
         HashMap<String, String> params = new HashMap<>();
-        if(getIntent().getExtras()!=null) {
-            Log.d("Bg code","Entering bg code");
-    for(String key:getIntent().getExtras().keySet())
-        if(key.equals("title")) {
+        if (getIntent().getExtras() != null) {
+            Log.d("Bg code", "Entering bg code");
+            for (String key : getIntent().getExtras().keySet())
+                if (key.equals("title")) {
 //            title_txt.setText(getIntent().getExtras().getString(key));
-            params.put("title", getIntent().getExtras().getString(key));
-            Log.d("Bg title", getIntent().getExtras().getString(key));
-        }
-    else if(key.equals("message"))
+                    params.put("title", getIntent().getExtras().getString(key));
+                    Log.d("Bg title", getIntent().getExtras().getString(key));
+                } else if (key.equals("message"))
 //        msg_txt.setText(getIntent().getExtras().getString(key));
-            params.put("message",getIntent().getExtras().getString(key));
+                    params.put("message", getIntent().getExtras().getString(key));
 
-}
+        }
 //        params.put("msgtype", Notify_title);
 //        params.put("msg", Notify_msg);
-        Log.d("Bg code","outside bg code");
-        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_MSG , params, CODE_POST_REQUEST);
+        Log.d("Bg code", "outside bg code");
+        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_MSG, params, CODE_POST_REQUEST);
         request.execute();
         /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationManager mNotificationManager =
@@ -236,17 +224,16 @@ public class MainActivity extends AppCompatActivity implements
                     SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
                     String regId = pref.getString("regId", null);
 
-                    Log.d("Firebase reg id noti: " ,regId);
+                    Log.d("Firebase reg id noti: ", regId);
 //                    displayFirebaseRegId();
 
-                }
-                else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
                     // new push notification is received
 
                     String message = intent.getStringExtra("message");
 
                     Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-Log.d("Notification text",message);
+                    Log.d("Notification text", message);
 //                    txtMessage.setText(message);
                 }
             }
@@ -284,7 +271,7 @@ Log.d("Notification text",message);
             jData.put("icon", "ic_notification");
             jData.put("picture", "http://opsbug.com/static/google-io.jpg");
 
-            switch(type) {
+            switch (type) {
                 case "tokens":
                     JSONArray ja = new JSONArray();
                     ja.put(AUTH_KEY);
@@ -319,7 +306,7 @@ Log.d("Notification text",message);
             h.post(new Runnable() {
                 @Override
                 public void run() {
-                    String mTextView=resp;
+                    String mTextView = resp;
 
                 }
             });
@@ -375,7 +362,6 @@ Log.d("Notification text",message);
             }
 
 
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -421,15 +407,20 @@ Log.d("Notification text",message);
                 getSupportActionBar().setTitle("Syllabus");
                 break;
 
+            case R.id.nav_profile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ProfileFragment()).commit();
+                getSupportActionBar().setTitle("Profile");
+                break;
+
             case R.id.nav_materials:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new MaterialsFragment()).commit();
                 getSupportActionBar().setTitle("Study Materials");
                 break;
 
-            case R.id.nav_questions:
+            /*case R.id.nav_questions:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new QuestionsFragment()).commit();
                 getSupportActionBar().setTitle("Question Papers");
-                break;
+                break;*/
 
             case R.id.nav_events:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new EventsFragment()).commit();
@@ -437,8 +428,8 @@ Log.d("Notification text",message);
                 break;
 
             case R.id.nav_notification:
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new NotificationFragment()).commit();
-                getSupportActionBar().setTitle("Notifications");
+                Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.nav_result:
@@ -457,33 +448,31 @@ Log.d("Notification text",message);
     public void onBackPressed() {
         fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
         DrawerLayout drawerLayout = findViewById(R.id.drawable_layout);
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else {
-            if (fragment instanceof HomeFragment){
+        } else {
+            if (fragment instanceof HomeFragment) {
                 super.onBackPressed();
-            }
-            else {
+            } else {
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
                 getSupportActionBar().setTitle("Home");
             }
         }
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("Bg code","Entering onresume");
-        if(getIntent().getExtras()!=null) {
-            Log.d("Bg code","Entering bg code");
-            for(String key:getIntent().getExtras().keySet())
-                if(key.equals("title")) {
+        Log.d("Bg code", "Entering onresume");
+        if (getIntent().getExtras() != null) {
+            Log.d("Bg code", "Entering bg code");
+            for (String key : getIntent().getExtras().keySet())
+                if (key.equals("title")) {
 //            title_txt.setText(getIntent().getExtras().getString(key));
 //                    params.put("title", getIntent().getExtras().getString(key));
                     Log.d("Bg title", getIntent().getExtras().getString(key));
-                }
-                else if(key.equals("message"))
+                } else if (key.equals("message"))
 //        msg_txt.setText(getIntent().getExtras().getString(key));
 //                    params.put("message",getIntent().getExtras().getString(key));
                     Log.d("Bg msg", getIntent().getExtras().getString(key));
@@ -506,6 +495,7 @@ Log.d("Notification text",message);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
+
     private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
         String url;
         HashMap<String, String> params;

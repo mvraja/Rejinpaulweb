@@ -12,13 +12,17 @@
         android:icon="@drawable/syllabus"
         android:title="@string/syllabus" />
     <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_user"
+        android:title="@string/sprofile" />
+    <item
         android:id="@+id/nav_materials"
         android:icon="@drawable/study"
         android:title="@string/materials" />
-    <item
+    <!--<item
         android:id="@+id/nav_questions"
         android:icon="@drawable/ic_question"
-        android:title="@string/question" />
+        android:title="@string/question" />-->
     <item
         android:id="@+id/nav_events"
         android:icon="@drawable/friends"

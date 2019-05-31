@@ -1,17 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/logonbg">
 
-    <GridView
-        android:id="@+id/grid_home"
-        android:layout_centerInParent="true"
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/rg">
+
+        <RadioButton
+            style="@style/radioButtonStyle"
+            android:id="@+id/rb17"
+            android:checked="true"
+            android:text="Regulations 2017" />
+
+        <RadioButton
+            style="@style/radioButtonStyle"
+            android:id="@+id/rb13"
+            android:text="Regulations 2013" />
+
+    </RadioGroup>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_below="@id/rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:horizontalSpacing="1dp"
-        android:numColumns="2"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="3dp"/>
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:tabTextColor="@color/colorBeige"
+        app:tabSelectedTextColor="@color/colorYellow"
+        app:tabIndicatorColor="@color/colorGray"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabs"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </RelativeLayout>

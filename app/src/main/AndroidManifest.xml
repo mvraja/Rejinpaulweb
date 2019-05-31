@@ -70,6 +70,7 @@
         <activity android:name=".SetupActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".NotificationActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
         <intent-filter>
             <action android:name="OPEN_ACTIVITY_1" />

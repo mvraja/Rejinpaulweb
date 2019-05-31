@@ -1,4 +1,4 @@
-package org.reginpaul;
+package org.reginpaul.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.reginpaul.R;
 
 public class ResultFragment extends Fragment implements AdapterView.OnItemClickListener {
 

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/logonbg"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/t1"
+        style="@style/textViewStyle"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:text="@string/profile"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/timage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/t1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/logo1" />
+
+    <TextView
+        android:id="@+id/tname"
+        style="@style/textStyle"
+        android:layout_below="@id/timage"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/tnumber"
+        style="@style/textStyle"
+        android:layout_below="@id/tname"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/tdob"
+        style="@style/textStyle"
+        android:layout_below="@id/tnumber"
+        android:layout_marginTop="10dp" />
+
+    <Spinner
+        android:id="@+id/tdept"
+        style="@style/spinnerTheme"
+        android:layout_below="@id/tdob"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:id="@+id/trow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tdept"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/tbutton1"
+            style="@style/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/update" />
+
+        <Button
+            android:id="@+id/tbutton2"
+            style="@style/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/cancel" />
+    </LinearLayout>
+</RelativeLayout>

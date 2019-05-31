@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/layoutStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
 
@@ -13,6 +14,7 @@
     <TextView
         style="@style/gridViewText"
         android:id="@+id/title"
-        android:text="Name" />
+        android:text="Name"
+        android:textColor="@color/colorPrimaryDark"/>
 
 </LinearLayout>

@@ -29,6 +29,8 @@
     <string name="syllabus">Syllabus</string>
     <string name="save">Save</string>
     <string name="choose">Select a Category</string>
+    <string name="semester">Select a Semester</string>
+    <string name="course">Select a Course</string>
     <string name="create">Create Account</string>
     <string name="username">Username</string>
     <string name="question">Question Papers</string>
@@ -41,4 +43,29 @@
     <string name="events">Events</string>
     <string name="warn">This option is only for the users who registered through Email. This is not applicable for the users registered through social app.</string>
     <string name="event_reg">Notify about the Conferences, Workshops, Symposium organized by your Institution</string>
+    <string name="profile">User Profile Details</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="sprofile">Profile</string>
+    <string name="prof_update">Profile Updated Successfully</string>
+    <string name="ok">OK</string>
+
+    <string-array name="ug">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+        <item>IV</item>
+        <item>V</item>
+        <item>VI</item>
+        <item>VII</item>
+        <item>VIII</item>
+    </string-array>
+
+    <string-array name="pg">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+        <item>IV</item>
+    </string-array>
+
 </resources>
