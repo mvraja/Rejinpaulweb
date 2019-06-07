@@ -1,27 +1,5 @@
 package org.reginpaul;
 
-/*import android.util.Log;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
-
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
-
-    public void onNewToken(String token) {
-        //super.onNewToken(token);
-        Log.e("Refreshed token:",token);
-        sendRegistrationToServer(token);
-    }
-
-    @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        super.onMessageReceived(remoteMessage);
-    }
-
-    private void sendRegistrationToServer(String refreshedToken) {
-        Log.d("TOKEN ", refreshedToken);
-    }
-}*/
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -105,10 +83,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             handleNotification(remoteMessage.getNotification().getBody());
-            Notify_msg=remoteMessage.getData().get("body");
-            Notify_title=remoteMessage.getData().get("title");
-            //Log.d("Notificationtitle",Notify_title);
-            //Log.d("Notificationfg msg",Notify_msg);
+//            Notify_msg=remoteMessage.getData().get("body");
+//            Notify_title=remoteMessage.getData().get("title");
+            Notify_msg=remoteMessage.getNotification().getBody();
+            Notify_title=remoteMessage.getNotification().getTitle();
+//            Log.d("HANDLE NOTIFICATION",remoteMessage.getNotification().getBody());
+//            Log.d("Notificationtitle",Notify_title);
+//            Log.d("Notificationfg msg",Notify_msg);
         }
         sendNotification(notification, data);
         // Check if message contains a data payload.
@@ -128,6 +109,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             // app is in foreground, broadcast the push message
             Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
             pushNotification.putExtra("message", message);
+            Log.d("Notification message",message);
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
             // play notification sound
@@ -233,7 +215,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //        intent.putExtras(bundle);
         intent.putExtra("title",Notify_title );
         intent.putExtra("message", Notify_msg);
-//        Log.d("Notify",Notify_title);
+//        Log.d("Notify",Notify_title.toString());
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -329,9 +311,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         @Override
         protected String doInBackground(Void... voids) {
             RequestHandler requestHandler = new RequestHandler();
-            if (requestCode == CODE_POST_REQUEST)
+            if (requestCode == CODE_POST_REQUEST) {
+                Log.d("Notification url", url);
                 return requestHandler.sendPostRequest(url, params);
-
+            }
 
             if (requestCode == CODE_GET_REQUEST) {
                 Log.d("Syllabus", url);
