@@ -20,7 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.reginpaul.MainActivity;
-import org.reginpaul.MaterialsActivity;
+
 import org.reginpaul.R;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class MaterialsFragment extends Fragment {
 
     ListView listView;
     private OnFragmentInteractionListener mListener;
-    String sDept, tempSem, tempCourse, sem[];
+    String sDept, tempSem, tempCourse, sem[], selectedItem, course[];
     String[] au_title = {"ECE", "EEE", "CSE", "IT", "AUTO", "CIVIL", "MECH", "BIOTECH", "MCA", "MBA"};
 
     String[] tn_title = {"Class X", "Class XI", "Class XII"};
@@ -51,7 +51,6 @@ public class MaterialsFragment extends Fragment {
     ArrayList images = new ArrayList<Integer>();
 
     private Spinner semSpinner, courseSpinner;
-    String course[] = {"UG", "PG"};
     ArrayAdapter courseArray, semArray;
 
     AppCompatActivity activity;
@@ -90,6 +89,8 @@ public class MaterialsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View returnview = inflater.inflate(R.layout.fragment_materials, container, false);
+        TextView t1 = returnview.findViewById(R.id.chooseCourse);
+        TextView t2 = returnview.findViewById(R.id.chooseSem);
         grid = returnview.findViewById(R.id.grid_home);
         semSpinner = returnview.findViewById(R.id.setup_sem);
         courseSpinner = returnview.findViewById(R.id.setup_course);
@@ -99,13 +100,46 @@ public class MaterialsFragment extends Fragment {
 
         final CustomGrid adapter;
 
+
+        if (sDept.equalsIgnoreCase("anna university") || sDept.equalsIgnoreCase("jntu")) {
+            department = new ArrayList<>(Arrays.asList(au_title));
+            images = new ArrayList<>(Arrays.asList(au_icon));
+        }
+        if (sDept.equalsIgnoreCase("school board")) {
+            t1.setVisibility(View.GONE);
+            t2.setVisibility(View.GONE);
+            semSpinner.setVisibility(View.GONE);
+            courseSpinner.setVisibility(View.GONE);
+            department = new ArrayList<>(Arrays.asList(tn_title));
+            images = new ArrayList<>(Arrays.asList(tn_icon));
+        }
+        if (sDept.equalsIgnoreCase("competitive exams")) {
+            t1.setVisibility(View.GONE);
+            t2.setVisibility(View.GONE);
+            semSpinner.setVisibility(View.GONE);
+            courseSpinner.setVisibility(View.GONE);
+            department = new ArrayList<>(Arrays.asList(ce_title));
+            images = new ArrayList<>(Arrays.asList(ce_icon));
+        }
+
+        adapter = new CustomGrid(getActivity().getApplicationContext(), R.layout.custom_list_dept, department, images);
+        grid.setAdapter(adapter);
+
+        course = getActivity().getApplicationContext().getResources().getStringArray(R.array.temp_array1);
         courseArray = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, course);
         courseArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         courseSpinner.setAdapter(courseArray);
+
+        sem = getActivity().getApplicationContext().getResources().getStringArray(R.array.temp_array);
+        semArray = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, sem);
+        semArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        semSpinner.setAdapter(semArray);
+
+
         courseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                tempCourse = courseSpinner.getSelectedItem().toString();
+                tempCourse = course[position];//courseSpinner.getSelectedItem().toString();
                 if (tempCourse.equalsIgnoreCase("ug")) {
                     sem = getActivity().getApplicationContext().getResources().getStringArray(R.array.ug);
                 }
@@ -116,7 +150,19 @@ public class MaterialsFragment extends Fragment {
                 semArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 semSpinner.setAdapter(semArray);
 
-                tempSem = semSpinner.getSelectedItem().toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        semSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tempSem = sem[position];//semSpinner.getSelectedItem().toString();
             }
 
             @Override
@@ -127,28 +173,21 @@ public class MaterialsFragment extends Fragment {
 
 
 
-        if (sDept.equalsIgnoreCase("anna university") || sDept.equalsIgnoreCase("jntu")) {
-            department = new ArrayList<>(Arrays.asList(au_title));
-            images = new ArrayList<>(Arrays.asList(au_icon));
-        }
-        if (sDept.equalsIgnoreCase("school board")) {
-            department = new ArrayList<>(Arrays.asList(tn_title));
-            images = new ArrayList<>(Arrays.asList(tn_icon));
-        }
-        if (sDept.equalsIgnoreCase("competitive exams")) {
-            department = new ArrayList<>(Arrays.asList(ce_title));
-            images = new ArrayList<>(Arrays.asList(ce_icon));
-        }
-
-        adapter = new CustomGrid(getActivity().getApplicationContext(), R.layout.custom_list_dept, department, images);
-        grid.setAdapter(adapter);
-
 
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = parent.getItemAtPosition(position).toString();
-                getFragmentManager().beginTransaction().replace(R.id.main_container, new MaterialsTempFragment()).commit();
+                selectedItem = parent.getItemAtPosition(position).toString();
+                if (tempSem == null)
+                    tempSem = "z";
+
+                MaterialsTempFragment mf = new MaterialsTempFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("ctg",selectedItem);
+                bundle.putString("sem",tempSem);
+                mf.setArguments(bundle);
+
+                getFragmentManager().beginTransaction().replace(R.id.main_container, mf).commit();
                 actionBar.setTitle("Study Materials");
             }
         });

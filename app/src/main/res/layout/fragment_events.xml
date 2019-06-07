@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:background="@color/colorPrimary">
-
+    android:background="@drawable/logonbg">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,13 +57,31 @@
         android:layout_below="@id/text11"
         android:layout_marginTop="10dp"/>
 
+
+    <TextView
+        style="@style/textViewStyle"
+        android:text="Select Source to upload"
+        android:id="@+id/text12"
+        android:layout_below="@id/event_type"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:id="@+id/source"
+        android:layout_below="@id/text12"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_insert_photo"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_edit_text"/>
+
     <Button
         style="@style/buttonStyle"
         android:text="@string/send"
         android:layout_width="wrap_content"
         android:id="@+id/event_send"
-        android:layout_below="@id/event_type"
+        android:layout_below="@id/source"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"/>
-
 </RelativeLayout>
+</ScrollView>

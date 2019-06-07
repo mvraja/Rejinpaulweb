@@ -1,7 +1,10 @@
 package org.reginpaul;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -47,7 +50,7 @@ public class MaterialsActivity extends AppCompatActivity{
     private View listViewItem;
     ProgressBar p;
 
-    private String fileName, folder, category, temp_ctg, stSemester;
+    private String fileName, folder, category, temp_ctg, stSemester, type;
     private Toolbar toolbar;
 
 
@@ -59,6 +62,9 @@ public class MaterialsActivity extends AppCompatActivity{
         toolbar = findViewById(R.id.stud_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final Drawable upArrow =  ContextCompat.getDrawable(getApplicationContext(), R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorBrown), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Study Materials Files");
 
@@ -66,6 +72,8 @@ public class MaterialsActivity extends AppCompatActivity{
         savedInstanceState = getIntent().getExtras();
         category = savedInstanceState.getString("strtext");
         stSemester = savedInstanceState.getString("strSem");
+        type = savedInstanceState.getString("type");
+
         if (category.equalsIgnoreCase("ece")){
             temp_ctg = "ECE";
         }
@@ -94,10 +102,11 @@ public class MaterialsActivity extends AppCompatActivity{
             temp_ctg = "CSE";
         }
         String sDept1 = "\"" + temp_ctg + "\"";
+        String sSemester = "\"" + stSemester + "\"";
         listView = findViewById(R.id.listView);
 
         materialList = new ArrayList<>();
-        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_STUDY + sDept1, null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getstudy&category="+sDept1+"&semester="+sSemester, null, CODE_GET_REQUEST);
         request.execute();
         MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
         listView.setAdapter(materialAdapter);

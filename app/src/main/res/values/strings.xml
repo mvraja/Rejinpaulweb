@@ -42,7 +42,7 @@
     <string name="send">Send</string>
     <string name="events">Events</string>
     <string name="warn">This option is only for the users who registered through Email. This is not applicable for the users registered through social app.</string>
-    <string name="event_reg">Notify about the Conferences, Workshops, Symposium organized by your Institution</string>
+    <string name="event_reg">Notify about the Events organized by your Institution</string>
     <string name="profile">User Profile Details</string>
     <string name="update">Update</string>
     <string name="cancel">Cancel</string>
@@ -68,4 +68,14 @@
         <item>IV</item>
     </string-array>
 
+    <string-array name="temp_array">
+        <item>Select a Semester</item>
+    </string-array>
+
+
+    <string-array name="temp_array1">
+        <item>Select a Course</item>
+        <item>UG</item>
+        <item>PG</item>
+    </string-array>
 </resources>

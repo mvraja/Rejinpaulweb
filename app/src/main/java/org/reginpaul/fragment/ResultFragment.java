@@ -18,7 +18,7 @@ import org.reginpaul.R;
 public class ResultFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     String[] title = {"Anna University", "JNTU", "TN SSLC", "TN HSC"};
-    int[] icon = {R.drawable.au, R.drawable.jntu, R.drawable.tn, R.drawable.tn};
+    int[] icon = {R.drawable.ic_au, R.drawable.ic_jntu, R.drawable.ic_tn, R.drawable.ic_tn};
     GridView grid;
 
     @Override
@@ -76,7 +76,7 @@ public class ResultFragment extends Fragment implements AdapterView.OnItemClickL
 
                 name = convertView.findViewById(R.id.title);
                 image = convertView.findViewById(R.id.image);
-                convertView.setBackgroundResource(R.drawable.grid_items_border);
+                convertView.setBackgroundResource(R.drawable.grid_items_wborder);
                 name.setText(title[position]);
                 image.setImageResource(icon[position]);
             }
