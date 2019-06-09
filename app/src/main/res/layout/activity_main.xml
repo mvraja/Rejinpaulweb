@@ -29,5 +29,6 @@
         android:layout_gravity="start"
         android:layout_marginBottom="3dp"
         app:menu="@menu/navigation_menu"
-        android:background="@color/colorLemon"/>
+        app:itemBackground="@drawable/selector"
+        android:background="@color/colorWhite"/>
 </android.support.v4.widget.DrawerLayout>

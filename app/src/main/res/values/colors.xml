@@ -20,5 +20,8 @@
     <color name="colorBrown">#8b4513</color>
     <color name="colorCyan">#00ffff</color>
     <color name="colorLight">#cccc99</color>
+    <color name="colorGreen">#008000</color>
+	<color name="colorSky">#87ceeb</color>
+	<color name="colorLinen">#faf0e6</color>
 
 </resources>
