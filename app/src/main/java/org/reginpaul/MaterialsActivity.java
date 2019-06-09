@@ -50,7 +50,7 @@ public class MaterialsActivity extends AppCompatActivity{
     private View listViewItem;
     ProgressBar p;
 
-    private String fileName, folder, category, temp_ctg, stSemester, type;
+    private String fileName, folder, category, temp_ctg, stSemester, type, stCourse;
     private Toolbar toolbar;
 
 
@@ -72,6 +72,7 @@ public class MaterialsActivity extends AppCompatActivity{
         savedInstanceState = getIntent().getExtras();
         category = savedInstanceState.getString("strtext");
         stSemester = savedInstanceState.getString("strSem");
+        stCourse = savedInstanceState.getString("strCour");
         type = savedInstanceState.getString("type");
 
         if (category.equalsIgnoreCase("ece")){
@@ -103,10 +104,11 @@ public class MaterialsActivity extends AppCompatActivity{
         }
         String sDept1 = "\"" + temp_ctg + "\"";
         String sSemester = "\"" + stSemester + "\"";
+        String sCourse = "\"" + stCourse + "\"";
         listView = findViewById(R.id.listView);
 
         materialList = new ArrayList<>();
-        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getstudy&category="+sDept1+"&semester="+sSemester, null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getstudy&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
         request.execute();
         MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
         listView.setAdapter(materialAdapter);

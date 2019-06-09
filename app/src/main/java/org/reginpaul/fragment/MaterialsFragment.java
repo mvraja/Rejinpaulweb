@@ -185,6 +185,7 @@ public class MaterialsFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("ctg",selectedItem);
                 bundle.putString("sem",tempSem);
+                bundle.putString("cour",tempCourse);
                 mf.setArguments(bundle);
 
                 getFragmentManager().beginTransaction().replace(R.id.main_container, mf).commit();

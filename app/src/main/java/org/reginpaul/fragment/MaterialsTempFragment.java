@@ -14,7 +14,7 @@ import org.reginpaul.R;
 
 public class MaterialsTempFragment extends Fragment implements View.OnClickListener{
 
-    String categ, semester;
+    String categ, semester, course;
     LinearLayout mrow1, mrow2, mrow3;
     Intent intent;
 
@@ -26,6 +26,7 @@ public class MaterialsTempFragment extends Fragment implements View.OnClickListe
         savedInstanceState = getArguments();
         categ = savedInstanceState.getString("ctg");
         semester = savedInstanceState.getString("sem");
+        course = savedInstanceState.getString("cour");
 
         mrow1 = rootView.findViewById(R.id.mrow1);
         mrow2 = rootView.findViewById(R.id.mrow2);
@@ -45,6 +46,7 @@ public class MaterialsTempFragment extends Fragment implements View.OnClickListe
                 intent = new Intent(getActivity(),MaterialsActivity.class);
                 intent.putExtra("strtext",categ);
                 intent.putExtra("strSem", semester);
+                intent.putExtra("strCour", course);
                 intent.putExtra("type", "notes");
                 startActivity(intent);
                 break;
@@ -52,6 +54,7 @@ public class MaterialsTempFragment extends Fragment implements View.OnClickListe
                 intent = new Intent(getActivity(), QuestionsActivity.class);
                 intent.putExtra("strtext",categ);
                 intent.putExtra("strSem", semester);
+                intent.putExtra("strCour", course);
                 intent.putExtra("type", "question");
                 startActivity(intent);
                 break;
@@ -59,6 +62,7 @@ public class MaterialsTempFragment extends Fragment implements View.OnClickListe
                 intent = new Intent(getActivity(),QuestionsActivity.class);
                 intent.putExtra("strtext",categ);
                 intent.putExtra("strSem", semester);
+                intent.putExtra("strCour", course);
                 intent.putExtra("type", "qbank");
                 startActivity(intent);
                 break;
