@@ -2,15 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBeige">
+    android:background="@drawable/logonbg">
 
     <include
         android:id="@+id/res_toolbar"
         layout="@layout/app_bar_layout"/>
 
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_below="@id/res_toolbar"
+        style="@style/textViewStyle"
+        android:text="@string/res_note"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/webView"
+        android:layout_below="@id/textView"
+        android:visibility="gone"/>
+
+
     <ListView
         android:id="@+id/listView"
-        android:layout_below="@id/res_toolbar"
+        android:layout_below="@id/textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/colorPrimary"

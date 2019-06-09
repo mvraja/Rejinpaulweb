@@ -37,14 +37,14 @@ public class MaterialsFragment extends Fragment {
     ListView listView;
     private OnFragmentInteractionListener mListener;
     String sDept, tempSem, tempCourse, sem[], selectedItem, course[];
-    String[] au_title = {"ECE", "EEE", "CSE", "IT", "AUTO", "CIVIL", "MECH", "BIOTECH", "MCA", "MBA"};
+    String[] au_title = {"EEE", "ECE", "CSE", "IT", "AUTO", "CIVIL", "MECH", "BIOTECH", "MCA", "MBA"};
 
     String[] tn_title = {"Class X", "Class XI", "Class XII"};
-    String[] ce_title = {"TNPSC", "BANK", "RRB", "POLICE"};
+    String[] ce_title = {"TNPSC", "BANK", "RRB", "UPSC"};
 
-    Integer[] au_icon = {R.drawable.ece, R.drawable.eee, R.drawable.cse, R.drawable.it, R.drawable.automobile, R.drawable.civil, R.drawable.mechanical, R.drawable.biotech, R.drawable.mca, R.drawable.mba};
+    Integer[] au_icon = {R.drawable.eee, R.drawable.ece, R.drawable.cse, R.drawable.it, R.drawable.automobile, R.drawable.civil, R.drawable.mechanical, R.drawable.biotech, R.drawable.ic_mca, R.drawable.ic_mba};
     Integer[] tn_icon = {R.drawable.rx, R.drawable.rxi, R.drawable.rxii};
-    Integer[] ce_icon = {R.drawable.tnp, R.drawable.bank, R.drawable.rail, R.drawable.police};
+    Integer[] ce_icon = {R.drawable.tnp, R.drawable.bank, R.drawable.rail, R.drawable.upsc};
 
     GridView grid;
     ArrayList department = new ArrayList<>();
@@ -230,17 +230,20 @@ public class MaterialsFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // TODO Auto-generated method stub
-
+            View v;
             LayoutInflater inflater = LayoutInflater.from(getContext());
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.custom_list_dept, parent, false);
-                convertView.setBackgroundResource(R.drawable.grid_items_wborder);
-                TextView name = convertView.findViewById(R.id.title);
-                ImageView image = convertView.findViewById(R.id.image);
+                v = inflater.inflate(R.layout.custom_list_dept, parent, false);
+            }else {
+                v = convertView;
+            }
+            v.setBackgroundResource(R.drawable.grid_items_border);
+                TextView name = v.findViewById(R.id.title);
+                ImageView image = v.findViewById(R.id.image);
                 name.setText(deptList.get(position).toString());
                 image.setImageResource(imgList.get(position));
-            }
-            return convertView;
+
+            return v;
         }
 
     }

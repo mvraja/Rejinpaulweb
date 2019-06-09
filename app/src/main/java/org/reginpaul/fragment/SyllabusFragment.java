@@ -125,7 +125,7 @@ public class SyllabusFragment extends Fragment {
         adapter.addFragment(new TnFragment(), "TNPSC");
         adapter.addFragment(new RrbFragment(), "RRB");
         adapter.addFragment(new BankFragment(), "BANK");
-        adapter.addFragment(new PoliceFragment(), "POLICE");
+        adapter.addFragment(new UpscFragment(), "UPSC");
         viewPager.setAdapter(adapter);
     }
 

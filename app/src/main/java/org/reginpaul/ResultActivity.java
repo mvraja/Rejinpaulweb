@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -31,7 +33,7 @@ public class ResultActivity extends AppCompatActivity {
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
 
-    List<Material> materialList;
+    List<Result> materialList;
     ListView listView;
 
     private View listViewItem;
@@ -39,14 +41,15 @@ public class ResultActivity extends AppCompatActivity {
 
     private String clgName;
     private Toolbar toolbar;
+    private WebView webView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_study);
+        setContentView(R.layout.activity_result);
 
-        toolbar = findViewById(R.id.stud_toolbar);
+        toolbar = findViewById(R.id.res_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final Drawable upArrow = ContextCompat.getDrawable(getApplicationContext(), R.drawable.abc_ic_ab_back_material);
@@ -60,14 +63,16 @@ public class ResultActivity extends AppCompatActivity {
         clgName = savedInstanceState.getString("stRes");
 
         listView = findViewById(R.id.listView);
+        webView = findViewById(R.id.webView);
 
         //String sRes = "\"" + clgName + "\"";
 
         materialList = new ArrayList<>();
-        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getresult&name=" + clgName, null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getresult&name="+clgName, null, CODE_GET_REQUEST);
         request.execute();
         MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
         listView.setAdapter(materialAdapter);
+
     }
 
     private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
@@ -93,10 +98,11 @@ public class ResultActivity extends AppCompatActivity {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
-                    Log.d("Materials", object.toString());
-                    refreshList(object.getJSONArray("pfiles"));
+                    Log.d("Results", object.toString());
+                    refreshList(object.getJSONArray("results"));
                 } else
-                    Log.d("Materials", object.toString());
+
+                    Log.d("Results", object.toString());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -112,7 +118,7 @@ public class ResultActivity extends AppCompatActivity {
 
 
             if (requestCode == CODE_GET_REQUEST) {
-                Log.d("Materials", url);
+                Log.d("Results", url);
                 String getstring = requestHandler.sendGetRequest(url);
 
                 return requestHandler.sendGetRequest(url);
@@ -125,8 +131,8 @@ public class ResultActivity extends AppCompatActivity {
         materialList.clear();
         for (int i = 0; i < pfiles.length(); i++) {
             JSONObject obj = pfiles.getJSONObject(i);
-            materialList.add(new Material(obj.getInt("id"), obj.getString("name")));
-            Log.d("Materials", new Material(obj.getInt("id"), obj.getString("name")).toString());
+            materialList.add(new Result(obj.getString("name"), obj.getString("linkname")));
+            Log.d("Results", new Result(obj.getString("name"), obj.getString("linkname")).toString());
         }
 
 
@@ -134,12 +140,12 @@ public class ResultActivity extends AppCompatActivity {
         listView.setAdapter(materialAdapter);
     }
 
-    class MaterialAdapter extends ArrayAdapter<Material> {
+    class MaterialAdapter extends ArrayAdapter<Result> {
 
-        List<Material> materialList;
+        List<Result> materialList;
 
-        public MaterialAdapter(@NonNull List<Material> materialList) {
-            super(ResultActivity.this, R.layout.layout_list, materialList);
+        public MaterialAdapter(@NonNull List<Result> materialList) {
+            super(ResultActivity.this, R.layout.layout_result, materialList);
             this.materialList = materialList;
         }
 
@@ -148,14 +154,50 @@ public class ResultActivity extends AppCompatActivity {
             LayoutInflater inflater = getLayoutInflater();
             listViewItem = inflater.inflate(R.layout.layout_result, null, true);
 
-            TextView textViewName = listViewItem.findViewById(R.id.textViewName);
+            final TextView textViewName = listViewItem.findViewById(R.id.textViewName);
 
-            final Material material = materialList.get(position);
+            final Result material = materialList.get(position);
 
-            textViewName.setText(material.getName());
+            textViewName.setText(material.getLinkName());
+
+
+            textViewName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final String selectedItem = (String) textViewName.getText();
+                    //Toast.makeText(getApplicationContext(),selectedItem,Toast.LENGTH_SHORT).show();
+                    listView.setVisibility(View.GONE);
+                    webView.setVisibility(View.VISIBLE);
+                    webView.setWebViewClient(new inlineBrowser());
+                    webView.getSettings().setLoadWithOverviewMode(true);
+                    webView.getSettings().setUseWideViewPort(true);
+                    webView.getSettings().setLoadsImagesAutomatically(true);
+                    webView.getSettings().setJavaScriptEnabled(true);
+                    webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+                    webView.loadUrl(selectedItem);
+                    /*webView.getSettings().setJavaScriptEnabled(true);
+                    webView.setWebViewClient(new WebViewClient(){
+
+                        @Override
+                        public boolean shouldOverrideUrlLoading(WebView view, String url){
+                            view.loadUrl(selectedItem);
+                            return true;
+                        }
+                    });*/
+
+                }
+            });
 
             return listViewItem;
 
+        }
+    }
+
+    private class inlineBrowser extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
         }
     }
 }
