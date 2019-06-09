@@ -137,8 +137,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String timestamp = data.getString("timestamp");
             JSONObject payload = data.getJSONObject("payload");
 
-            Log.e(TAG, "title: " + title);
-            Log.e(TAG, "message: " + message);
+            Log.d(TAG, "title: " + title);
+            Log.d(TAG, "message: " + message);
             Log.e(TAG, "payload: " + payload.toString());
             Log.e(TAG, "imageUrl: " + imageUrl);
             Log.e(TAG, "timestamp: " + timestamp);
@@ -232,7 +232,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setLights(Color.RED, 1000, 300)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setNumber(++numMessages)
-                .setSmallIcon(R.drawable.ic_notification);
+                .setSmallIcon(R.drawable.logo1);
         HashMap<String, String> params = new HashMap<>();
         params.put("msgtype", Notify_title);
         params.put("msg", Notify_msg);
