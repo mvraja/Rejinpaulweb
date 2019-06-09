@@ -78,8 +78,10 @@ public class MainActivity extends AppCompatActivity implements
 
     String currentUserID, department, firebaseToken, userGender;
 
-    private static final String AUTH_KEY = "key=AAAA5oDKL-4:APA91bEVqeEYD7lkC0EnNmFyV3qHSZcNcoFGCNSZvB0QmeO-rJJDzfzuAyRhf7tmJkYzHN7lDxma8ploBc9B8k2d8kGf85hhsu3PbpipemeCXl43yG7bEKvA-5r9DdHlbok47q7lwybR";
+        private static final String AUTH_KEY = "key=AAAA5oDKL-4:APA91bEVqeEYD7lkC0EnNmFyV3qHSZcNcoFGCNSZvB0QmeO-rJJDzfzuAyRhf7tmJkYzHN7lDxma8ploBc9B8k2d8kGf85hhsu3PbpipemeCXl43yG7bEKvA-5r9DdHlbok47q7lwybR";
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private String Notify_title;
+    private String Notify_msg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,8 +193,8 @@ public class MainActivity extends AppCompatActivity implements
 //        params.put("msgtype", Notify_title);
 //        params.put("msg", Notify_msg);
         Log.d("Bg code", "outside bg code");
-        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_MSG, params, CODE_POST_REQUEST);
-        request.execute();
+//        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_MSG, params, CODE_POST_REQUEST);
+//        request.execute();
         /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -285,7 +287,18 @@ public class MainActivity extends AppCompatActivity implements
             jPayload.put("priority", "high");
             jPayload.put("notification", jNotification);
             jPayload.put("data", jData);
-            Log.d("Notification test", jData.getString("title"));
+
+//            Notify_title=jData.getString("title");
+//            Notify_msg=jData.getString("body");
+//            HashMap<String, String> params = new HashMap<>();
+//            params.put("msgtype", Notify_title);
+//            params.put("msg", Notify_msg);
+//
+//            PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_MSG , params, CODE_POST_REQUEST);
+//            request.execute();
+////        intent.putExtras(bundle);
+            
+            
             URL url = new URL("https://fcm.googleapis.com/fcm/send");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
@@ -301,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements
             InputStream inputStream = conn.getInputStream();
             final String resp = convertStreamToString(inputStream);
 
-
+            Log.d("Notification test", jData.getString("title"));
             Handler h = new Handler(Looper.getMainLooper());
             h.post(new Runnable() {
                 @Override
@@ -310,6 +323,7 @@ public class MainActivity extends AppCompatActivity implements
 
                 }
             });
+            
 //            HashMap<String, String> params = new HashMap<>();
 //            params.put("msgtype", jPayload.getString("title"));
 //            params.put("msg", jPayload.getString("message"));
