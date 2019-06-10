@@ -50,6 +50,7 @@
     <string name="prof_update">Profile Updated Successfully</string>
     <string name="ok">OK</string>
     <string name="res_note">You can get the results by clicking any one of the below links</string>
+    <string name="source">Select Source to upload</string>
 
     <string-array name="ug">
         <item>I</item>

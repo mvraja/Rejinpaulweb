@@ -125,6 +125,9 @@ public class SetupActivity extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(dob)) {
             Toast.makeText(this, "Please select your birth date", Toast.LENGTH_SHORT).show();
+        }
+        if (phone.length()!=10){
+            Toast.makeText(this, "Invalid Phone number", Toast.LENGTH_SHORT).show();
         } else {
             loadingBar.setTitle("Saving Information");
             loadingBar.setMessage("Please wait for a while...");
