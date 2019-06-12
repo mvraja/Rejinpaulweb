@@ -33,6 +33,7 @@
         android:layout_below="@id/chooseSem"
         android:layout_marginTop="10dp" />
 
+
     <GridView
         android:id="@+id/grid_home"
         android:layout_centerInParent="true"

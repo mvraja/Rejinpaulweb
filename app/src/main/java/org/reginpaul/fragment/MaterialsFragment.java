@@ -44,7 +44,7 @@ public class MaterialsFragment extends Fragment {
 
     Integer[] au_icon = {R.drawable.ece, R.drawable.eee, R.drawable.cse, R.drawable.it, R.drawable.automobile, R.drawable.civil, R.drawable.mechanical, R.drawable.biotech, R.drawable.mca, R.drawable.mba};
     Integer[] tn_icon = {R.drawable.rx, R.drawable.rxi, R.drawable.rxii};
-    Integer[] ce_icon = {R.drawable.tnp, R.drawable.bank, R.drawable.rail, R.drawable.police};
+    Integer[] ce_icon = {R.drawable.tnp, R.drawable.bank, R.drawable.rail, R.drawable.rail};
 
     GridView grid;
     ArrayList department = new ArrayList<>();
@@ -234,7 +234,7 @@ public class MaterialsFragment extends Fragment {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.custom_list_dept, parent, false);
-                convertView.setBackgroundResource(R.drawable.grid_items_wborder);
+//                convertView.setBackgroundResource(R.drawable.grid_items_wborder);
                 TextView name = convertView.findViewById(R.id.title);
                 ImageView image = convertView.findViewById(R.id.image);
                 name.setText(deptList.get(position).toString());

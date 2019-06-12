@@ -10,6 +10,7 @@
     <!--android:src="@drawable/logo"-->
     <!--android:layout_centerInParent="true"/>-->
 
+
     <GridView
         android:id="@+id/grid_home"
         android:layout_width="match_parent"
