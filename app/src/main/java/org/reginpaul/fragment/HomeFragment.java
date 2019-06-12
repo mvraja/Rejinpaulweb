@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
                 name = convertView.findViewById(R.id.title);
                 image = convertView.findViewById(R.id.image);
-                convertView.setBackgroundResource(R.drawable.grid_items_wborder);
+//                convertView.setBackgroundResource(R.drawable.grid_items_wborder);
                 name.setText(title[position]);
                 image.setImageResource(icon[position]);
             }

@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bg_grid"
+    >
 
     <ImageView
         android:id="@+id/image"
@@ -16,6 +18,6 @@
         android:id="@+id/title"
         android:text="Name"
         android:layout_gravity="center"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@color/colorbg"/>
 
 </LinearLayout>
