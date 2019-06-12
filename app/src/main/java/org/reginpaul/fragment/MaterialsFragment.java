@@ -234,7 +234,7 @@ public class MaterialsFragment extends Fragment {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.custom_list_dept, parent, false);
-//                convertView.setBackgroundResource(R.drawable.grid_items_wborder);
+                convertView.setBackgroundResource(R.drawable.grid_items_wborder);
                 TextView name = convertView.findViewById(R.id.title);
                 ImageView image = convertView.findViewById(R.id.image);
                 name.setText(deptList.get(position).toString());

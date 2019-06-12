@@ -3,12 +3,15 @@ package org.reginpaul.fragment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,32 +30,41 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.reginpaul.Api;
 import org.reginpaul.R;
+import org.reginpaul.RequestHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
 public class EventsFragment extends Fragment {
 
+    private static final int CODE_GET_REQUEST = 1024;
+    private static final int CODE_POST_REQUEST = 1025;
+
     private static EditText eventName, eventDate, eventLocation;
     private Button saveEvent;
     private ImageView imgSource;
     private Spinner sType;
+    String strName, strDate, strLoc, strType, strImage;
     String event[] = {"WORKSHOP", "CONFERENCE", "SYMPOSIUM", "OFF CAMPUS", "CULTURAL EVENTS", "PLACEMENT ACTIVITIES", "OTHER EVENTS"};
     ArrayAdapter eventArray;
     int mYear, mMonth, mDay;
     private String str1;
+    private ProgressDialog loadingBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
@@ -65,6 +77,7 @@ public class EventsFragment extends Fragment {
         imgSource = rootView.findViewById(R.id.source);
         sType = rootView.findViewById(R.id.event_type);
         saveEvent = rootView.findViewById(R.id.event_send);
+        loadingBar = new ProgressDialog(getActivity());
 
         eventArray = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, event);
         eventArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -74,7 +87,7 @@ public class EventsFragment extends Fragment {
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
         eventDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,23 +276,109 @@ public class EventsFragment extends Fragment {
 
 
     private void SaveEventInformation() {
-        String strName, strDate, strLoc;
         strName = eventName.getText().toString();
         strDate = eventDate.getText().toString();
         strLoc = eventLocation.getText().toString();
+        strType = sType.getSelectedItem().toString();
+
+        BitmapDrawable drawable = (BitmapDrawable) imgSource.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+        strImage = getStringImage(bitmap);
+
         if (TextUtils.isEmpty(strName)) {
-            Toast.makeText(getActivity(), "Please enter event name", Toast.LENGTH_SHORT).show();
+            eventName.setError("Please enter event name");
+            eventName.requestFocus();
+            return;
+            //Toast.makeText(getActivity(), "Please enter event name", Toast.LENGTH_SHORT).show();
         }
         if (TextUtils.isEmpty(strDate)) {
             Toast.makeText(getActivity(), "Please enter event date", Toast.LENGTH_SHORT).show();
         }
         if (TextUtils.isEmpty(strLoc)) {
             Toast.makeText(getActivity(), "Please enter event location", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+
             eventName.setText("");
             eventDate.setText("");
             eventLocation.setText("");
-            Toast.makeText(getActivity().getApplicationContext(), "Event Information Saved", Toast.LENGTH_SHORT).show();
+            imgSource.setImageResource(R.drawable.select_image);
+            loadingBar.setTitle("Saving Event Information");
+            loadingBar.setMessage("Please wait for a while...");
+            loadingBar.show();
+            loadingBar.setCanceledOnTouchOutside(true);
+
+            HashMap<String, String> params = new HashMap<>();
+        params.put("name", strName);
+        params.put("date", strDate);
+        params.put("loc", strLoc);
+        params.put("type", strType);
+        params.put("image", strImage);
+
+/*        params.put("eventname", strName);
+            params.put("eventdate", strDate);
+            params.put("eventtype", strType);
+            params.put("eventloc", strLoc);
+            params.put("eventsrc", strImage);*/
+
+            PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_EVNT, params, CODE_POST_REQUEST);
+            request.execute();
+            loadingBar.dismiss();
+
+            //Toast.makeText(getActivity().getApplicationContext(), "Event Information Sent to Admin", Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+
+    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
+        String url;
+        HashMap<String, String> params;
+        int requestCode;
+
+        PerformNetworkRequest(String url, HashMap<String, String> params, int requestCode) {
+            this.url = url;
+            this.params = params;
+            this.requestCode = requestCode;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                JSONObject object = new JSONObject(s);
+                if (!object.getBoolean("error")) {
+                    Toast.makeText(getActivity().getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            RequestHandler requestHandler = new RequestHandler();
+
+            if (requestCode == CODE_POST_REQUEST)
+                return requestHandler.sendPostRequest(url, params);
+
+
+            if (requestCode == CODE_GET_REQUEST)
+                return requestHandler.sendGetRequest(url);
+
+            return null;
         }
     }
 

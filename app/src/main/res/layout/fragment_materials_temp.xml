@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:background="@color/colorLinen"
+        android:background="@color/colorGray"
         android:orientation="vertical"
         android:weightSum="3">
 
@@ -20,20 +20,23 @@
             android:layout_height="0dp"
             android:layout_margin="15dp"
             android:layout_weight="1"
-            android:background="@drawable/grid_items_wborder"
+            android:background="@drawable/blueptrn"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:alpha="0.8">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_notes" />
+                android:src="@drawable/ic_notes"
+                android:background="@color/colorWhite"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notes"
-                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/notes"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -43,20 +46,23 @@
             android:layout_height="0dp"
             android:layout_margin="15dp"
             android:layout_weight="1"
-            android:background="@drawable/grid_items_wborder"
+            android:background="@drawable/blueptrn"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:alpha="0.8">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_ques" />
+                android:src="@drawable/ic_ques"
+                android:background="@color/colorWhite"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Question Papers"
-                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/qp"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -66,20 +72,23 @@
             android:layout_height="0dp"
             android:layout_margin="15dp"
             android:layout_weight="1"
-            android:background="@drawable/grid_items_wborder"
+            android:background="@drawable/blueptrn"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:alpha="0.8">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_qb" />
+                android:src="@drawable/ic_qb"
+                android:background="@color/colorWhite"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Question Bank"
-                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/qb"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
                 android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>

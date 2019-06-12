@@ -20,7 +20,7 @@ import org.reginpaul.R;
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener{
 
     String[] title = { "Syllabus","Study materials", "Profile", "Events","Notification","Results" };
-    int[] icon={R.drawable.syllabus,R.drawable.study, R.drawable.ic_user, R.drawable.friends,R.drawable.messages,R.drawable.result};
+    int[] icon={R.drawable.syllabus,R.drawable.study, R.drawable.profile, R.drawable.friends,R.drawable.messages,R.drawable.result};
     GridView grid;
     AppCompatActivity activity;
     ActionBar actionBar;

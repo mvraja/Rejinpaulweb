@@ -14,5 +14,5 @@ public class Api {
     public static final String URL_READ_QUESTIONS = ROOT_URL + "getquestion&category=";
     public static final String URL_READ_MSG = ROOT_URL + "getmessage";
     public static final String URL_CREATE_MSG = ROOT_URL + "createmessage";
-
+    public static final String URL_CREATE_EVNT = ROOT_URL + "createuser";
 }

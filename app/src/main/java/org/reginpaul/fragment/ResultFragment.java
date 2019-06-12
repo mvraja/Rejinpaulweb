@@ -133,7 +133,7 @@ public class ResultFragment extends Fragment {
 
                 name = convertView.findViewById(R.id.title);
                 image = convertView.findViewById(R.id.image);
-                convertView.setBackgroundResource(R.drawable.grid_items_wborder);
+                convertView.setBackgroundResource(R.drawable.grid_items_border);
                 name.setText(title[position]);
                 image.setImageResource(icon[position]);
             }

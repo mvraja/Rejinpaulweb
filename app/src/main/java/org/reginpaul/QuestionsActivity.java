@@ -115,7 +115,7 @@ public class QuestionsActivity extends AppCompatActivity{
 
         materialList = new ArrayList<>();
        // PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_QUESTIONS + sDept1, null, CODE_GET_REQUEST);
-        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getques&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getquestion&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
         request.execute();
         MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
         listView.setAdapter(materialAdapter);
