@@ -54,6 +54,7 @@
     <string name="qb">Question Bank</string>
     <string name="qp">Question Papers</string>
     <string name="notes">Notes</string>
+    <string name="msg_log">You need to logout to make changes effect</string>
 
     <string-array name="ug">
         <item>I</item>

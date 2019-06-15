@@ -44,6 +44,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.reginpaul.fragment.EventsFragment;
+import org.reginpaul.fragment.EventsRegFragment;
 import org.reginpaul.fragment.HomeFragment;
 import org.reginpaul.fragment.MaterialsFragment;
 import org.reginpaul.fragment.ProfileFragment;
@@ -60,7 +61,7 @@ import java.util.Scanner;
 
 
 public class MainActivity extends AppCompatActivity implements
-        SyllabusFragment.OnFragmentInteractionListener, MaterialsFragment.OnFragmentInteractionListener{
+        SyllabusFragment.OnFragmentInteractionListener, EventsRegFragment.OnFragmentInteractionListener, MaterialsFragment.OnFragmentInteractionListener{
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -234,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements
 
                     String message = intent.getStringExtra("message");
 
-                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
                     Log.d("Notification text", message);
 //                    txtMessage.setText(message);
                 }
@@ -437,7 +438,7 @@ public class MainActivity extends AppCompatActivity implements
                 break;*/
 
             case R.id.nav_events:
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new EventsFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new EventsRegFragment()).commit();
                 getSupportActionBar().setTitle("Events");
                 break;
 

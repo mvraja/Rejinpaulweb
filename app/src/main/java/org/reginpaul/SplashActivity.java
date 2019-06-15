@@ -77,7 +77,7 @@ public class SplashActivity extends AppCompatActivity {
             try {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
-                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     Log.d("Syllabus", object.toString());
 //                    refreshList(object.getJSONArray("pfiles"));
 //                    object.put("msgtype",Notify_title);
