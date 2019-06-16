@@ -5,6 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawable_layout"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
@@ -22,6 +23,17 @@
         android:layout_below="@id/main_page_toolbar"/>
 
 </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+    </RelativeLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
@@ -31,4 +43,5 @@
         app:menu="@menu/navigation_menu"
         app:itemBackground="@drawable/selector"
         android:background="@color/colorWhite"/>
+
 </android.support.v4.widget.DrawerLayout>
