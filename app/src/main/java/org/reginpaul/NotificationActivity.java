@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +28,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,13 +46,14 @@ public class NotificationActivity extends AppCompatActivity{
     TextView messageView;
 
     String title;
-    String message, mlink;
+    String message, fileName, folder;
     List<Notify> notifylist;
     ListView listView;
 
     Notify notify;
 
     private View listViewItem;
+    ProgressBar p;
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
@@ -160,8 +171,8 @@ public class NotificationActivity extends AppCompatActivity{
 //            message.put("msgtype",title);
 //            message.put("msg",msg);
 //            notifylist.add(new Notify(title,msg));
-            notifylist.add(new Notify( obj.getString("msgtype"),obj.getString("msg"),obj.getString("link")));
-            Log.d("Notify display", new Notify(obj.getString("msgtype"),obj.getString("msg"),obj.getString("link")).toString());
+            notifylist.add(new Notify( obj.getString("msgtype"),obj.getString("msg")));
+            Log.d("Notify display", new Notify(obj.getString("msgtype"),obj.getString("msg")).toString());
         }
 
 
@@ -227,8 +238,9 @@ public class NotificationActivity extends AppCompatActivity{
                     tit.setText(notify.getMsgtype());
                     TextView tmsg = alertDialog.findViewById(R.id.txt21);
                     tmsg.setText(notify.getMsg());
-                    TextView tlink = alertDialog.findViewById(R.id.txt22);
-                    tlink.setText(notify.getLink());
+                    String getMsg = tmsg.getText().toString();
+                    String[] part = getMsg.split("-");
+                    String newUrl = part[1];
                     Button ok = alertDialog.findViewById(R.id.buttonOk);
                     ok.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -242,12 +254,76 @@ public class NotificationActivity extends AppCompatActivity{
         }
     }
 
+    class DownloadFile extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            p = new ProgressBar(NotificationActivity.this);
+            p.setIndeterminate(false);
+            p.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... f_url) {
+            int count;
+            try {
+                URL url = new URL(f_url[0]);
+                URLConnection connection = url.openConnection();
+                connection.connect();
+                int lengthOfFile = connection.getContentLength();
+
+
+                InputStream input = connection.getInputStream();
+
+                String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+
+                fileName = f_url[0].substring(f_url[0].lastIndexOf('/') + 1, f_url[0].length());
+                folder = Environment.DIRECTORY_DOWNLOADS + File.separator;
+
+                File directory = new File(folder);
+
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
+
+                OutputStream output = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+
+                byte data[] = new byte[1024];
+
+                long total = 0;
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    output.write(data, 0, count);
+                }
+                output.flush();
+
+                output.close();
+                input.close();
+                return "Downloaded at: " + folder + fileName;
+
+            } catch (Exception e) {
+                Log.e("Error: ", e.getMessage());
+            }
+
+
+            return "Something went wrong";
+        }
+
+
+        @Override
+        protected void onPostExecute(String message) {
+            super.onPostExecute(message);
+            p.setVisibility(View.GONE);
+            Toast.makeText(getApplicationContext(),"File downloaded in File Manager/"+folder+fileName,Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         title = intent.getStringExtra("title");
         message = intent.getStringExtra("message");
-        mlink = intent.getStringExtra("link");
 
         titleView.setText("Refreshed Notification: \n"+title);
         messageView.setText(message);

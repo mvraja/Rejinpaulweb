@@ -29,15 +29,6 @@
         android:layout_marginBottom="5dp"/>
 
 
-    <TextView
-        style="@style/listViewText"
-        android:id="@+id/link"
-        android:text="Download Link"
-        android:layout_marginStart="5dp"
-        android:layout_below="@id/message"
-        android:layout_toEndOf="@id/img1"
-        android:layout_marginBottom="5dp"/>
-
 </RelativeLayout>
 
 

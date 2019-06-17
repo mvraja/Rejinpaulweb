@@ -105,7 +105,7 @@
         <item name="android:textColor">@color/colorYellow</item>
     </style>
 
-    <style name="listViewText" parent="wh_ww">
+    <style name="listViewText" parent="wh_mw">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorBeige</item>
     </style>
