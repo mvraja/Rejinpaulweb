@@ -26,12 +26,28 @@
         android:visibility="gone"/>
 
 
-    <ListView
+<!--    <ListView
         android:id="@+id/listView"
         android:layout_below="@id/textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/colorPrimary"
-        android:dividerHeight="2dp" />
+        android:dividerHeight="2dp" />-->
+
+    <EditText
+        style="@style/editTextStyle"
+        android:id="@+id/regno"
+        android:layout_below="@id/textView"
+        android:layout_margin="10dp"
+        android:hint="Enter your Register Number"/>
+
+    <Button
+        style="@style/buttonStyle"
+        android:layout_width="200dp"
+        android:text="@string/get"
+        android:id="@+id/btnSub"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/regno"/>
 
 </RelativeLayout>

@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,6 +37,8 @@ public class ResultActivity extends AppCompatActivity {
 
     List<Result> materialList;
     ListView listView;
+    private EditText eRegno;
+    private Button bSend;
 
     private View listViewItem;
     ProgressBar p;
@@ -62,20 +66,42 @@ public class ResultActivity extends AppCompatActivity {
         savedInstanceState = getIntent().getExtras();
         clgName = savedInstanceState.getString("stRes");
 
-        listView = findViewById(R.id.listView);
+        //listView = findViewById(R.id.listView);
         webView = findViewById(R.id.webView);
+        bSend = findViewById(R.id.btnSub);
+        eRegno = findViewById(R.id.regno);
+
+        bSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String rno = eRegno.getText().toString();
+                String url = "https://aucoe.annauniv.edu/cgi-bin/result/cgrade.pl=";
+                eRegno.setVisibility(View.GONE);
+                bSend.setVisibility(View.GONE);
+                webView.setVisibility(View.VISIBLE);
+                webView.setWebViewClient(new inlineBrowser());
+                webView.getSettings().setLoadWithOverviewMode(true);
+                webView.getSettings().setUseWideViewPort(true);
+                webView.getSettings().setLoadsImagesAutomatically(true);
+                webView.getSettings().setJavaScriptEnabled(true);
+                webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+                webView.loadUrl(url+rno);
+
+                //webView.loadUrl("http://coe1.annauniv.edu");
+            }
+        });
 
         //String sRes = "\"" + clgName + "\"";
 
-        materialList = new ArrayList<>();
+      /*  materialList = new ArrayList<>();
         PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getresult&name="+clgName, null, CODE_GET_REQUEST);
         request.execute();
         MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
-        listView.setAdapter(materialAdapter);
+        listView.setAdapter(materialAdapter);*/
 
     }
 
-    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
+    /*private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
         String url;
         HashMap<String, String> params;
         int requestCode;
@@ -175,15 +201,6 @@ public class ResultActivity extends AppCompatActivity {
                     webView.getSettings().setJavaScriptEnabled(true);
                     webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
                     webView.loadUrl(selectedItem);
-                    /*webView.getSettings().setJavaScriptEnabled(true);
-                    webView.setWebViewClient(new WebViewClient(){
-
-                        @Override
-                        public boolean shouldOverrideUrlLoading(WebView view, String url){
-                            view.loadUrl(selectedItem);
-                            return true;
-                        }
-                    });*/
 
                 }
             });
@@ -191,7 +208,7 @@ public class ResultActivity extends AppCompatActivity {
             return listViewItem;
 
         }
-    }
+    }*/
 
     private class inlineBrowser extends WebViewClient {
         @Override
