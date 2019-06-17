@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -238,9 +239,20 @@ public class NotificationActivity extends AppCompatActivity{
                     tit.setText(notify.getMsgtype());
                     TextView tmsg = alertDialog.findViewById(R.id.txt21);
                     tmsg.setText(notify.getMsg());
-                    String getMsg = tmsg.getText().toString();
-                    String[] part = getMsg.split("-");
-                    String newUrl = part[1];
+                    tmsg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String getMsg = notify.getMsg();
+//                            String getMsg = tmsg.getText().toString();
+                            String[] part = getMsg.split("-");
+                            String newUrl = part[1];
+                            Log.d("NewnotifyURL",newUrl);
+
+                            new DownloadFile().execute(newUrl);
+
+                        }
+                    });
+
                     Button ok = alertDialog.findViewById(R.id.buttonOk);
                     ok.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -272,34 +284,50 @@ public class NotificationActivity extends AppCompatActivity{
                 connection.connect();
                 int lengthOfFile = connection.getContentLength();
 
-
                 InputStream input = connection.getInputStream();
+                Log.d("dwnld url name", url.toString());
 
                 String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 
                 fileName = f_url[0].substring(f_url[0].lastIndexOf('/') + 1, f_url[0].length());
+                Log.d("new url fname", fileName);
                 folder = Environment.DIRECTORY_DOWNLOADS + File.separator;
-
+                Log.d("Newurl foldername", folder);
                 File directory = new File(folder);
 
                 if (!directory.exists()) {
                     directory.mkdirs();
                 }
 
-                OutputStream output = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-
+                OutputStream output = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName);
+                Log.d("Check folder path", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName + ".pdf");
                 byte data[] = new byte[1024];
 
                 long total = 0;
 
                 while ((count = input.read(data)) != -1) {
                     total += count;
+//                    Log.d("Materials fragment", "Check");
                     output.write(data, 0, count);
                 }
+
                 output.flush();
 
                 output.close();
                 input.close();
+                Log.d("Materials fragment", "Downloaded at: " + folder + fileName);
+//                File outputFile = new File(Environment.getExternalStoragePublicDirectory
+//                        (Environment.DIRECTORY_DOWNLOADS), material.getName() + ".pdf");
+//                Uri uri = Uri.parse(String.valueOf(outputFile));
+//
+//                Intent share = new Intent();
+//                share.setAction(Intent.ACTION_SEND);
+//                share.setType("application/pdf");
+//                share.putExtra(Intent.EXTRA_STREAM, uri);
+//                share.setPackage("com.whatsapp");
+//
+//                startActivity(share);
+
                 return "Downloaded at: " + folder + fileName;
 
             } catch (Exception e) {
@@ -314,8 +342,7 @@ public class NotificationActivity extends AppCompatActivity{
         @Override
         protected void onPostExecute(String message) {
             super.onPostExecute(message);
-            p.setVisibility(View.GONE);
-            Toast.makeText(getApplicationContext(),"File downloaded in File Manager/"+folder+fileName,Toast.LENGTH_SHORT).show();
+            p.setVisibility(View.VISIBLE);
         }
     }
 
