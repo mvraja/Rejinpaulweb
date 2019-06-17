@@ -86,6 +86,7 @@ public class ResultActivity extends AppCompatActivity {
                 webView.getSettings().setJavaScriptEnabled(true);
                 webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
                 webView.loadUrl(url+rno);
+
                 //webView.loadUrl("http://coe1.annauniv.edu");
             }
         });
