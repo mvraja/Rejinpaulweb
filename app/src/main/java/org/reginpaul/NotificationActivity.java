@@ -36,7 +36,7 @@ public class NotificationActivity extends AppCompatActivity{
     TextView messageView;
 
     String title;
-    String message;
+    String message, mlink;
     List<Notify> notifylist;
     ListView listView;
 
@@ -117,7 +117,7 @@ public class NotificationActivity extends AppCompatActivity{
             try {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
-                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     Log.d("Notify", object.toString());
 //                    JSONArray jsonarray=object.getJSONArray("message");
 //                    Log.d("notify json",jsonarray.toString());
@@ -160,8 +160,8 @@ public class NotificationActivity extends AppCompatActivity{
 //            message.put("msgtype",title);
 //            message.put("msg",msg);
 //            notifylist.add(new Notify(title,msg));
-            notifylist.add(new Notify( obj.getString("msgtype"),obj.getString("msg")));
-            Log.d("Notify display", new Notify(obj.getString("msgtype"),obj.getString("msg")).toString());
+            notifylist.add(new Notify( obj.getString("msgtype"),obj.getString("msg"),obj.getString("link")));
+            Log.d("Notify display", new Notify(obj.getString("msgtype"),obj.getString("msg"),obj.getString("link")).toString());
         }
 
 
@@ -186,6 +186,7 @@ public class NotificationActivity extends AppCompatActivity{
             viewGroup = parent;
             TextView title_txt= listViewItem.findViewById(R.id.title);
             TextView msg_txt= listViewItem.findViewById(R.id.message);
+            //TextView msg_link= listViewItem.findViewById(R.id.link);
 
 
 //TextView show_title=listViewItem.findViewById(R.id.)
@@ -198,6 +199,7 @@ public class NotificationActivity extends AppCompatActivity{
 
             title_txt.setText(notify.getMsgtype());
             msg_txt.setText(notify.getMsg());
+            //msg_link.setText(notify.getLink());
 //if(getIntent().getExtras()!=null) {
 //    for(String key:getIntent().getExtras().keySet())
 //        if(key.equals("title"))
@@ -225,6 +227,8 @@ public class NotificationActivity extends AppCompatActivity{
                     tit.setText(notify.getMsgtype());
                     TextView tmsg = alertDialog.findViewById(R.id.txt21);
                     tmsg.setText(notify.getMsg());
+                    TextView tlink = alertDialog.findViewById(R.id.txt22);
+                    tlink.setText(notify.getLink());
                     Button ok = alertDialog.findViewById(R.id.buttonOk);
                     ok.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -243,6 +247,7 @@ public class NotificationActivity extends AppCompatActivity{
         super.onNewIntent(intent);
         title = intent.getStringExtra("title");
         message = intent.getStringExtra("message");
+        mlink = intent.getStringExtra("link");
 
         titleView.setText("Refreshed Notification: \n"+title);
         messageView.setText(message);
