@@ -43,7 +43,7 @@ public class ResultActivity extends AppCompatActivity {
     private View listViewItem;
     ProgressBar p;
 
-    private String clgName;
+    private String clgName, zUrl;
     private Toolbar toolbar;
     private WebView webView;
 
@@ -66,16 +66,25 @@ public class ResultActivity extends AppCompatActivity {
         savedInstanceState = getIntent().getExtras();
         clgName = savedInstanceState.getString("stRes");
 
-        //listView = findViewById(R.id.listView);
+
         webView = findViewById(R.id.webView);
         bSend = findViewById(R.id.btnSub);
         eRegno = findViewById(R.id.regno);
+
+
+        //String sRes = "\"" + clgName + "\"";
+
+
+        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getresult&name="+clgName, null, CODE_GET_REQUEST);
+        request.execute();
+
+
 
         bSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String rno = eRegno.getText().toString();
-                String url = "https://aucoe.annauniv.edu/cgi-bin/result/cgrade.pl=";
+                String url = zUrl;
                 eRegno.setVisibility(View.GONE);
                 bSend.setVisibility(View.GONE);
                 webView.setVisibility(View.VISIBLE);
@@ -85,23 +94,13 @@ public class ResultActivity extends AppCompatActivity {
                 webView.getSettings().setLoadsImagesAutomatically(true);
                 webView.getSettings().setJavaScriptEnabled(true);
                 webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-                webView.loadUrl(url+rno);
+                webView.loadUrl(url);
 
-                //webView.loadUrl("http://coe1.annauniv.edu");
             }
         });
-
-        //String sRes = "\"" + clgName + "\"";
-
-      /*  materialList = new ArrayList<>();
-        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getresult&name="+clgName, null, CODE_GET_REQUEST);
-        request.execute();
-        MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
-        listView.setAdapter(materialAdapter);*/
-
     }
 
-    /*private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
+    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
         String url;
         HashMap<String, String> params;
         int requestCode;
@@ -157,16 +156,12 @@ public class ResultActivity extends AppCompatActivity {
         materialList.clear();
         for (int i = 0; i < pfiles.length(); i++) {
             JSONObject obj = pfiles.getJSONObject(i);
-            materialList.add(new Result(obj.getString("name"), obj.getString("linkname")));
-            Log.d("Results", new Result(obj.getString("name"), obj.getString("linkname")).toString());
+            zUrl = obj.getString("linkname");
         }
 
-
-        MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
-        listView.setAdapter(materialAdapter);
     }
 
-    class MaterialAdapter extends ArrayAdapter<Result> {
+    /*class MaterialAdapter extends ArrayAdapter<Result> {
 
         List<Result> materialList;
 

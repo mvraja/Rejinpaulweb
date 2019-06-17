@@ -7,17 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
 import org.reginpaul.R;
 
-public class UgnewFragment extends Fragment {
+public class UgoldFragment extends Fragment {
 
     WebView webView;
     String url;
-    //ProgressBar progressBar;
 
-    public UgnewFragment() { }
+    public UgoldFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,12 +24,11 @@ public class UgnewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_ugnew, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_ugold, container, false);
 
-        webView = rootView.findViewById(R.id.ugweb2);
-      //  progressBar = rootView.findViewById(R.id.progress_bar);
+        webView = rootView.findViewById(R.id.ugweb1);
 
-        url = "http://mindvoice.info/rpweb/regulations/UG2017.pdf";
+        url = "http://mindvoice.info/rpweb/regulations/UG2013.pdf";
         webView.setWebViewClient(new inlineBrowser());
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
@@ -49,8 +46,5 @@ public class UgnewFragment extends Fragment {
             view.loadUrl(url);
             return true;
         }
-        /*public void onPageFinished(WebView view, String url){
-            progressBar.setVisibility(View.GONE);
-        }*/
     }
 }

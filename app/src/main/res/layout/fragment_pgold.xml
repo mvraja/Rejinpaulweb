@@ -7,8 +7,7 @@
 
     <WebView
         android:layout_width="match_parent"
-        android:id="@+id/pgweb2"
+        android:id="@+id/pgweb1"
         android:layout_height="match_parent"/>
-
 
 </RelativeLayout>

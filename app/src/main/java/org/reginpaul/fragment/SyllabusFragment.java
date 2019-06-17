@@ -106,8 +106,8 @@ public class SyllabusFragment extends Fragment {
 
     private void setupViewPagerAU1(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
-        adapter.addFragment(new UgnewFragment(), "UG");
-        adapter.addFragment(new PgnewFragment(), "PG");
+        adapter.addFragment(new UgoldFragment(), "UG");
+        adapter.addFragment(new PgoldFragment(), "PG");
         viewPager.setAdapter(adapter);
     }
 

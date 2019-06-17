@@ -1,6 +1,6 @@
 package org.reginpaul;
 
-class Notify {
+public class Notify {
     private int id;
     private String msgtype, msg;
 

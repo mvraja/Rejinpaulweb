@@ -42,9 +42,9 @@ public class MaterialsFragment extends Fragment {
     String[] tn_title = {"Class X", "Class XI", "Class XII"};
     String[] ce_title = {"TNPSC", "BANK", "RRB", "UPSC"};
 
-    Integer[] au_icon = {R.drawable.ece, R.drawable.eee, R.drawable.cse, R.drawable.it, R.drawable.automobile, R.drawable.civil, R.drawable.mechanical, R.drawable.biotech, R.drawable.ic_mca, R.drawable.ic_mba};
-    Integer[] tn_icon = {R.drawable.rx, R.drawable.rxi, R.drawable.rxii};
-    Integer[] ce_icon = {R.drawable.tnp, R.drawable.bank, R.drawable.rail, R.drawable.rail};
+    Integer[] au_icon = {R.drawable.ic_ece, R.drawable.ic_eee, R.drawable.ic_cse, R.drawable.ic_it, R.drawable.ic_automob, R.drawable.ic_civil, R.drawable.ic_mech, R.drawable.ic_bio, R.drawable.ic_mca, R.drawable.ic_mba};
+    Integer[] tn_icon = {R.drawable.ic_x, R.drawable.ic_xi, R.drawable.ic_xii};
+    Integer[] ce_icon = {R.drawable.ic_tnp, R.drawable.ic_bank, R.drawable.ic_rail, R.drawable.ic_upsc};
 
     GridView grid;
     ArrayList department = new ArrayList<>();

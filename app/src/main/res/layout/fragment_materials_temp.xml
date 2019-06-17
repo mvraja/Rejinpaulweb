@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:background="@color/colorGray"
+        android:background="@color/colorWhite"
         android:orientation="vertical"
         android:weightSum="3">
 
@@ -20,16 +20,15 @@
             android:layout_height="0dp"
             android:layout_margin="15dp"
             android:layout_weight="1"
-            android:background="@drawable/blueptrn"
+            android:background="@drawable/logonbg"
             android:gravity="center"
-            android:orientation="vertical"
-            android:alpha="0.8">
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/ic_notes"
-                android:background="@color/colorWhite"/>
+                android:background="@drawable/bg_grid"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -46,16 +45,15 @@
             android:layout_height="0dp"
             android:layout_margin="15dp"
             android:layout_weight="1"
-            android:background="@drawable/blueptrn"
+            android:background="@drawable/logonbg"
             android:gravity="center"
-            android:orientation="vertical"
-            android:alpha="0.8">
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/ic_ques"
-                android:background="@color/colorWhite"/>
+                android:background="@drawable/bg_grid"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -72,16 +70,15 @@
             android:layout_height="0dp"
             android:layout_margin="15dp"
             android:layout_weight="1"
-            android:background="@drawable/blueptrn"
+            android:background="@drawable/logonbg"
             android:gravity="center"
-            android:orientation="vertical"
-            android:alpha="0.8">
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/ic_qb"
-                android:background="@color/colorWhite"/>
+                android:background="@drawable/bg_grid"/>
 
             <TextView
                 android:layout_width="wrap_content"

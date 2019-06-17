@@ -37,6 +37,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +50,7 @@ public class NotificationActivity extends AppCompatActivity{
 
     String title;
     String message, fileName, folder;
-    List<Notify> notifylist;
+    ArrayList<Notify> notifylist;
     ListView listView;
 
     Notify notify;
@@ -172,14 +174,28 @@ public class NotificationActivity extends AppCompatActivity{
 //            message.put("msgtype",title);
 //            message.put("msg",msg);
 //            notifylist.add(new Notify(title,msg));
-            notifylist.add(new Notify( obj.getString("msgtype"),obj.getString("msg")));
-            Log.d("Notify display", new Notify(obj.getString("msgtype"),obj.getString("msg")).toString());
-        }
+            notifylist.add(new Notify(obj.getInt("msgid"),obj.getString("msgtype"),obj.getString("msg")));
+            //Log.d("Notify display", new Notify(obj.getString("msgtype"),obj.getString("msg")).toString());
 
+            if (notifylist.size()>0){
+                sortList(notifylist);
+            }
+        }
 
         NotifyAdapter notifyAdapter = new NotifyAdapter(notifylist);
         listView.setAdapter(notifyAdapter);
     }
+
+    private void sortList(List<Notify> notifylist) {
+        Collections.sort(notifylist, new MessageSort());
+    }
+
+    private class MessageSort implements Comparator<Notify> {
+        public int compare(Notify s1, Notify s2) {
+            return Integer.compare(s2.getId(), s1.getId());
+        }
+    }
+
 
     class NotifyAdapter extends ArrayAdapter<Notify> {
 
@@ -342,6 +358,7 @@ public class NotificationActivity extends AppCompatActivity{
         protected void onPostExecute(String message) {
             super.onPostExecute(message);
             p.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(),"File downloaded in File Manager/"+folder+fileName,Toast.LENGTH_SHORT).show();
         }
     }
 
