@@ -247,7 +247,6 @@ public class NotificationActivity extends AppCompatActivity{
                             String[] part = getMsg.split("-");
                             String newUrl = part[1];
                             Log.d("NewnotifyURL",newUrl);
-
                             new DownloadFile().execute(newUrl);
 
                         }
