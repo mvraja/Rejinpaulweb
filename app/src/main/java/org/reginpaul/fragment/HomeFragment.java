@@ -1,6 +1,7 @@
 package org.reginpaul.fragment;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.reginpaul.NotificationActivity;
@@ -24,15 +26,19 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     GridView grid;
     AppCompatActivity activity;
     ActionBar actionBar;
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         grid = rootView.findViewById(R.id.grid_home);
+        progressBar = rootView.findViewById(R.id.progress_bar);
         CustomGrid adapter=new CustomGrid();
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(this);
+        ApiLoad apiLoad = new ApiLoad();
+        apiLoad.execute();
         return rootView;
 
     }
@@ -120,11 +126,28 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                 name.setText(title[position]);
                 image.setImageResource(icon[position]);
             }
-
             return convertView;
+        }
+    }
 
+    public class ApiLoad extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
         }
 
+        @Override
+        protected String doInBackground(String[] params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String data) {
+            super.onPostExecute(data);
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
 

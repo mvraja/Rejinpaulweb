@@ -10,10 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.reginpaul.Api;
 import org.reginpaul.EventAdapter;
 import org.reginpaul.R;
 import org.reginpaul.RegEvent;
@@ -35,6 +37,7 @@ public class UpEventFragment extends Fragment {
     RecyclerView recyclerView;
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
+    ProgressBar progressBar;
 
 
     @Override
@@ -42,6 +45,7 @@ public class UpEventFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_upevents, container, false);
         recyclerView = rootView.findViewById(R.id.recylcerView);
+        progressBar = rootView.findViewById(R.id.progress_bar);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(),1));
         
@@ -52,7 +56,8 @@ public class UpEventFragment extends Fragment {
     }
 
     private void loadProducts() {
-        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getuser", null, CODE_GET_REQUEST);
+        //PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getuser", null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UP_EVNT, null, CODE_GET_REQUEST);
         request.execute();
         EventAdapter eventAdapter = new EventAdapter(getActivity(), eventList);
         recyclerView.setAdapter(eventAdapter);
@@ -72,11 +77,13 @@ public class UpEventFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progressBar.setVisibility(View.GONE);
             try {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {

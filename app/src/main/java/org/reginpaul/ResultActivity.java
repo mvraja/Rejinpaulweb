@@ -153,7 +153,6 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void refreshList(JSONArray pfiles) throws JSONException {
-        materialList.clear();
         for (int i = 0; i < pfiles.length(); i++) {
             JSONObject obj = pfiles.getJSONObject(i);
             zUrl = obj.getString("linkname");

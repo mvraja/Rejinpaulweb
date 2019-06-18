@@ -1,13 +1,16 @@
 package org.reginpaul;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +18,8 @@ import com.bumptech.glide.Glide;
 
 import java.io.InputStream;
 import java.util.List;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
 
@@ -38,7 +43,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public void onBindViewHolder(EventViewHolder holder, int position) {
         RegEvent product = regEventList.get(position);
 
-        //loading the image Glide.with(mCtx).load(product.getImage()).into(holder.imageView);
+
         byte [] encodeByte=Base64.decode(product.getImage(), Base64.DEFAULT);
         Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 
@@ -47,7 +52,39 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         holder.textViewShortDesc.setText(product.getType());
         holder.textViewRating.setText(product.getDate());
         holder.textViewPrice.setText(product.getLoc());
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadImage(v);
+            }
+        });
     }
+
+    private void loadImage(View v) {
+        ImageView tempImageView = (ImageView)v;
+
+        View layout = LayoutInflater.from(mCtx).inflate(R.layout.custom_image,null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mCtx,android.R.style.Theme_Light);
+        builder.setView(layout);
+
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+
+        ImageView image = layout.findViewById(R.id.fullimage);
+        image.setImageDrawable(tempImageView.getDrawable());
+
+
+        Button ok = layout.findViewById(R.id.btnOk);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+    }
+
 
     @Override
     public int getItemCount() {
