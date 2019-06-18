@@ -17,12 +17,17 @@
             style="@style/radioButtonStyle"
             android:id="@+id/rb17"
             android:checked="true"
-            android:text="Regulations 2017" />
+            android:text="Regulations 2017"
+
+            />
 
         <RadioButton
             style="@style/radioButtonStyle"
             android:id="@+id/rb13"
-            android:text="Regulations 2013" />
+            android:checked="false"
+            android:text="Regulations 2013"
+
+            />
 
     </RadioGroup>
 

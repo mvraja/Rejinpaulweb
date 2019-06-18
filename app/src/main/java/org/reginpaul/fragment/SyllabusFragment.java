@@ -9,12 +9,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import org.reginpaul.MainActivity;
 import org.reginpaul.R;
@@ -75,13 +77,38 @@ public class SyllabusFragment extends Fragment {
         tabLayout = returnview.findViewById(R.id.tabs);
 
         if (sDept.equalsIgnoreCase("anna university")||sDept.equalsIgnoreCase("jntu")) {
-            if (r17.isChecked()){
-                setupViewPagerAU(viewPager);
-            }
-            if (r13.isChecked()){
-                setupViewPagerAU1(viewPager);
-            }
+//            if (r17.isChecked()){
+//                 Log.d("Syllabus","Regulation17");
+//                setupViewPagerAU(viewPager);
+//            }
+//            if (r13.isChecked()){
+//                Log.d("Syllabus","Regulation13");
+//                setupViewPagerAU1(viewPager);
+//
+//            }
+//            r13.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d("Syllabus","Regulation13");
+//                    setupViewPagerAU1(viewPager);
+//
+//                }
+//
+//            });
+//            r17.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d("Syllabus","Regulation17");
+//                    setupViewPagerAU(viewPager);
+//
+//                }
+//
+//            });
+            rg.setVisibility(View.GONE);
+            setupViewPagerAU(viewPager);
+
         }
+
         if (sDept.equalsIgnoreCase("school board")){
             rg.setVisibility(View.GONE);
             setupViewPagerSC(viewPager);
@@ -96,19 +123,30 @@ public class SyllabusFragment extends Fragment {
         return returnview;
     }
 
+
+
     private void setupViewPagerAU(ViewPager viewPager) {
+        Log.d("Syllabus setup","EntertedAU");
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
-        adapter.addFragment(new UgnewFragment(), "UG");
-        adapter.addFragment(new PgnewFragment(), "PG");
+
+        adapter.addFragment(new UgnewFragment(), "UG 2017");
+        adapter.addFragment(new PgnewFragment(), "PG 2017");
+        adapter.addFragment(new UgoldFragment(), "UG 2013");
+        adapter.addFragment(new PgoldFragment(), "PG 2013");
+
         viewPager.setAdapter(adapter);
+
     }
 
 
     private void setupViewPagerAU1(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
-        adapter.addFragment(new UgoldFragment(), "UG");
-        adapter.addFragment(new PgoldFragment(), "PG");
-        viewPager.setAdapter(adapter);
+        Log.d("Syllabus setup","EntertedAU1");
+        ViewPagerAdapter adapter1 = new ViewPagerAdapter(getFragmentManager());
+        viewPager.getAdapter().notifyDataSetChanged();
+        adapter1.addFragment(new UgoldFragment(), "UG");
+        adapter1.addFragment(new PgoldFragment(), "PG");
+        viewPager.setAdapter(adapter1);
+
     }
 
 
@@ -148,7 +186,9 @@ public class SyllabusFragment extends Fragment {
             return mFragmentList.size();
         }
 
+
         public void addFragment(Fragment fragment, String title) {
+
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }

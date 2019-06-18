@@ -5,9 +5,15 @@
     android:background="@drawable/logonbg"
     android:padding="10dp">
 
-    <WebView
+    <!--<WebView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:id="@+id/ugweb1"-->
+        <!--android:layout_height="match_parent"/>-->
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:id="@+id/ugweb1"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:divider="@color/colorPrimary"
+        android:dividerHeight="2dp" />
 
 </RelativeLayout>
