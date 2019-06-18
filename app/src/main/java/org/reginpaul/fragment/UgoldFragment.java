@@ -157,6 +157,7 @@ public class UgoldFragment extends Fragment {
 
     class SyllabusAdapter extends ArrayAdapter<Syllabus> {
 
+
         List<Syllabus> Syllabuslist;
 
         public SyllabusAdapter(Activity context, @NonNull List<Syllabus> Syllabuslist) {

@@ -175,6 +175,7 @@ public class PgoldFragment extends Fragment {
 
             textViewName.setText(syllabus.getName());
             textViewName.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View view) {
 

@@ -45,7 +45,7 @@ public class UgnewFragment extends Fragment {
 
     WebView webView;
     String url;
-    //ProgressBar progressBar;
+
     List<Syllabus> Syllabuslist;
     ListView listView;
     private static final int CODE_GET_REQUEST = 1024;

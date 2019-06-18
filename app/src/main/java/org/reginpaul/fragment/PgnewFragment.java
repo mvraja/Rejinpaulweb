@@ -174,6 +174,7 @@ public class PgnewFragment extends Fragment {
             final Syllabus syllabus = Syllabuslist.get(position);
 
             textViewName.setText(syllabus.getName());
+
             textViewName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
