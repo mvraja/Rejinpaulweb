@@ -36,13 +36,13 @@
 
     <GridView
         android:id="@+id/grid_home"
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/setup_sem"
+        android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:horizontalSpacing="1dp"
         android:numColumns="2"
-        android:layout_below="@id/setup_sem"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="3dp"/>
+        android:verticalSpacing="3dp" />
 </RelativeLayout>
