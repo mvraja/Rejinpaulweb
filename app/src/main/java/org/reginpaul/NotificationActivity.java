@@ -255,18 +255,22 @@ public class NotificationActivity extends AppCompatActivity{
                     tit.setText(notify.getMsgtype());
                     TextView tmsg = alertDialog.findViewById(R.id.txt21);
                     tmsg.setText(notify.getMsg());
-                    tmsg.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            String getMsg = notify.getMsg();
+                    if((notify.getMsg().contains("http"))) {
+                        tmsg.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String getMsg = notify.getMsg();
 //                            String getMsg = tmsg.getText().toString();
-                            String[] part = getMsg.split("-");
-                            String newUrl = part[1];
-                            Log.d("NewnotifyURL",newUrl);
-                            new DownloadFile().execute(newUrl);
+                                String[] part = getMsg.split("-");
+                                String newUrl = part[1];
+                                Log.d("NewnotifyURL", newUrl);
+                                new DownloadFile().execute(newUrl);
+                            }
 
-                        }
-                    });
+
+                        });
+                    }
+
 
                     Button ok = alertDialog.findViewById(R.id.buttonOk);
                     ok.setOnClickListener(new View.OnClickListener() {
