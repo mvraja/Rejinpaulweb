@@ -91,55 +91,34 @@ public class MainActivity extends AppCompatActivity implements
     private String Notify_title;
     private String Notify_msg;
     private Handler updateBarHandler;
-    ProgressDialog barProgressDialog;
+//    ProgressDialog barProgressDialog;
+private  ProgressDialog progressBar;
+    private int progressBarStatus = 0;
+    private Handler progressBarbHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         updateBarHandler = new Handler();
-        barProgressDialog = new ProgressDialog(MainActivity.this);
+        progressBar = new ProgressDialog(MainActivity.this);
+        progressBar.setCancelable(true);
+        progressBar.setMessage("Please wait for a while..");
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressBar.setProgress(0);
+        progressBar.setMax(100);
+        progressBar.show();
 
-        barProgressDialog.setTitle("Please Wait ...");
-        barProgressDialog.setMessage("Loading in progress ...");
-        barProgressDialog.setProgressStyle(barProgressDialog.STYLE_HORIZONTAL);
-        barProgressDialog.setProgress(0);
-        barProgressDialog.setMax(8);
-
-        barProgressDialog.show();
-
-        new Thread(new Runnable() {
+        updateBarHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                try {
 
-                    // Here you should write your time consuming task...
-                    while (barProgressDialog.getProgress() <= barProgressDialog.getMax()) {
 
-                        Thread.sleep(800);
+                progressBar.dismiss();
 
-                        updateBarHandler.post(new Runnable() {
-
-                            public void run() {
-
-                                barProgressDialog.incrementProgressBy(2);
-
-                            }
-
-                        });
-
-                        if (barProgressDialog.getProgress() == barProgressDialog.getMax()) {
-
-                            barProgressDialog.dismiss();
-
-                        }
-                    }
-                } catch (Exception e) {
-                }
             }
-        }).start();
-
-             mAuth = FirebaseAuth.getInstance();
+        }, 5000);
+        mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
