@@ -1,10 +1,13 @@
 package org.reginpaul;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -87,11 +90,54 @@ public class MainActivity extends AppCompatActivity implements
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private String Notify_title;
     private String Notify_msg;
+    private Handler updateBarHandler;
+    ProgressDialog barProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        updateBarHandler = new Handler();
+        barProgressDialog = new ProgressDialog(MainActivity.this);
+
+        barProgressDialog.setTitle("Please Wait ...");
+        barProgressDialog.setMessage("Loading in progress ...");
+        barProgressDialog.setProgressStyle(barProgressDialog.STYLE_HORIZONTAL);
+        barProgressDialog.setProgress(0);
+        barProgressDialog.setMax(8);
+
+        barProgressDialog.show();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    // Here you should write your time consuming task...
+                    while (barProgressDialog.getProgress() <= barProgressDialog.getMax()) {
+
+                        Thread.sleep(800);
+
+                        updateBarHandler.post(new Runnable() {
+
+                            public void run() {
+
+                                barProgressDialog.incrementProgressBy(2);
+
+                            }
+
+                        });
+
+                        if (barProgressDialog.getProgress() == barProgressDialog.getMax()) {
+
+                            barProgressDialog.dismiss();
+
+                        }
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }).start();
 
              mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();

@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -136,6 +137,8 @@ public class SyllabusFragment extends Fragment {
 
         viewPager.setAdapter(adapter);
 
+
+
     }
 
 
@@ -168,7 +171,7 @@ public class SyllabusFragment extends Fragment {
     }
 
 
-    public class ViewPagerAdapter extends FragmentPagerAdapter {
+    public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -196,6 +199,9 @@ public class SyllabusFragment extends Fragment {
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
+        }
+        private String getFragmentTag(int pos){
+            return "android:switcher:"+R.id.viewpager+":"+pos;
         }
     }
 

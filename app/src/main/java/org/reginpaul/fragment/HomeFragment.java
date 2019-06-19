@@ -37,8 +37,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         CustomGrid adapter=new CustomGrid();
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(this);
-        ApiLoad apiLoad = new ApiLoad();
-        apiLoad.execute();
+//        ApiLoad apiLoad = new ApiLoad();
+//        apiLoad.execute();
         return rootView;
 
     }
