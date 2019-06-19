@@ -55,6 +55,18 @@ public class EventsRegFragment extends Fragment{
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View returnview = inflater.inflate(R.layout.fragment_event_reg, container, false);

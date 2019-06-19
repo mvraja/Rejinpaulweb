@@ -49,13 +49,18 @@
     <string name="sprofile">Profile</string>
     <string name="prof_update">Profile Updated Successfully</string>
     <string name="ok">OK</string>
-    <string name="res_note">Students can check Semester results by entering their Register number</string>
+    <string name="res_note">Enter your register number below to check your results</string>
     <string name="source">Select Source to upload</string>
     <string name="qb">Question Bank</string>
     <string name="qp">Question Papers</string>
     <string name="notes">Notes</string>
     <string name="msg_log">You need to logout to make changes effect</string>
     <string name="get">Get Result</string>
+    <string name="enlarge">Click on the image to enlarge</string>
+    <string name="link1">https://coe1.annauniv.edu</string>
+    <string name="link2">https://coe2.annauniv.edu</string>
+    <string name="link3">https://aucoe.annauniv.edu</string>
+    <string name="link_note">Official links of Anna University Results</string>
 
     <string-array name="ug">
         <item>I</item>

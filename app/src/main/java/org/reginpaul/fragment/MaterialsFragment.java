@@ -78,6 +78,12 @@ public class MaterialsFragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+
+    @Override
     public void onResume() {
         super.onResume();
         activity = (AppCompatActivity) getActivity();

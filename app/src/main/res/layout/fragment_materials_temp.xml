@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/logonbg"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:background="@color/colorWhite"
         android:orientation="vertical"
         android:weightSum="3">
@@ -18,7 +18,7 @@
             android:id="@+id/mrow1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="15dp"
+            android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/logonbg"
             android:gravity="center"
@@ -27,8 +27,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/ic_notes"
-                android:background="@drawable/bg_grid"/>
+                android:src="@drawable/ic_notes" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -43,7 +42,7 @@
             android:id="@+id/mrow2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="15dp"
+            android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/logonbg"
             android:gravity="center"
@@ -52,8 +51,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/ic_ques"
-                android:background="@drawable/bg_grid"/>
+                android:src="@drawable/ic_ques" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -68,7 +66,7 @@
             android:id="@+id/mrow3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="15dp"
+            android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/logonbg"
             android:gravity="center"
@@ -77,8 +75,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/ic_qb"
-                android:background="@drawable/bg_grid"/>
+                android:src="@drawable/ic_qb" />
 
             <TextView
                 android:layout_width="wrap_content"

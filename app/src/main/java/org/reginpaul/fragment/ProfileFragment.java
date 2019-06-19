@@ -100,6 +100,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         activity = (AppCompatActivity) getActivity();
         actionBar = activity.getSupportActionBar();
     }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 
 
     @Override

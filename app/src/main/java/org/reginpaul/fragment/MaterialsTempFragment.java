@@ -40,6 +40,16 @@ public class MaterialsTempFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.mrow1:

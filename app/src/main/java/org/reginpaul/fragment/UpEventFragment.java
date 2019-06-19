@@ -55,6 +55,16 @@ public class UpEventFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     private void loadProducts() {
         //PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getuser", null, CODE_GET_REQUEST);
         PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UP_EVNT, null, CODE_GET_REQUEST);

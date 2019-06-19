@@ -17,6 +17,7 @@ import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -44,8 +45,10 @@ public class ResultActivity extends AppCompatActivity {
     ProgressBar p;
 
     private String clgName, zUrl;
+    private TextView t1, t2;
     private Toolbar toolbar;
     private WebView webView;
+    private LinearLayout lay1;
 
 
     @Override
@@ -70,6 +73,9 @@ public class ResultActivity extends AppCompatActivity {
         webView = findViewById(R.id.webView);
         bSend = findViewById(R.id.btnSub);
         eRegno = findViewById(R.id.regno);
+        lay1 = findViewById(R.id.lay1);
+        t1 = findViewById(R.id.textView);
+        t2 = findViewById(R.id.textView1);
 
 
         //String sRes = "\"" + clgName + "\"";
@@ -85,8 +91,11 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String rno = eRegno.getText().toString();
                 String url = zUrl;
+                t1.setVisibility(View.GONE);
+                t2.setVisibility(View.GONE);
                 eRegno.setVisibility(View.GONE);
                 bSend.setVisibility(View.GONE);
+                lay1.setVisibility(View.GONE);
                 webView.setVisibility(View.VISIBLE);
                 webView.setWebViewClient(new inlineBrowser());
                 webView.getSettings().setLoadWithOverviewMode(true);

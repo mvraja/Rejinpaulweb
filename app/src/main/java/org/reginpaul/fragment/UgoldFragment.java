@@ -28,7 +28,6 @@ import org.json.JSONObject;
 import org.reginpaul.BuildConfig;
 import org.reginpaul.R;
 import org.reginpaul.RequestHandler;
-import org.reginpaul.SyllabusActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -82,6 +81,17 @@ public class UgoldFragment extends Fragment {
         listView.setAdapter(syllabusAdapter);
 
         return rootView;
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private class inlineBrowser extends WebViewClient {

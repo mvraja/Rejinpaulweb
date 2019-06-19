@@ -124,7 +124,15 @@ public class SyllabusFragment extends Fragment {
         return returnview;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     private void setupViewPagerAU(ViewPager viewPager) {
         Log.d("Syllabus setup","EntertedAU");
