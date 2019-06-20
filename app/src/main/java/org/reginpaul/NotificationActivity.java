@@ -252,17 +252,6 @@ public class NotificationActivity extends AppCompatActivity {
             else
                 msg_txt.setText(getMsg1);
 //            msg_txt.setText(text_part1+"- Click here to download the file.");
-//            msg_link.setText(notify.getLink());
-//if(getIntent().getExtras()!=null) {
-//    for(String key:getIntent().getExtras().keySet())
-//        if(key.equals("title"))
-//            title_txt.setText(getIntent().getExtras().getString(key));
-//
-//    else if(key.equals("message"))
-//        msg_txt.setText(getIntent().getExtras().getString(key));
-//
-//
-//}
 
 
             listViewItem.setOnClickListener(new View.OnClickListener() {
