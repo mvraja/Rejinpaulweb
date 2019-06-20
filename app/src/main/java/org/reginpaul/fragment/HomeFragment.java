@@ -57,27 +57,27 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             case 0:
                 getFragmentManager().beginTransaction().replace(R.id.main_container, new SyllabusFragment()).commit();
                 actionBar.setTitle("  "+"Syllabus");
-                actionBar.setIcon(R.drawable.logo_small);
+                //actionBar.setIcon(R.drawable.logo_small);
 
                 break;
 
             case 1:
                 getFragmentManager().beginTransaction().replace(R.id.main_container, new MaterialsFragment()).commit();
                 actionBar.setTitle("  "+"Study Materials");
-                actionBar.setIcon(R.drawable.logo_small);
+                //actionBar.setIcon(R.drawable.logo_small);
                 break;
 
             case 2:
                 getFragmentManager().beginTransaction().replace(R.id.main_container, new ProfileFragment()).commit();
                 actionBar.setTitle("  "+"Profile");
-                actionBar.setIcon(R.drawable.logo_small);
+                //actionBar.setIcon(R.drawable.logo_small);
                 break;
 
 
             case 3:
                 getFragmentManager().beginTransaction().replace(R.id.main_container, new EventsRegFragment()).commit();
                 actionBar.setTitle("  "+"Events");
-                actionBar.setIcon(R.drawable.logo_small);
+                //actionBar.setIcon(R.drawable.logo_small);
                 break;
 
             case 4:
@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             case 5:
                 getFragmentManager().beginTransaction().replace(R.id.main_container, new ResultFragment()).commit();
                 actionBar.setTitle("  "+"Results");
-                actionBar.setIcon(R.drawable.logo_small);
+                //actionBar.setIcon(R.drawable.logo_small);
                 break;
 
         }

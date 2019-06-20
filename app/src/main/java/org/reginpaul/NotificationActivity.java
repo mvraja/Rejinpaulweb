@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,8 +49,7 @@ public class NotificationActivity extends AppCompatActivity {
     TextView titleView;
     TextView messageView;
 
-    String title;
-    String message, fileName, folder;
+    String title, strDown1, message, fileName, folder;
     ArrayList<Notify> notifylist;
     ListView listView;
 
@@ -86,7 +86,7 @@ public class NotificationActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("  " + "Notifications");
-        getSupportActionBar().setIcon(R.drawable.logo_small);
+        //getSupportActionBar().setIcon(R.drawable.logo_small);
 
 
         notifylist = new ArrayList<Notify>();
@@ -244,8 +244,11 @@ public class NotificationActivity extends AppCompatActivity {
 
             title_txt.setText(notify.getMsgtype());
             msg_txt.setContentDescription(notify.getMsg());
+            //strDown1 = Html.fromHtml("<font color=#303F9F><b>- CLICK HERE to download the file.</b></font>").toString();
+            strDown1 = Html.fromHtml(getResources().getString(R.string.downlink)).toString();
             if (getMsg1.contains("http"))
-                msg_txt.setText(getMsg2 + "- CLICK HERE to download the file.");
+                //msg_txt.setText(getMsg2 + "- CLICK HERE to download the file.");
+                msg_txt.setText(getMsg2 + strDown1);
             else
                 msg_txt.setText(getMsg1);
 //            msg_txt.setText(text_part1+"- Click here to download the file.");
@@ -282,12 +285,15 @@ public class NotificationActivity extends AppCompatActivity {
 //                    String[] part = getMsg.split("-");
 //                    newUrl = part[1];
 //                    text_part=part[0];
+                    //strDown1 = Html.fromHtml("<font color=#303F9F><b>- CLICK HERE to download the file.</b></font>").toString();
+                    strDown1 = Html.fromHtml(getResources().getString(R.string.downlink)).toString();
                     int lastPos = getMsg.lastIndexOf("-"); // return the index of the last occurrence
                     if (lastPos != -1) {
                         msgtxt = getMsg.substring(0, lastPos - 1);
                         newUrl = getMsg.substring(lastPos + 1);
                         Log.d("url", newUrl);
-                        tmsg.setText(msgtxt + "- CLICK HERE to download the file.");
+                        //tmsg.setText(msgtxt + "- CLICK HERE to download the file.");
+                        tmsg.setText(msgtxt + strDown1);
                     } else {
                         msgtxt = getMsg.substring(0, getMsg.length());
 

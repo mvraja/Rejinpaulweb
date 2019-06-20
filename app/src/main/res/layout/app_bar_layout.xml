@@ -9,6 +9,12 @@
     app:titleTextColor="@color/colorBrown"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
+<ImageView
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:src="@drawable/logo1"
+    android:background="@color/colorGray"
+    android:layout_gravity="end"
+    android:layout_marginEnd="15dp"/>
 </android.support.v7.widget.Toolbar>
     <!--android:layout_height="?attr/actionBarSize"-->

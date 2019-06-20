@@ -61,6 +61,7 @@
     <string name="link2">https://coe2.annauniv.edu</string>
     <string name="link3">https://aucoe.annauniv.edu</string>
     <string name="link_note">Official links of Anna University Results</string>
+    <string name="downlink">&lt;font color="#303F9F">&lt;b>- CLICK HERE TO DOWNLOAD.&lt;/b>&lt;/font></string>
 
     <string-array name="ug">
         <item>I</item>

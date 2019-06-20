@@ -45,7 +45,7 @@ public class ResultActivity extends AppCompatActivity {
     ProgressBar p;
 
     private String clgName, zUrl;
-    private TextView t1, t2;
+    private TextView t1, t2, link1, link2, link3;
     private Toolbar toolbar;
     private WebView webView;
     private LinearLayout lay1;
@@ -64,6 +64,7 @@ public class ResultActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Result Display Page");
+        //getSupportActionBar().setIcon(R.drawable.logo_small);
 
 
         savedInstanceState = getIntent().getExtras();
@@ -76,7 +77,34 @@ public class ResultActivity extends AppCompatActivity {
         lay1 = findViewById(R.id.lay1);
         t1 = findViewById(R.id.textView);
         t2 = findViewById(R.id.textView1);
+        link1 = findViewById(R.id.link1);
+        link2 = findViewById(R.id.link2);
+        link3 = findViewById(R.id.link3);
 
+        if(!clgName.equalsIgnoreCase("au")){
+            lay1.setVisibility(View.GONE);
+            t1.setVisibility(View.GONE);
+        }
+        link1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linkone();
+            }
+        });
+
+        link2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linktwo();
+            }
+        });
+
+        link3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linkthree();
+            }
+        });
 
         //String sRes = "\"" + clgName + "\"";
 
@@ -107,6 +135,58 @@ public class ResultActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void linkone(){
+        String furl = link1.getText().toString();
+        t1.setVisibility(View.GONE);
+        t2.setVisibility(View.GONE);
+        eRegno.setVisibility(View.GONE);
+        bSend.setVisibility(View.GONE);
+        lay1.setVisibility(View.GONE);
+        webView.setVisibility(View.VISIBLE);
+        webView.setWebViewClient(new inlineBrowser());
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadsImagesAutomatically(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        webView.loadUrl(furl);
+    }
+
+    public void linktwo(){
+        String surl = link2.getText().toString();
+        t1.setVisibility(View.GONE);
+        t2.setVisibility(View.GONE);
+        eRegno.setVisibility(View.GONE);
+        bSend.setVisibility(View.GONE);
+        lay1.setVisibility(View.GONE);
+        webView.setVisibility(View.VISIBLE);
+        webView.setWebViewClient(new inlineBrowser());
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadsImagesAutomatically(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        webView.loadUrl(surl);
+    }
+
+
+    public void linkthree(){
+        String turl = link3.getText().toString();
+        t1.setVisibility(View.GONE);
+        t2.setVisibility(View.GONE);
+        eRegno.setVisibility(View.GONE);
+        bSend.setVisibility(View.GONE);
+        lay1.setVisibility(View.GONE);
+        webView.setVisibility(View.VISIBLE);
+        webView.setWebViewClient(new inlineBrowser());
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadsImagesAutomatically(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        webView.loadUrl(turl);
     }
 
     private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {

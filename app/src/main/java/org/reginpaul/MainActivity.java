@@ -133,7 +133,7 @@ private  ProgressDialog progressBar;
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.logo_small);
+//        getSupportActionBar().setIcon(R.drawable.logo_small);
         getSupportActionBar().setTitle("  "+"Home");
         navigationView = findViewById(R.id.navigation_view);
 
