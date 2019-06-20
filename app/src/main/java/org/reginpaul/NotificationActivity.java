@@ -43,7 +43,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class NotificationActivity extends AppCompatActivity{
+public class NotificationActivity extends AppCompatActivity {
 
     TextView titleView;
     TextView messageView;
@@ -81,15 +81,16 @@ public class NotificationActivity extends AppCompatActivity{
         toolbar = findViewById(R.id.noti_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        final Drawable upArrow =  ContextCompat.getDrawable(getApplicationContext(), R.drawable.abc_ic_ab_back_material);
+        final Drawable upArrow = ContextCompat.getDrawable(getApplicationContext(), R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorBrown), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Notifications");
+        getSupportActionBar().setTitle("  " + "Notifications");
+        getSupportActionBar().setIcon(R.drawable.logo_small);
 
 
         notifylist = new ArrayList<Notify>();
-        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_MSG , null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_MSG, null, CODE_GET_REQUEST);
         request.execute();
         NotifyAdapter notifyAdapter = new NotifyAdapter(notifylist);
         listView.setAdapter(notifyAdapter);
@@ -174,10 +175,11 @@ public class NotificationActivity extends AppCompatActivity{
 //            message.put("msgtype",title);
 //            message.put("msg",msg);
 //            notifylist.add(new Notify(title,msg));
-            notifylist.add(new Notify(obj.getInt("msgid"),obj.getString("msgtype"),obj.getString("msg")));
+
+            notifylist.add(new Notify(obj.getInt("msgid"), obj.getString("msgtype"), obj.getString("msg")));
             //Log.d("Notify display", new Notify(obj.getString("msgtype"),obj.getString("msg")).toString());
 
-            if (notifylist.size()>0){
+            if (notifylist.size() > 0) {
                 sortList(notifylist);
             }
         }
@@ -201,6 +203,8 @@ public class NotificationActivity extends AppCompatActivity{
 
         List<Notify> notifyList;
         ViewGroup viewGroup;
+        private String newUrl;
+        private String text_part;
 
         private NotifyAdapter(@NonNull List<Notify> notifyList) {
             super(NotificationActivity.this, R.layout.layout_notify, notifylist);
@@ -212,11 +216,9 @@ public class NotificationActivity extends AppCompatActivity{
             LayoutInflater inflater = getLayoutInflater();
             listViewItem = inflater.inflate(R.layout.layout_notify, null, true);
             viewGroup = parent;
-            TextView title_txt= listViewItem.findViewById(R.id.title);
-            TextView msg_txt= listViewItem.findViewById(R.id.message);
+            TextView title_txt = listViewItem.findViewById(R.id.title);
+            TextView msg_txt = listViewItem.findViewById(R.id.message);
             //TextView msg_link= listViewItem.findViewById(R.id.link);
-
-
 //TextView show_title=listViewItem.findViewById(R.id.)
 //            TextView textViewName = listViewItem.findViewById(R.id.ti);
 
@@ -224,10 +226,30 @@ public class NotificationActivity extends AppCompatActivity{
 //            ImageView fileDownload = listViewItem.findViewById(R.id.imgDown);
 
             final Notify notify = notifyList.get(position);
+            String getMsg1 = notify.getMsg();
+            Log.d("Getmsg1", getMsg1);
+            int lastPos = getMsg1.lastIndexOf("-"); // return the index of the last occurrence
+            Log.d("POsition", String.format("value = %d", lastPos));
+            String getMsg2;
+            if (lastPos != -1) {
+                getMsg2 = getMsg1.substring(0, lastPos - 1);
+
+                Log.d("getmsg parsed", getMsg2);
+            } else {
+                getMsg2 = getMsg1.substring(0, getMsg1.length());
+
+                Log.d("getmsg parsed", getMsg2);
+            }
+
 
             title_txt.setText(notify.getMsgtype());
-            msg_txt.setText(notify.getMsg());
-            //msg_link.setText(notify.getLink());
+            msg_txt.setContentDescription(notify.getMsg());
+            if (getMsg1.contains("http"))
+                msg_txt.setText(getMsg2 + "- CLICK HERE to download the file.");
+            else
+                msg_txt.setText(getMsg1);
+//            msg_txt.setText(text_part1+"- Click here to download the file.");
+//            msg_link.setText(notify.getLink());
 //if(getIntent().getExtras()!=null) {
 //    for(String key:getIntent().getExtras().keySet())
 //        if(key.equals("title"))
@@ -245,7 +267,7 @@ public class NotificationActivity extends AppCompatActivity{
                 public void onClick(View v) {
                     View dialogView = LayoutInflater.from(NotificationActivity.this).inflate(R.layout.custom_alert, viewGroup, false);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(NotificationActivity.this,android.R.style.Theme_Light);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(NotificationActivity.this, android.R.style.Theme_Light);
                     builder.setView(dialogView);
 
                     final AlertDialog alertDialog = builder.create();
@@ -254,16 +276,30 @@ public class NotificationActivity extends AppCompatActivity{
                     TextView tit = alertDialog.findViewById(R.id.txt20);
                     tit.setText(notify.getMsgtype());
                     TextView tmsg = alertDialog.findViewById(R.id.txt21);
-                    tmsg.setText(notify.getMsg());
-                    if((notify.getMsg().contains("http"))) {
+                    String getMsg = notify.getMsg();
+                    String msgtxt;
+//                            String getMsg = tmsg.getText().toString();
+//                    String[] part = getMsg.split("-");
+//                    newUrl = part[1];
+//                    text_part=part[0];
+                    int lastPos = getMsg.lastIndexOf("-"); // return the index of the last occurrence
+                    if (lastPos != -1) {
+                        msgtxt = getMsg.substring(0, lastPos - 1);
+                        newUrl = getMsg.substring(lastPos + 1);
+                        Log.d("url", newUrl);
+                        tmsg.setText(msgtxt + "- CLICK HERE to download the file.");
+                    } else {
+                        msgtxt = getMsg.substring(0, getMsg.length());
+
+                        Log.d("text with no url", msgtxt);
+                        tmsg.setText(msgtxt);
+                    }
+
+
+                    if ((notify.getMsg().contains("http"))) {
                         tmsg.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String getMsg = notify.getMsg();
-//                            String getMsg = tmsg.getText().toString();
-                                String[] part = getMsg.split("-");
-                                String newUrl = part[1];
-                                Log.d("NewnotifyURL", newUrl);
                                 new DownloadFile().execute(newUrl);
                             }
 
@@ -362,7 +398,7 @@ public class NotificationActivity extends AppCompatActivity{
         protected void onPostExecute(String message) {
             super.onPostExecute(message);
             p.setVisibility(View.VISIBLE);
-            Toast.makeText(getApplicationContext(),"File downloaded in File Manager/"+folder+fileName,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "File downloaded in File Manager/" + folder + fileName, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -372,7 +408,7 @@ public class NotificationActivity extends AppCompatActivity{
         title = intent.getStringExtra("title");
         message = intent.getStringExtra("message");
 
-        titleView.setText("Refreshed Notification: \n"+title);
+        titleView.setText("Refreshed Notification: \n" + title);
         messageView.setText(message);
 
     }
