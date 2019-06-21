@@ -3,13 +3,13 @@ package org.reginpaul;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,7 +38,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class MaterialsActivity extends AppCompatActivity{
+
+public class QuestionsBankActivity extends AppCompatActivity{
+
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
@@ -48,27 +49,32 @@ public class MaterialsActivity extends AppCompatActivity{
     ListView listView;
 
     private View listViewItem;
+
     ProgressBar p;
 
-    private String fileName, folder, category, temp_ctg, stSemester, type, stCourse;
+    private String fileName, folder, category, temp_ctg, stSemester, stCourse, type;
+
     private Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_study);
+        setContentView(R.layout.activity_question_bank);
 
-        toolbar = findViewById(R.id.stud_toolbar);
+        toolbar = findViewById(R.id.quesbank_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final Drawable upArrow =  ContextCompat.getDrawable(getApplicationContext(), R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorBrown), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("  "+"Study Materials Files");
+        getSupportActionBar().setTitle("  "+"Question Bank");
+
 
         savedInstanceState = getIntent().getExtras();
+        category = savedInstanceState.getString("strtext");
+
         category = savedInstanceState.getString("strtext");
         stSemester = savedInstanceState.getString("strSem");
         stCourse = savedInstanceState.getString("strCour");
@@ -115,12 +121,12 @@ public class MaterialsActivity extends AppCompatActivity{
         listView = findViewById(R.id.listView);
 
         materialList = new ArrayList<>();
-        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getstudy&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
+       // PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_QUESTIONS + sDept1, null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getquestionbank&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
         request.execute();
         MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
         listView.setAdapter(materialAdapter);
     }
-
 
     private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
         String url;
@@ -145,10 +151,10 @@ public class MaterialsActivity extends AppCompatActivity{
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
-                    Log.d("Materials", object.toString());
+                    Log.d("Questions", object.toString());
                     refreshList(object.getJSONArray("pfiles"));
                 } else
-                    Log.d("Materials", object.toString());
+                    Log.d("Questions", object.toString());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -164,7 +170,7 @@ public class MaterialsActivity extends AppCompatActivity{
 
 
             if (requestCode == CODE_GET_REQUEST) {
-                Log.d("Materials", url);
+                Log.d("Questions", url);
                 String getstring = requestHandler.sendGetRequest(url);
 
                 return requestHandler.sendGetRequest(url);
@@ -178,7 +184,7 @@ public class MaterialsActivity extends AppCompatActivity{
         for (int i = 0; i < pfiles.length(); i++) {
             JSONObject obj = pfiles.getJSONObject(i);
             materialList.add(new Material(obj.getInt("id"), obj.getString("name")));
-            Log.d("Materials", new Material(obj.getInt("id"), obj.getString("name")).toString());
+            Log.d("Questions", new Material(obj.getInt("id"), obj.getString("name")).toString());
         }
 
 
@@ -191,7 +197,7 @@ public class MaterialsActivity extends AppCompatActivity{
         List<Material> materialList;
 
         public MaterialAdapter(@NonNull List<Material> materialList) {
-            super(MaterialsActivity.this, R.layout.layout_list, materialList);
+            super(QuestionsBankActivity.this, R.layout.layout_list, materialList);
             this.materialList = materialList;
         }
 
@@ -215,8 +221,8 @@ public class MaterialsActivity extends AppCompatActivity{
                     //Toast.makeText(getContext(),"Clicked download", Toast.LENGTH_LONG).show();
 
 
-                    String url = "http://mindvoice.info/rpweb/study/" + material.getName() + ".pdf";
-                    Log.d("Materials fragment", url);
+                    String url = "http://mindvoice.info/rpweb/questionbank/" + material.getName() + ".pdf";
+                    Log.d("Questions fragment", url);
                     new DownloadFile().execute(url);
 
 
@@ -226,7 +232,7 @@ public class MaterialsActivity extends AppCompatActivity{
                     @Override
                     protected void onPreExecute() {
                         super.onPreExecute();
-                        p = new ProgressBar(MaterialsActivity.this);
+                        p = new ProgressBar(QuestionsBankActivity.this);
                         p.setIndeterminate(false);
                         p.setVisibility(View.VISIBLE);
                     }
@@ -248,7 +254,7 @@ public class MaterialsActivity extends AppCompatActivity{
                             fileName = f_url[0].substring(f_url[0].lastIndexOf('/') + 1, f_url[0].length());
                             Log.d("dwnld url fname", fileName);
                             folder = Environment.DIRECTORY_DOWNLOADS + File.separator;
-                            Log.d("Materials fragment", folder);
+                            Log.d("Questions fragment", folder);
                             File directory = new File(folder);
 
                             if (!directory.exists()) {
@@ -263,7 +269,7 @@ public class MaterialsActivity extends AppCompatActivity{
 
                             while ((count = input.read(data)) != -1) {
                                 total += count;
-                                Log.d("Materials fragment", "Check");
+                                Log.d("Questions fragment", "Check");
                                 output.write(data, 0, count);
                             }
 
@@ -271,7 +277,7 @@ public class MaterialsActivity extends AppCompatActivity{
 
                             output.close();
                             input.close();
-                            Log.d("Materials fragment", "Downloaded at: " + folder + fileName);
+                            Log.d("Questions fragment", "Downloaded at: " + folder + fileName);
                             File outputFile = new File(Environment.getExternalStoragePublicDirectory
                                     (Environment.DIRECTORY_DOWNLOADS), material.getName() + ".pdf");
                             Uri uri = Uri.parse(String.valueOf(outputFile));
@@ -298,17 +304,22 @@ public class MaterialsActivity extends AppCompatActivity{
                     @Override
                     protected void onPostExecute(String message) {
                         super.onPostExecute(message);
-                        p.setVisibility(View.VISIBLE);
+
+                        p.setVisibility(View.GONE);
+
                     }
                 }
             });
             fileDownload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //Toast.makeText(getContext(),"Clicked download", Toast.LENGTH_LONG).show();
 
-                    String url = "http://mindvoice.info/rpweb/study/" + material.getName() + ".pdf";
+
+                    String url = "http://mindvoice.info/rpweb/questionbank/" + material.getName() + ".pdf";
                     Log.d("Materials fragment", url);
                     new DownloadFile().execute(url);
+
 
                 }
 
@@ -316,7 +327,7 @@ public class MaterialsActivity extends AppCompatActivity{
                     @Override
                     protected void onPreExecute() {
                         super.onPreExecute();
-                        p = new ProgressBar(MaterialsActivity.this);
+                        p = new ProgressBar(QuestionsBankActivity.this);
                         p.setIndeterminate(false);
                         p.setVisibility(View.VISIBLE);
                     }
@@ -339,7 +350,7 @@ public class MaterialsActivity extends AppCompatActivity{
                             fileName = f_url[0].substring(f_url[0].lastIndexOf('/') + 1, f_url[0].length());
                             Log.d("dwnld url fname", fileName);
                             folder = Environment.DIRECTORY_DOWNLOADS + File.separator;
-                            Log.d("Materials fragment", folder);
+                            Log.d("Questions fragment", folder);
                             File directory = new File(folder);
 
                             if (!directory.exists()) {
@@ -354,14 +365,14 @@ public class MaterialsActivity extends AppCompatActivity{
 
                             while ((count = input.read(data)) != -1) {
                                 total += count;
-                                Log.d("Materials fragment", "Check");
+                                Log.d("Questions fragment", "Check");
                                 output.write(data, 0, count);
                             }
                             output.flush();
 
                             output.close();
                             input.close();
-                            Log.d("Materials fragment", "Downloaded at: " + folder + fileName);
+                            Log.d("Questions fragment", "Downloaded at: " + folder + fileName);
                             return "Downloaded at: " + folder + fileName;
 
                         } catch (Exception e) {
@@ -376,8 +387,10 @@ public class MaterialsActivity extends AppCompatActivity{
                     @Override
                     protected void onPostExecute(String message) {
                         super.onPostExecute(message);
+
                         p.setVisibility(View.GONE);
                         Toast.makeText(getContext(),"File downloaded in File Manager/"+folder+fileName,Toast.LENGTH_SHORT).show();
+
                     }
                 }
             });

@@ -5,31 +5,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/logonbg">
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/rg">
-
-        <RadioButton
-            style="@style/radioButtonStyle"
-            android:id="@+id/rb17"
-            android:checked="true"
-            android:text="Regulations 2017"
-
-            />
-
-        <RadioButton
-            style="@style/radioButtonStyle"
-            android:id="@+id/rb13"
-            android:checked="false"
-            android:text="Regulations 2013"
-
-            />
-
-    </RadioGroup>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"

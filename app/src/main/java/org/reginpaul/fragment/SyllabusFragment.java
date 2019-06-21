@@ -35,8 +35,6 @@ public class SyllabusFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private RadioButton r17,r13;
-    private RadioGroup rg;
     ListView listView;
     private OnFragmentInteractionListener mListener;
     String sDept;
@@ -71,51 +69,17 @@ public class SyllabusFragment extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         sDept = mainActivity.getDept();
 
-        rg = returnview.findViewById(R.id.rg);
-        r17 = returnview.findViewById(R.id.rb17);
-        r13 = returnview.findViewById(R.id.rb13);
         viewPager = returnview.findViewById(R.id.viewpager);
         tabLayout = returnview.findViewById(R.id.tabs);
 
         if (sDept.equalsIgnoreCase("anna university")||sDept.equalsIgnoreCase("jntu")) {
-//            if (r17.isChecked()){
-//                 Log.d("Syllabus","Regulation17");
-//                setupViewPagerAU(viewPager);
-//            }
-//            if (r13.isChecked()){
-//                Log.d("Syllabus","Regulation13");
-//                setupViewPagerAU1(viewPager);
-//
-//            }
-//            r13.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Log.d("Syllabus","Regulation13");
-//                    setupViewPagerAU1(viewPager);
-//
-//                }
-//
-//            });
-//            r17.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Log.d("Syllabus","Regulation17");
-//                    setupViewPagerAU(viewPager);
-//
-//                }
-//
-//            });
-            rg.setVisibility(View.GONE);
             setupViewPagerAU(viewPager);
-
         }
 
         if (sDept.equalsIgnoreCase("school board")){
-            rg.setVisibility(View.GONE);
             setupViewPagerSC(viewPager);
         }
         if (sDept.equalsIgnoreCase("competitive exams")){
-            rg.setVisibility(View.GONE);
             setupViewPagerCE(viewPager);
         }
 

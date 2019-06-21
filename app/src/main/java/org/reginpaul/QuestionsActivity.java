@@ -71,7 +71,7 @@ public class QuestionsActivity extends AppCompatActivity{
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("  "+"Question Papers");
-getSupportActionBar().setIcon(R.drawable.logo_small);
+
 
         savedInstanceState = getIntent().getExtras();
         category = savedInstanceState.getString("strtext");
@@ -104,6 +104,14 @@ getSupportActionBar().setIcon(R.drawable.logo_small);
         }
         else if (category.equalsIgnoreCase("biotech")){
             temp_ctg = "BIOTECH";
+        }
+
+        else if (category.equalsIgnoreCase("mca")){
+            temp_ctg = "MCA";
+        }
+
+        else if (category.equalsIgnoreCase("mba")){
+            temp_ctg = "MBA";
         }
         else {
             temp_ctg = "CSE";

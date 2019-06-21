@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import org.reginpaul.MaterialsActivity;
 import org.reginpaul.QuestionsActivity;
+import org.reginpaul.QuestionsBankActivity;
 import org.reginpaul.R;
 
 public class MaterialsTempFragment extends Fragment implements View.OnClickListener{
@@ -69,7 +70,7 @@ public class MaterialsTempFragment extends Fragment implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.mrow3:
-                intent = new Intent(getActivity(),QuestionsActivity.class);
+                intent = new Intent(getActivity(),QuestionsBankActivity.class);
                 intent.putExtra("strtext",categ);
                 intent.putExtra("strSem", semester);
                 intent.putExtra("strCour", course);
