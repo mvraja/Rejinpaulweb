@@ -68,7 +68,7 @@ import java.util.Scanner;
 
 
 public class MainActivity extends AppCompatActivity implements
-        SyllabusFragment.OnFragmentInteractionListener, EventsRegFragment.OnFragmentInteractionListener, MaterialsFragment.OnFragmentInteractionListener{
+        SyllabusFragment.OnFragmentInteractionListener, EventsRegFragment.OnFragmentInteractionListener, MaterialsFragment.OnFragmentInteractionListener {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -86,15 +86,10 @@ public class MainActivity extends AppCompatActivity implements
 
     String currentUserID, department, firebaseToken, userGender;
 
-        private static final String AUTH_KEY = "key=AAAA5oDKL-4:APA91bEVqeEYD7lkC0EnNmFyV3qHSZcNcoFGCNSZvB0QmeO-rJJDzfzuAyRhf7tmJkYzHN7lDxma8ploBc9B8k2d8kGf85hhsu3PbpipemeCXl43yG7bEKvA-5r9DdHlbok47q7lwybR";
+    private static final String AUTH_KEY = "key=AAAAofV9caU:APA91bFEwCBQ5GNRJugmOoTgUkUC4TSW872j8qVPpN47dQoRHg_Ej4nWPm81HLu3VEhFewUi1_s6czLh-A-9hlnC_KA-CfmHvfZ-JjBsifcZ9hXZOovS7Ry5VO0eM9OdFNUhCLDQRN0m";
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private String Notify_title;
-    private String Notify_msg;
     private Handler updateBarHandler;
-//    ProgressDialog barProgressDialog;
-private  ProgressDialog progressBar;
-    private int progressBarStatus = 0;
-    private Handler progressBarbHandler = new Handler();
+    private ProgressDialog progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,10 +107,7 @@ private  ProgressDialog progressBar;
         updateBarHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-
-
                 progressBar.dismiss();
-
             }
         }, 5000);
         mAuth = FirebaseAuth.getInstance();
@@ -134,7 +126,7 @@ private  ProgressDialog progressBar;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 //        getSupportActionBar().setIcon(R.drawable.logo_small);
-        getSupportActionBar().setTitle("  "+"Home");
+        getSupportActionBar().setTitle("  " + "Home");
         navigationView = findViewById(R.id.navigation_view);
 
 
@@ -151,13 +143,6 @@ private  ProgressDialog progressBar;
                         String fullname = dataSnapshot.child("username").getValue().toString();
                         NavProfileUserName.setText(fullname);
                     }
-                    /*if (dataSnapshot.hasChild("profileimage")) {
-                        String image = dataSnapshot.child("profileimage").getValue().toString();
-                        //String image = "https://firebasestorage.googleapis.com/v0/b/rejinpaul-c8196.appspot.com/o/Profile%20Images%2FJEtueCXwe6XHlZKv01YwVhBX23s1.jpg";
-                        //String image = "https://firebasestorage.googleapis.com/v0/b/rejinpaul-c8196.appspot.com/o/Profile%20Images%2FJEtueCXwe6XHlZKv01YwVhBX23s1.jpg?alt=media&token=4ebbc727-cd92-4700-afe7-c90305735559";
-
-                        Picasso.with(MainActivity.this).load(image).placeholder(R.drawable.profile).into(NavProfileImage);
-                    }*/
 
                     if (dataSnapshot.hasChild("gender")) {
                         userGender = dataSnapshot.child("gender").getValue().toString();
@@ -202,7 +187,6 @@ private  ProgressDialog progressBar;
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 firebaseToken = instanceIdResult.getToken();
-                //Log.e("Updated Token",updatedToken);
                 Log.d("Firebase reg id", firebaseToken);
             }
         });
@@ -210,37 +194,15 @@ private  ProgressDialog progressBar;
 
         HashMap<String, String> params = new HashMap<>();
         if (getIntent().getExtras() != null) {
-            Log.d("Bg code", "Entering bg code");
+
             for (String key : getIntent().getExtras().keySet())
                 if (key.equals("title")) {
-//            title_txt.setText(getIntent().getExtras().getString(key));
+
                     params.put("title", getIntent().getExtras().getString(key));
-                    Log.d("Bg title", getIntent().getExtras().getString(key));
                 } else if (key.equals("message"))
-//        msg_txt.setText(getIntent().getExtras().getString(key));
                     params.put("message", getIntent().getExtras().getString(key));
 
         }
-//        params.put("msgtype", Notify_title);
-//        params.put("msg", Notify_msg);
-        Log.d("Bg code", "outside bg code");
-//        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_MSG, params, CODE_POST_REQUEST);
-//        request.execute();
-        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationManager mNotificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel mChannel = new NotificationChannel(Constants.CHANNEL_ID, Constants.CHANNEL_NAME, importance);
-            mChannel.setDescription(Constants.CHANNEL_DESCRIPTION);
-            mChannel.enableLights(true);
-            mChannel.setLightColor(Color.RED);
-            mChannel.enableVibration(true);
-            //mChannel.setSound();
-            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-            mNotificationManager.createNotificationChannel(mChannel);
-        }*/
-
-        //MyNotificationManager.getInstance(this).displayNotification("Greetings", "Hello how are you?");
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -249,37 +211,26 @@ private  ProgressDialog progressBar;
                 LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mRegistrationBroadcastReceiver,
                         new IntentFilter(Config.PUSH_NOTIFICATION));
 
-                // checking for type intent filter
                 if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
-                    // gcm successfully registered
-                    // now subscribe to `global` topic to receive app wide notifications
                     FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
                     SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
                     String regId = pref.getString("regId", null);
 
-                    Log.d("Firebase reg id noti: ", regId);
-//                    displayFirebaseRegId();
 
                 } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
-                    // new push notification is received
 
                     String message = intent.getStringExtra("message");
 
-                    //Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-                    Log.d("Notification text", message);
-//                    txtMessage.setText(message);
                 }
             }
         };
-//        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
-        MobileAds.initialize(this, "ca-app-pub-5307742290353150~2901344057");
-//
-//        // Load an ad into the AdMob banner view.
-        AdView adView = (AdView) findViewById(R.id.adView);
+
+        MobileAds.initialize(this, getString(R.string.admob_app_id));
+        AdView adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().setRequestAgent("android_studio:ad_template").build();
         adView.loadAd(adRequest);
 
-//        displayFirebaseRegId();
+
     }
 
 
@@ -297,12 +248,6 @@ private  ProgressDialog progressBar;
         JSONObject jNotification = new JSONObject();
         JSONObject jData = new JSONObject();
         try {
-//            jNotification.put("title", "Rejinpaul");
-//            jNotification.put("body", "Testing App");
-//            jNotification.put("sound", "default");
-//            jNotification.put("badge", "1");
-//            jNotification.put("click_action", "OPEN_ACTIVITY_1");
-//            jNotification.put("icon", "ic_notification");
             jData.put("title", "Rejinpaul");
             jData.put("body", "Testing App");
             jData.put("sound", "default");
@@ -326,17 +271,6 @@ private  ProgressDialog progressBar;
             jPayload.put("notification", jNotification);
             jPayload.put("data", jData);
 
-//            Notify_title=jData.getString("title");
-//            Notify_msg=jData.getString("body");
-//            HashMap<String, String> params = new HashMap<>();
-//            params.put("msgtype", Notify_title);
-//            params.put("msg", Notify_msg);
-//
-//            PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_MSG , params, CODE_POST_REQUEST);
-//            request.execute();
-////        intent.putExtras(bundle);
-            
-            
             URL url = new URL("https://fcm.googleapis.com/fcm/send");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
@@ -344,15 +278,12 @@ private  ProgressDialog progressBar;
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
 
-            // Send FCM message content.
             OutputStream outputStream = conn.getOutputStream();
             outputStream.write(jPayload.toString().getBytes());
 
-            // Read FCM response.
             InputStream inputStream = conn.getInputStream();
             final String resp = convertStreamToString(inputStream);
 
-            Log.d("Notification test", jData.getString("title"));
             Handler h = new Handler(Looper.getMainLooper());
             h.post(new Runnable() {
                 @Override
@@ -361,13 +292,7 @@ private  ProgressDialog progressBar;
 
                 }
             });
-            
-//            HashMap<String, String> params = new HashMap<>();
-//            params.put("msgtype", jPayload.getString("title"));
-//            params.put("msg", jPayload.getString("message"));
-//Log.d("Parms background",jPayload.getString("message"));
-//            PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_MSG , params, CODE_POST_REQUEST);
-//            request.execute();
+
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
@@ -469,10 +394,6 @@ private  ProgressDialog progressBar;
                 getSupportActionBar().setTitle("Study Materials");
                 break;
 
-            /*case R.id.nav_questions:
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new QuestionsFragment()).commit();
-                getSupportActionBar().setTitle("Question Papers");
-                break;*/
 
             case R.id.nav_events:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new EventsRegFragment()).commit();
@@ -480,7 +401,7 @@ private  ProgressDialog progressBar;
                 break;
 
             case R.id.nav_notification:
-                Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
                 startActivity(intent);
                 break;
 
@@ -521,12 +442,7 @@ private  ProgressDialog progressBar;
             Log.d("Bg code", "Entering bg code");
             for (String key : getIntent().getExtras().keySet())
                 if (key.equals("title")) {
-//            title_txt.setText(getIntent().getExtras().getString(key));
-//                    params.put("title", getIntent().getExtras().getString(key));
-                    Log.d("Bg title", getIntent().getExtras().getString(key));
                 } else if (key.equals("message"))
-//        msg_txt.setText(getIntent().getExtras().getString(key));
-//                    params.put("message",getIntent().getExtras().getString(key));
                     Log.d("Bg msg", getIntent().getExtras().getString(key));
         }
         // register GCM registration complete receiver
@@ -534,7 +450,6 @@ private  ProgressDialog progressBar;
                 new IntentFilter(Config.REGISTRATION_COMPLETE));
 
         // register new push message receiver
-        // by doing this, the activity will be notified each time a new message arrives
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Config.PUSH_NOTIFICATION));
 
@@ -548,55 +463,4 @@ private  ProgressDialog progressBar;
         super.onPause();
     }
 
-    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
-        String url;
-        HashMap<String, String> params;
-        int requestCode;
-
-        PerformNetworkRequest(String url, HashMap<String, String> params, int requestCode) {
-            this.url = url;
-            this.params = params;
-            this.requestCode = requestCode;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-                JSONObject object = new JSONObject(s);
-                if (!object.getBoolean("error")) {
-                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
-                    Log.d("Syllabus", object.toString());
-//                    refreshList(object.getJSONArray("pfiles"));
-//                    object.put("msgtype",Notify_title);
-//                    object.put("msg",Notify_msg);
-                } else
-                    Log.d("Syllabus", object.toString());
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            RequestHandler requestHandler = new RequestHandler();
-            if (requestCode == CODE_POST_REQUEST)
-                return requestHandler.sendPostRequest(url, params);
-
-
-            if (requestCode == CODE_GET_REQUEST) {
-                Log.d("Syllabus", url);
-                String getstring = requestHandler.sendGetRequest(url);
-
-                return requestHandler.sendGetRequest(url);
-            }
-            return null;
-        }
-    }
 }

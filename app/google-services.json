@@ -1,43 +1,40 @@
 {
   "project_info": {
-    "project_number": "990003212270",
-    "firebase_url": "https://rejinpaul-c8196.firebaseio.com",
-    "project_id": "rejinpaul-c8196",
-    "storage_bucket": "rejinpaul-c8196.appspot.com"
+    "project_number": "695608373669",
+    "firebase_url": "https://rejinpaul-network-95b3c.firebaseio.com",
+    "project_id": "rejinpaul-network-95b3c",
+    "storage_bucket": "rejinpaul-network-95b3c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:990003212270:android:b71b3f4559d3d284",
+        "mobilesdk_app_id": "1:695608373669:android:b71b3f4559d3d284",
         "android_client_info": {
           "package_name": "org.reginpaul"
         }
       },
       "oauth_client": [
         {
-          "client_id": "990003212270-n2bf1vu9m77ieaja0m4rum5t4shrvrc3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "org.reginpaul",
-            "certificate_hash": "51cd072450deec78cf7604d079e4e164b377a08f"
-          }
+          "client_id": "695608373669-5qji172fie6ihb8o2nc0uijtrb14qcia.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA0BlhxMzVHle23M-9qw6xDPEYkooqKbdY"
+          "current_key": "AIzaSyAwUKsRE6GKYBR8OB45bpoal_xUoFYOiwU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "990003212270-7hiqjo7ho5q2p9ccr21f6189v7nih1ok.apps.googleusercontent.com",
+              "client_id": "695608373669-5qji172fie6ihb8o2nc0uijtrb14qcia.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-1886054018235657~4069404730"
     }
   ],
   "configuration_version": "1"

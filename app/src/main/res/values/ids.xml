@@ -3,4 +3,7 @@
 	<string name="facebook_app_id">619246641873302</string>
 	<string name="twitter_consumer_key">1Eu7wYJg2dBVzfsDlYzVAn81P</string>
 	<string name="twitter_consumer_secret">jxi78fkgRP1YJ83zikGt4hktZOIXokl3WRbZ79OKbp0BM55ZeY</string>
+	<string name="admob_app_id">ca-app-pub-1886054018235657~4069404730</string>
+	<string name="admob_unit_id">ca-app-pub-1886054018235657/1443241397</string>
+    <!--<string name="admob_unit_id">ca-app-pub-3940256099942544/6300978111</string>-->
 </resources>

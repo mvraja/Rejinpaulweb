@@ -23,6 +23,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,6 +73,10 @@ public class ResultActivity extends AppCompatActivity {
 
         savedInstanceState = getIntent().getExtras();
         clgName = savedInstanceState.getString("stRes");
+        MobileAds.initialize(this, getString(R.string.admob_app_id));
+        AdView adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().setRequestAgent("android_studio:ad_template").build();
+        adView.loadAd(adRequest);
 
 
         webView = findViewById(R.id.webView);

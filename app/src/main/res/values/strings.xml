@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Rejinpaul</string>
+	<string name="app_name">Rejinpaul Network</string>
     <string name="authenticate">Authentication</string>
 
     <string name="sign_in">Sign In</string>
@@ -34,7 +34,8 @@
     <string name="create">Create Account</string>
     <string name="username">Username</string>
     <string name="question">Question Papers</string>
-    <string name="google_id">990003212270-7hiqjo7ho5q2p9ccr21f6189v7nih1ok.apps.googleusercontent.com</string>
+    <!--<string name="google_id">695608373669-3sethe3hgv7duv5g1u0c8vlp24u6c522.apps.googleusercontent.com</string>-->
+    <string name="google_id">695608373669-5qji172fie6ihb8o2nc0uijtrb14qcia.apps.googleusercontent.com</string>
 
     <string name="notification_channel_id">default</string>
     <string name="forget">Forgot Password?</string>

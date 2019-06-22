@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/logonbg"
@@ -9,10 +10,14 @@
         android:id="@+id/res_toolbar"
         layout="@layout/app_bar_layout"/>
 
-
+<RelativeLayout
+    android:id="@+id/lay2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/res_toolbar"
+    android:layout_above="@id/adView">
     <TextView
         android:id="@+id/textView"
-        android:layout_below="@id/res_toolbar"
         style="@style/textViewStyle"
         android:text="@string/link_note"
         android:gravity="center"
@@ -91,5 +96,14 @@
         android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/regno"/>
+</RelativeLayout>
+    <com.google.android.gms.ads.AdView
+        android:layout_alignParentBottom="true"
+        android:id="@+id/adView"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/admob_unit_id" />
 
 </RelativeLayout>
