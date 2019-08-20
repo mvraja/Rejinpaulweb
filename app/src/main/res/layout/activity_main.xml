@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/tools"
+    app:ignore="NamespaceTypo">
 
     <LinearLayout
         android:id="@+id/re1"
@@ -44,7 +46,49 @@
                 android:id="@+id/main_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/main_page_toolbar" />
+                android:layout_below="@id/main_page_toolbar" >
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab4"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="5dp"
+                    app:srcCompat="@drawable/twitter_share" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="5dp"
+                    app:srcCompat="@drawable/insta_share" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="5dp"
+                    app:srcCompat="@drawable/fb_share" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="5dp"
+                    app:srcCompat="@drawable/whatsapp_share" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="5dp"
+                    app:srcCompat="@drawable/share" />
+            </FrameLayout>
+
+
         </RelativeLayout>
 
         <android.support.design.widget.NavigationView
@@ -58,6 +102,7 @@
             app:menu="@menu/navigation_menu" />
 
     </android.support.v4.widget.DrawerLayout>
+
 
 
 </RelativeLayout>

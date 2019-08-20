@@ -6,13 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +31,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +70,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -80,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements
     private TextView NavProfileUserName;
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
-
+    private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
 
@@ -90,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private Handler updateBarHandler;
     private ProgressDialog progressBar;
+    private FloatingActionButton fab1,fab2,fab3,fab4;
+    private boolean isFABOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +119,129 @@ public class MainActivity extends AppCompatActivity implements
                 progressBar.dismiss();
             }
         }, 5000);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            askPermission();
+        }
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+//            startService(new Intent(MainActivity.this, FloatingViewServiceJava.class));
+//            finish();
+//        } else if (Settings.canDrawOverlays(MainActivity.this)) {
+//            startService(new Intent(MainActivity.this, FloatingViewServiceJava.class));
+//            finish();
+//        } else {
+//            askPermission();
+//            Toast.makeText(MainActivity.this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
+//        }
+//            }
+//        });
+//
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab3 = (FloatingActionButton) findViewById(R.id.fab3);
+        fab4 = (FloatingActionButton) findViewById(R.id.fab4);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isFABOpen){
+                    showFABMenu();
+                }else{
+                    closeFABMenu();
+                }
+            }
+        });
+
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent share = new Intent();
+                share.setAction(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, "Share this education app and help your friends to Enjoy benefits. https://play.google.com/store/apps/details?id=org.reginpaul&hl=en");
+                share.setPackage("com.whatsapp");
+
+                startActivity(share);
+
+            }
+        });
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent share = new Intent();
+                String urltoshare="https://play.google.com/store/apps/details?id=org.reginpaul&hl=en";
+                share.setAction(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, urltoshare);
+//                share.setPackage("com.facebook");
+//                startActivity(Intent.createChooser(share, "Title of the dialog the system will open"));
+//                startActivity(share);
+// See if official Facebook app is found
+                boolean facebookAppFound = false;
+                List<ResolveInfo> matches = getPackageManager().queryIntentActivities(share, 0);
+                for (ResolveInfo info : matches) {
+                    if (info.activityInfo.packageName.toLowerCase().startsWith("com.facebook.katana")) {
+                        share.setPackage(info.activityInfo.packageName);
+                        facebookAppFound = true;
+                        break;
+                    }
+                }
+
+// As fallback, launch sharer.php in a browser
+                if (!facebookAppFound) {
+                    String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + urltoshare;
+                    share = new Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl));
+                }
+
+                startActivity(share);
+            }
+        });
+
+        fab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent share = new Intent();
+                share.setAction(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, "Share this education app and help your friends to Enjoy benefits.https://play.google.com/store/apps/details?id=org.reginpaul&hl=en");
+                share.setPackage("com.instagram.android");
+
+                startActivity(share);
+
+            }
+        });
+        fab4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tweetIntent = new Intent(Intent.ACTION_SEND);
+                tweetIntent.putExtra(Intent.EXTRA_TEXT, "Share this education app and help your friends to Enjoy benefits.https://play.google.com/store/apps/details?id=org.reginpaul&hl=en");
+                tweetIntent.setType("text/plain");
+
+                PackageManager packManager = getPackageManager();
+                List<ResolveInfo> resolvedInfoList = packManager.queryIntentActivities(tweetIntent,  PackageManager.MATCH_DEFAULT_ONLY);
+
+                boolean resolved = false;
+                for(ResolveInfo resolveInfo: resolvedInfoList){
+                    if(resolveInfo.activityInfo.packageName.startsWith("com.twitter.android")){
+                        tweetIntent.setClassName(
+                                resolveInfo.activityInfo.packageName,
+                                resolveInfo.activityInfo.name );
+                        resolved = true;
+                        break;
+                    }
+                }
+                if(resolved){
+                    startActivity(tweetIntent);
+                }else{
+                    Toast.makeText(MainActivity.this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -229,11 +361,38 @@ public class MainActivity extends AppCompatActivity implements
         AdView adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().setRequestAgent("android_studio:ad_template").build();
         adView.loadAd(adRequest);
+//        ImageView fb=(ImageView)findViewById(R.id.img_fb);
+//        ImageView insta=(ImageView)findViewById(R.id.img_insta);
+//        ImageView youtube=(ImageView)findViewById(R.id.img_youtube);
+//        ImageView web=(ImageView)findViewById(R.id.img_website);
+//        fb.setOnClickListener(this);
+//        insta.setOnClickListener(this);
+//        youtube.setOnClickListener(this);
+//        web.setOnClickListener(this);
 
 
     }
 
+    private void askPermission() {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
+    }
+    private void showFABMenu(){
+        isFABOpen=true;
+        fab1.animate().translationY(getResources().getDimension(R.dimen.standard_55));
+        fab2.animate().translationY(getResources().getDimension(R.dimen.standard_105));
+        fab3.animate().translationY(getResources().getDimension(R.dimen.standard_155));
+        fab4.animate().translationY(getResources().getDimension(R.dimen.standard_205));
+    }
 
+    private void closeFABMenu(){
+        isFABOpen=false;
+        fab1.animate().translationY(0);
+        fab2.animate().translationY(0);
+        fab3.animate().translationY(0);
+        fab4.animate().translationY(0);
+    }
     private void sendWithOtherThread(final String type) {
         new Thread(new Runnable() {
             @Override
@@ -462,5 +621,30 @@ public class MainActivity extends AppCompatActivity implements
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
-
+//
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.img_fb:
+//                Uri urifb = Uri.parse("https://www.facebook.com/macroidapps/");
+//                Intent fbintent = new Intent(Intent.ACTION_VIEW, urifb);
+//                startActivity(fbintent);
+//                break;
+//            case R.id.img_insta:
+//                Uri uriinsta = Uri.parse("https://www.facebook.com/macroidapps/");
+//                Intent instaintent = new Intent(Intent.ACTION_VIEW, uriinsta);
+//                startActivity(instaintent);
+//                break;
+//            case R.id.img_youtube:
+//                Uri yturi = Uri.parse("https://www.youtube.com/channel/UCbeg_YK3R1mKo7xhM5-2Yeg");
+//                Intent ytintent = new Intent(Intent.ACTION_VIEW, yturi);
+//                startActivity(ytintent);
+//                break;
+//            case R.id.img_website:
+//                Uri weburi = Uri.parse("http://Rejinpaul.com/");
+//                Intent webintent = new Intent(Intent.ACTION_VIEW, weburi);
+//                startActivity(webintent);
+//                break;
+//        }
+//    }
 }
