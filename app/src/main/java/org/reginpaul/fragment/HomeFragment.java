@@ -16,12 +16,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.reginpaul.AboutusActivity;
 import org.reginpaul.NotificationActivity;
 import org.reginpaul.R;
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener{
 
-    String[] title = { "Syllabus","Study materials", "Profile", "Events","Notification","Results" };
+    String[] title = { "Syllabus","Study materials", "Profile", "Events","Notification","Results"};
     int[] icon={R.drawable.syllabus,R.drawable.study, R.drawable.profile_home, R.drawable.friends,R.drawable.messages,R.drawable.result};
     GridView grid;
     AppCompatActivity activity;
@@ -90,6 +91,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                 actionBar.setTitle("  "+"Results");
                 //actionBar.setIcon(R.drawable.logo_small);
                 break;
+
 
         }
     }

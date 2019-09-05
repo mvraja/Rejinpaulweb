@@ -573,6 +573,11 @@ public class MainActivity extends AppCompatActivity implements
                 mAuth.signOut();
                 SendUserToLoginActivity();
                 break;
+            case  R.id.nav_about:
+                Intent i = new Intent(MainActivity.this,AboutusActivity.class);
+                startActivity(i);
+                break;
+
         }
     }
 

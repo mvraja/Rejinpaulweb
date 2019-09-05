@@ -13,7 +13,7 @@
         android:title="@string/syllabus" />
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_user"
+        android:icon="@drawable/profile_home"
         android:title="@string/sprofile" />
     <item
         android:id="@+id/nav_materials"
@@ -36,6 +36,10 @@
         android:id="@+id/nav_result"
         android:icon="@drawable/result"
         android:title="@string/result" />
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/profile_home"
+        android:title="@string/About_us" />
     <item
         android:id="@+id/nav_logout"
         android:icon="@drawable/logout"

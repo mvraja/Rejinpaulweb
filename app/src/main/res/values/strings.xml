@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Rejinpaul Network</string>
+    <string name="app_name">Rejinpaul Network</string>
     <string name="authenticate">Authentication</string>
 
     <string name="sign_in">Sign In</string>
@@ -26,6 +26,7 @@
     <string name="materials">Study Materials</string>
     <string name="notification">Notifications</string>
     <string name="result">Results</string>
+    <string name="About_us">About_us</string>
     <string name="syllabus">Syllabus</string>
     <string name="save">Save</string>
     <string name="choose">Select a Category</string>
