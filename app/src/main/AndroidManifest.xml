@@ -99,10 +99,6 @@
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AboutusActivity"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".MaterialsActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
@@ -122,6 +118,9 @@
             android:name=".QuestionsBankActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".SearchActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -133,10 +132,10 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <service
+        <!--<service
             android:name=".FloatingViewServiceJava"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false" />-->
 
 
     </application>

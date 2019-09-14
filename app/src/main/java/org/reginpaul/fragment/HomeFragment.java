@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.reginpaul.AboutusActivity;
 import org.reginpaul.NotificationActivity;
 import org.reginpaul.R;
 

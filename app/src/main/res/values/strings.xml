@@ -64,6 +64,12 @@
     <string name="link3">https://aucoe.annauniv.edu</string>
     <string name="link_note">Official links of Anna University Results</string>
     <string name="downlink">&lt;font color="#303F9F">&lt;b>- CLICK HERE TO DOWNLOAD.&lt;/b>&lt;/font></string>
+    <string name="clientMail">rejinpaul&#64;rejinpaul.com</string>
+    <string name="drop">Drop us your queries at</string>
+    <string name="rating">Rate our application on Google Play Store</string>
+    <string name="business">For Business and Advertisement contact 1234567890</string>
+    <string name="thank">Thank you for your interest in Rejinpaul Network application. Please contact us using above Mail Id about your need to help us serve you better.</string>
+    <string name="search">Search</string>
 
     <string-array name="ug">
         <item>I</item>

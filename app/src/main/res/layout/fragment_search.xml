@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/logonbg"
+    android:padding="10dp">
+
+    <TextView
+        style="@style/textStyle"
+        android:id="@+id/txt50"
+        android:gravity="center"
+        android:textColor="@color/colorYellow"
+        android:layout_marginTop="10dp"
+        android:text="Enter a keyword to search contents from rejinpaul.com"/>
+
+    <EditText
+        style="@style/editTextStyle"
+        android:id="@+id/searchview"
+        android:layout_below="@id/txt50"
+        android:layout_marginTop="10dp"
+        android:hint="Type and Search"
+        android:inputType="text"
+        android:imeOptions="actionSearch"/>
+
+</RelativeLayout>

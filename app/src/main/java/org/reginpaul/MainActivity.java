@@ -56,12 +56,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.reginpaul.fragment.AboutusFragment;
 import org.reginpaul.fragment.EventsFragment;
 import org.reginpaul.fragment.EventsRegFragment;
 import org.reginpaul.fragment.HomeFragment;
 import org.reginpaul.fragment.MaterialsFragment;
 import org.reginpaul.fragment.ProfileFragment;
 import org.reginpaul.fragment.ResultFragment;
+import org.reginpaul.fragment.SearchFragment;
 import org.reginpaul.fragment.SyllabusFragment;
 
 import java.io.IOException;
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private Handler updateBarHandler;
     private ProgressDialog progressBar;
-    private FloatingActionButton fab1,fab2,fab3,fab4;
+    private FloatingActionButton fab, fab1,fab2,fab3,fab4;
     private boolean isFABOpen;
 
     @Override
@@ -122,30 +124,12 @@ public class MainActivity extends AppCompatActivity implements
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             askPermission();
         }
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-////                        .setAction("Action", null).show();
-//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-//            startService(new Intent(MainActivity.this, FloatingViewServiceJava.class));
-//            finish();
-//        } else if (Settings.canDrawOverlays(MainActivity.this)) {
-//            startService(new Intent(MainActivity.this, FloatingViewServiceJava.class));
-//            finish();
-//        } else {
-//            askPermission();
-//            Toast.makeText(MainActivity.this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
-//        }
-//            }
-//        });
-//
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab1 = (FloatingActionButton) findViewById(R.id.fab1);
-        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
-        fab3 = (FloatingActionButton) findViewById(R.id.fab3);
-        fab4 = (FloatingActionButton) findViewById(R.id.fab4);
+
+        fab = findViewById(R.id.fab);
+        fab1 = findViewById(R.id.fab1);
+        fab2 = findViewById(R.id.fab2);
+        fab3 = findViewById(R.id.fab3);
+        fab4 = findViewById(R.id.fab4);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,13 +147,14 @@ public class MainActivity extends AppCompatActivity implements
                 Intent share = new Intent();
                 share.setAction(Intent.ACTION_SEND);
                 share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_TEXT, "Share this education app and help your friends to Enjoy benefits. https://play.google.com/store/apps/details?id=org.reginpaul&hl=en");
+                share.putExtra(Intent.EXTRA_TEXT, "Share this education app and help your friends to enjoy benefits. https://play.google.com/store/apps/details?id=org.reginpaul&hl=en");
                 share.setPackage("com.whatsapp");
 
                 startActivity(share);
 
             }
         });
+
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,10 +163,6 @@ public class MainActivity extends AppCompatActivity implements
                 share.setAction(Intent.ACTION_SEND);
                 share.setType("text/plain");
                 share.putExtra(Intent.EXTRA_TEXT, urltoshare);
-//                share.setPackage("com.facebook");
-//                startActivity(Intent.createChooser(share, "Title of the dialog the system will open"));
-//                startActivity(share);
-// See if official Facebook app is found
                 boolean facebookAppFound = false;
                 List<ResolveInfo> matches = getPackageManager().queryIntentActivities(share, 0);
                 for (ResolveInfo info : matches) {
@@ -192,7 +173,6 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 }
 
-// As fallback, launch sharer.php in a browser
                 if (!facebookAppFound) {
                     String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + urltoshare;
                     share = new Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl));
@@ -208,18 +188,19 @@ public class MainActivity extends AppCompatActivity implements
                 Intent share = new Intent();
                 share.setAction(Intent.ACTION_SEND);
                 share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_TEXT, "Share this education app and help your friends to Enjoy benefits.https://play.google.com/store/apps/details?id=org.reginpaul&hl=en");
+                share.putExtra(Intent.EXTRA_TEXT, "Share this education app and help your friends to enjoy benefits.https://play.google.com/store/apps/details?id=org.reginpaul&hl=en");
                 share.setPackage("com.instagram.android");
 
                 startActivity(share);
 
             }
         });
+
         fab4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent tweetIntent = new Intent(Intent.ACTION_SEND);
-                tweetIntent.putExtra(Intent.EXTRA_TEXT, "Share this education app and help your friends to Enjoy benefits.https://play.google.com/store/apps/details?id=org.reginpaul&hl=en");
+                tweetIntent.putExtra(Intent.EXTRA_TEXT, "Share this education app and help your friends to enjoy benefits.https://play.google.com/store/apps/details?id=org.reginpaul&hl=en");
                 tweetIntent.setType("text/plain");
 
                 PackageManager packManager = getPackageManager();
@@ -238,10 +219,11 @@ public class MainActivity extends AppCompatActivity implements
                 if(resolved){
                     startActivity(tweetIntent);
                 }else{
-                    Toast.makeText(MainActivity.this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Twitter app not found", Toast.LENGTH_LONG).show();
                 }
             }
         });
+
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -573,11 +555,16 @@ public class MainActivity extends AppCompatActivity implements
                 mAuth.signOut();
                 SendUserToLoginActivity();
                 break;
+
             case  R.id.nav_about:
-                Intent i = new Intent(MainActivity.this,AboutusActivity.class);
-                startActivity(i);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new AboutusFragment()).commit();
+                getSupportActionBar().setTitle("About us");
                 break;
 
+            case R.id.nav_search:
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new SearchFragment()).commit();
+                getSupportActionBar().setTitle("Search");
+                break;
         }
     }
 

@@ -24,6 +24,11 @@
         android:icon="@drawable/ic_question"
         android:title="@string/question" />-->
     <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/search"
+        android:title="@string/search"/>
+
+    <item
         android:id="@+id/nav_events"
         android:icon="@drawable/friends"
         android:title="@string/events"/>
@@ -32,6 +37,7 @@
         android:id="@+id/nav_notification"
         android:icon="@drawable/messages"
         android:title="@string/notification" />
+
     <item
         android:id="@+id/nav_result"
         android:icon="@drawable/result"

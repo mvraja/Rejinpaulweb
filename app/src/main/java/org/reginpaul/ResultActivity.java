@@ -67,7 +67,7 @@ public class ResultActivity extends AppCompatActivity {
         upArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorBrown), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Result Display Page");
+        getSupportActionBar().setTitle("Result Page");
         //getSupportActionBar().setIcon(R.drawable.logo_small);
 
 
