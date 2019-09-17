@@ -65,6 +65,7 @@ import org.reginpaul.fragment.ProfileFragment;
 import org.reginpaul.fragment.ResultFragment;
 import org.reginpaul.fragment.SearchFragment;
 import org.reginpaul.fragment.SyllabusFragment;
+import org.reginpaul.fragment.TimetableFragment;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -535,6 +536,10 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportActionBar().setTitle("Study Materials");
                 break;
 
+            case R.id.nav_timetable:
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new TimetableFragment()).commit();
+                getSupportActionBar().setTitle("Timetable");
+                break;
 
             case R.id.nav_events:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new EventsRegFragment()).commit();
