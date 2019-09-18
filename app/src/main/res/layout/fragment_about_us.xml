@@ -74,6 +74,7 @@
                 android:padding="20dp">
 
                 <ImageView
+                    android:id="@+id/mail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_email_black_24dp" />
@@ -95,6 +96,7 @@
                 android:padding="20dp">
 
                 <ImageView
+                    android:id="@+id/ph"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_phone_black_24dp" />
@@ -116,6 +118,7 @@
                 android:padding="20dp">
 
                 <ImageView
+                    android:id="@+id/rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_star_black_24dp" />
