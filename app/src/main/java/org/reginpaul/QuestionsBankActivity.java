@@ -232,39 +232,39 @@ public class QuestionsBankActivity extends AppCompatActivity{
 
             textViewName.setText(material.getName());
             // define sound URI, the sound to be played when there's a notification
-            Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            String CHANNEL_ID = "my_channel_01";
-            CharSequence name = "my_channel";
-            String Description = "This is my channel";
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-
-
-
-                int importance = NotificationManager.IMPORTANCE_HIGH;
-                mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-                mChannel.setDescription(Description);
-                mChannel.enableLights(true);
-                mChannel.setLightColor(Color.RED);
-                mChannel.enableVibration(true);
-                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                mChannel.setShowBadge(false);
-                mNotifyManager.createNotificationChannel(mChannel);
-            }
-            Intent intent;
-//            try {
-//                // Perform the operation associated with our pendingIntent
-//                pendingIntent.send();
-//            } catch (PendingIntent.CanceledException e) {
-//                e.printStackTrace();
+//            Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//            mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//            String CHANNEL_ID = "my_channel_01";
+//            CharSequence name = "my_channel";
+//            String Description = "This is my channel";
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//
+//
+//
+//                int importance = NotificationManager.IMPORTANCE_HIGH;
+//                mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+//                mChannel.setDescription(Description);
+//                mChannel.enableLights(true);
+//                mChannel.setLightColor(Color.RED);
+//                mChannel.enableVibration(true);
+//                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+//                mChannel.setShowBadge(false);
+//                mNotifyManager.createNotificationChannel(mChannel);
 //            }
-
-            mBuilder = new NotificationCompat.Builder(QuestionsBankActivity.this,CHANNEL_ID);
-            mBuilder.setContentTitle("File Download")
-                    .setContentText("Download in progress")
-                    .setSmallIcon(R.drawable.ic_download).setSound(soundUri);
-
-//                            .setContentIntent(pendingIntent);
+//            Intent intent;
+////            try {
+////                // Perform the operation associated with our pendingIntent
+////                pendingIntent.send();
+////            } catch (PendingIntent.CanceledException e) {
+////                e.printStackTrace();
+////            }
+//
+//            mBuilder = new NotificationCompat.Builder(QuestionsBankActivity.this,CHANNEL_ID);
+//            mBuilder.setContentTitle("File Download")
+//                    .setContentText("Download in progress")
+//                    .setSmallIcon(R.drawable.ic_download).setSound(soundUri);
+//
+////                            .setContentIntent(pendingIntent);
 
             fileShare.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -358,6 +358,7 @@ public class QuestionsBankActivity extends AppCompatActivity{
 
                         p.setVisibility(View.GONE);
 
+
                     }
                 }
             });
@@ -372,51 +373,51 @@ public class QuestionsBankActivity extends AppCompatActivity{
                     File outputFile = new File(Environment.getExternalStoragePublicDirectory
                             (Environment.DIRECTORY_DOWNLOADS), material.getName() + ".pdf");
 
-                    Uri fileURI = FileProvider.getUriForFile(getContext(),
-                            BuildConfig.APPLICATION_ID + ".provider",
-                            outputFile);
-
-                    Intent i = new Intent();
-                    i.setAction(android.content.Intent.ACTION_VIEW);
-                    i.setDataAndType(fileURI, "application/pdf");
-                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-                    Log.d("CHECKING intent1", String.valueOf(fileURI));
-                    pendingIntent = PendingIntent.getActivity(QuestionsBankActivity.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+//                    Uri fileURI = FileProvider.getUriForFile(getContext(),
+//                            BuildConfig.APPLICATION_ID + ".provider",
+//                            outputFile);
+//
+//                    Intent i = new Intent();
+//                    i.setAction(android.content.Intent.ACTION_VIEW);
+//                    i.setDataAndType(fileURI, "application/pdf");
+//                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                    i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//
+//                    Log.d("CHECKING intent1", String.valueOf(fileURI));
+//                    pendingIntent = PendingIntent.getActivity(QuestionsBankActivity.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
                     // Start a the operation in a background thread
-                    new Thread(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    int incr;
-                                    // Do the "lengthy" operation 20 times
-                                    for (incr = 0; incr <= 100; incr+=15) {
-                                        // Sets the progress indicator to a max value, the current completion percentage and "determinate" state
-                                        mBuilder.setProgress(100, incr, false);
-                                        // Displays the progress bar for the first time.
-                                        mNotifyManager.notify(id, mBuilder.build());
-                                        // Sleeps the thread, simulating an operation
-                                        try {
-                                            // Sleep for 1 second
-                                            Thread.sleep(1*1000);
-                                        } catch (InterruptedException e) {
-                                            Log.d("TAG", "sleep failure");
-                                        }
-                                    }
-                                    // When the loop is finished, updates the notification
-                                    mBuilder.setContentText("Download completed")
-                                            // Removes the progress bar
-                                            .setProgress(0,0,false)
-                                    // Creating a pending intent and wrapping our intent
-                                            .setContentIntent(pendingIntent);
-                                    mNotifyManager.notify(id, mBuilder.build());
-
-                                }
-                            }
-                            // Starts the thread by calling the run() method in its Runnable
-                    ).start();
+//                    new Thread(
+//                            new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    int incr;
+//                                    // Do the "lengthy" operation 20 times
+//                                    for (incr = 0; incr <= 100; incr+=15) {
+//                                        // Sets the progress indicator to a max value, the current completion percentage and "determinate" state
+//                                        mBuilder.setProgress(100, incr, false);
+//                                        // Displays the progress bar for the first time.
+//                                        mNotifyManager.notify(id, mBuilder.build());
+//                                        // Sleeps the thread, simulating an operation
+//                                        try {
+//                                            // Sleep for 1 second
+//                                            Thread.sleep(1*1000);
+//                                        } catch (InterruptedException e) {
+//                                            Log.d("TAG", "sleep failure");
+//                                        }
+//                                    }
+//                                    // When the loop is finished, updates the notification
+//                                    mBuilder.setContentText("Download completed")
+//                                            // Removes the progress bar
+//                                            .setProgress(0,0,false)
+//                                    // Creating a pending intent and wrapping our intent
+//                                            .setContentIntent(pendingIntent);
+//                                    mNotifyManager.notify(id, mBuilder.build());
+//
+//                                }
+//                            }
+//                            // Starts the thread by calling the run() method in its Runnable
+//                    ).start();
 
 //                    mBuilder.setContentIntent(pendingIntent);
 
@@ -492,6 +493,17 @@ public class QuestionsBankActivity extends AppCompatActivity{
 
                         p.setVisibility(View.GONE);
                         Toast.makeText(getContext(),"File downloaded in File Manager/"+folder+fileName,Toast.LENGTH_SHORT).show();
+                        File open = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + material.getName() + ".pdf");
+                        Uri fileURI = FileProvider.getUriForFile(getContext(),
+                                BuildConfig.APPLICATION_ID + ".provider",
+                                open);
+                        Intent i = new Intent();
+                        i.setAction(android.content.Intent.ACTION_VIEW);
+                        i.setDataAndType(fileURI, "application/pdf");
+                        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+                        startActivity(i);
 
                     }
                 }
