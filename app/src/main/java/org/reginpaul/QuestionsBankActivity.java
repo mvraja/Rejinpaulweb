@@ -1,11 +1,13 @@
 package org.reginpaul;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -16,11 +18,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -137,8 +141,9 @@ public class QuestionsBankActivity extends AppCompatActivity{
         listView = findViewById(R.id.listView);
 
         materialList = new ArrayList<>();
-       // PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_QUESTIONS + sDept1, null, CODE_GET_REQUEST);
-        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getquestionbank&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
+//        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_QUESTIONS + sDept1, null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest("https://rejinpaulnetwork.com/rejinpaulapp/v1/Api.php?apicall=getquestionbank&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
+//        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getquestionbank&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
         request.execute();
         MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
         listView.setAdapter(materialAdapter);
@@ -164,7 +169,9 @@ public class QuestionsBankActivity extends AppCompatActivity{
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
+//                s = EntityUtils.toString(response.getEntity());
                 JSONObject object = new JSONObject(s);
+                Log.d("Questions", object.toString());
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     Log.d("Questions", object.toString());
@@ -272,7 +279,8 @@ public class QuestionsBankActivity extends AppCompatActivity{
                     //Toast.makeText(getContext(),"Clicked download", Toast.LENGTH_LONG).show();
 
 
-                    String url = "http://mindvoice.info/rpweb/questionbank/" + material.getName() + ".pdf";
+//                    String url = "http://mindvoice.info/rpweb/questionbank/" + material.getName() + ".pdf";
+                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/pdf/" + material.getName() + ".pdf";
                     Log.d("Questions fragment", url);
                     new DownloadFile().execute(url);
 
@@ -362,13 +370,15 @@ public class QuestionsBankActivity extends AppCompatActivity{
                     }
                 }
             });
+
             fileDownload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //Toast.makeText(getContext(),"Clicked download", Toast.LENGTH_LONG).show();
 
 
-                    String url = "http://mindvoice.info/rpweb/questionbank/" + material.getName() + ".pdf";
+                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/pdf/"+material.getName()+".pdf";
+//                    String url = "http://mindvoice.info/rpweb/questionbank/" + material.getName() + ".pdf";
                     Log.d("Materials fragment", url);
                     File outputFile = new File(Environment.getExternalStoragePublicDirectory
                             (Environment.DIRECTORY_DOWNLOADS), material.getName() + ".pdf");
@@ -492,7 +502,10 @@ public class QuestionsBankActivity extends AppCompatActivity{
                         super.onPostExecute(message);
 
                         p.setVisibility(View.GONE);
-                        Toast.makeText(getContext(),"File downloaded in File Manager/"+folder+fileName,Toast.LENGTH_SHORT).show();
+//                        fileName = f_url[0].substring(f_url[0].lastIndexOf('/') + 1, f_url[0].length());
+//                        Log.d("dwnld url fname", fileName);
+                        folder = Environment.DIRECTORY_DOWNLOADS + File.separator;
+                        Toast.makeText(getContext(),"File downloaded in File Manager/"+folder,Toast.LENGTH_SHORT).show();
                         File open = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + material.getName() + ".pdf");
                         Uri fileURI = FileProvider.getUriForFile(getContext(),
                                 BuildConfig.APPLICATION_ID + ".provider",
@@ -510,6 +523,24 @@ public class QuestionsBankActivity extends AppCompatActivity{
             });
 //            mBuilder.setContentIntent(pendingIntent);
             return listViewItem;
+        }
+        public  boolean isStoragePermissionGranted() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    Log.v("Question","Permission is granted");
+                    return true;
+                } else {
+
+                    Log.v("Question","Permission is revoked");
+                    ActivityCompat.requestPermissions(QuestionsBankActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    return false;
+                }
+            }
+            else { //permission is automatically granted on sdk<23 upon installation
+                Log.v("Question","Permission is granted");
+                return true;
+            }
         }
     }
 
