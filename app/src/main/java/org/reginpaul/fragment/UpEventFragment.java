@@ -47,8 +47,8 @@ public class UpEventFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recylcerView);
         progressBar = rootView.findViewById(R.id.progress_bar);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(),1));
-        
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 1));
+
         eventList = new ArrayList<>();
         loadProducts();
         return rootView;
@@ -65,9 +65,12 @@ public class UpEventFragment extends Fragment {
         super.onResume();
     }
 
+
+
     private void loadProducts() {
-        //PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getuser", null, CODE_GET_REQUEST);
-        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UP_EVNT, null, CODE_GET_REQUEST);
+        String s1 = "yes";
+        PerformNetworkRequest request = new PerformNetworkRequest("https://rejinpaulnetwork.com/rejinpaulapp/v1/Api.php?apicall=getuser&status=" + s1, null, CODE_GET_REQUEST);
+        //PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getuser&status="+s1, null, CODE_GET_REQUEST);
         request.execute();
         EventAdapter eventAdapter = new EventAdapter(getActivity(), eventList);
         recyclerView.setAdapter(eventAdapter);
@@ -97,7 +100,7 @@ public class UpEventFragment extends Fragment {
             try {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
-                   // Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     Log.d("Events", object.toString());
                     refreshList(object.getJSONArray("users"));
                 } else
@@ -130,8 +133,8 @@ public class UpEventFragment extends Fragment {
         eventList.clear();
         for (int i = 0; i < pfiles.length(); i++) {
             JSONObject obj = pfiles.getJSONObject(i);
-            eventList.add(new RegEvent(obj.getInt("id"), obj.getString("name"),obj.getString("type"), obj.getString("date"),obj.getString("loc"), obj.getString("image")));
-            if (eventList.size()>0){
+            eventList.add(new RegEvent(obj.getString("name"), obj.getString("type"), obj.getString("date"), obj.getString("loc"), obj.getString("image")));
+            if (eventList.size() > 0) {
                 sortList(eventList);
             }
         }
@@ -198,5 +201,4 @@ public class UpEventFragment extends Fragment {
         }
         return returnDate;
     }
-
 }

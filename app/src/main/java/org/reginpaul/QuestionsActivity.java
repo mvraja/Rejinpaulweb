@@ -124,7 +124,8 @@ public class QuestionsActivity extends AppCompatActivity{
 
         materialList = new ArrayList<>();
        // PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_QUESTIONS + sDept1, null, CODE_GET_REQUEST);
-        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getquestion&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
+        //PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getquestion&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest("https://rejinpaulnetwork.com/rejinpaulapp/v1/Api.php?apicall=getquestion&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
         request.execute();
         MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
         listView.setAdapter(materialAdapter);
@@ -223,7 +224,7 @@ public class QuestionsActivity extends AppCompatActivity{
                     //Toast.makeText(getContext(),"Clicked download", Toast.LENGTH_LONG).show();
 
 
-                    String url = "http://mindvoice.info/rpweb/question/" + material.getName() + ".pdf";
+                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/question/" + material.getName() + ".pdf";
                     Log.d("Questions fragment", url);
                     new DownloadFile().execute(url);
 
@@ -318,7 +319,7 @@ public class QuestionsActivity extends AppCompatActivity{
                     //Toast.makeText(getContext(),"Clicked download", Toast.LENGTH_LONG).show();
 
 
-                    String url = "http://mindvoice.info/rpweb/question/" + material.getName() + ".pdf";
+                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/question/" + material.getName() + ".pdf";
                     Log.d("Materials fragment", url);
                     new DownloadFile().execute(url);
 

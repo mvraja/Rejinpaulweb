@@ -238,40 +238,6 @@ public class QuestionsBankActivity extends AppCompatActivity{
             final Material material = materialList.get(position);
 
             textViewName.setText(material.getName());
-            // define sound URI, the sound to be played when there's a notification
-//            Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//            mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//            String CHANNEL_ID = "my_channel_01";
-//            CharSequence name = "my_channel";
-//            String Description = "This is my channel";
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//
-//
-//
-//                int importance = NotificationManager.IMPORTANCE_HIGH;
-//                mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-//                mChannel.setDescription(Description);
-//                mChannel.enableLights(true);
-//                mChannel.setLightColor(Color.RED);
-//                mChannel.enableVibration(true);
-//                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-//                mChannel.setShowBadge(false);
-//                mNotifyManager.createNotificationChannel(mChannel);
-//            }
-//            Intent intent;
-////            try {
-////                // Perform the operation associated with our pendingIntent
-////                pendingIntent.send();
-////            } catch (PendingIntent.CanceledException e) {
-////                e.printStackTrace();
-////            }
-//
-//            mBuilder = new NotificationCompat.Builder(QuestionsBankActivity.this,CHANNEL_ID);
-//            mBuilder.setContentTitle("File Download")
-//                    .setContentText("Download in progress")
-//                    .setSmallIcon(R.drawable.ic_download).setSound(soundUri);
-//
-////                            .setContentIntent(pendingIntent);
 
             fileShare.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -280,7 +246,7 @@ public class QuestionsBankActivity extends AppCompatActivity{
 
 
 //                    String url = "http://mindvoice.info/rpweb/questionbank/" + material.getName() + ".pdf";
-                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/pdf/" + material.getName() + ".pdf";
+                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/questionbank/" + material.getName() + ".pdf";
                     Log.d("Questions fragment", url);
                     new DownloadFile().execute(url);
 
@@ -377,7 +343,7 @@ public class QuestionsBankActivity extends AppCompatActivity{
                     //Toast.makeText(getContext(),"Clicked download", Toast.LENGTH_LONG).show();
 
 
-                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/pdf/"+material.getName()+".pdf";
+                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/questionbank/"+material.getName()+".pdf";
 //                    String url = "http://mindvoice.info/rpweb/questionbank/" + material.getName() + ".pdf";
                     Log.d("Materials fragment", url);
                     File outputFile = new File(Environment.getExternalStoragePublicDirectory

@@ -2,8 +2,8 @@ package org.reginpaul;
 
 public class Api {
 
-    private static final String ROOT_URL = "http://mindvoice.info/rpweb/v1/Api.php?apicall=";
-
+    //private static final String ROOT_URL = "http://mindvoice.info/rpweb/v1/Api.php?apicall=";
+    private static final String ROOT_URL = "https://rejinpaulnetwork.com/rejinpaulapp/v1/Api.php?apicall=";
     /*public static final String URL_CREATE_USER = ROOT_URL + "createuser";
     public static final String URL_READ_USERS = ROOT_URL + "getuser&email=";
     public static final String URL_READ_MSG = ROOT_URL + "getmessage";

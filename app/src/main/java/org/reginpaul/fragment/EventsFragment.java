@@ -130,7 +130,7 @@ public class EventsFragment extends Fragment {
     }
 
 
-        private void selectImage() {
+    private void selectImage() {
         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
         builder.setTitle("Add Event Source!");
@@ -183,43 +183,6 @@ public class EventsFragment extends Fragment {
                 }
 
                 imgSource.setImageBitmap(thumbnail);
-
-                /*File f = new File(Environment.getExternalStorageDirectory().toString());
-                for (File temp : f.listFiles()) {
-                    if (temp.getName().equals("temp.jpg")) {
-                        f = temp;
-                        break;
-                    }
-                }
-                try {
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
-                    bitmap=getResizedBitmap(bitmap, 400);
-                    imgSource.setImageBitmap(bitmap);
-                    BitMapToString(bitmap);
-                    String path = android.os.Environment
-                            .getExternalStorageDirectory()
-                            + File.separator
-                            + "Phoenix" + File.separator + "default";
-                    f.delete();
-                    OutputStream outFile = null;
-                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
-                    try {
-                        outFile = new FileOutputStream(file);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
-                        outFile.flush();
-                        outFile.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
 
             } else if (requestCode == 2) {
                 Uri selectedImage = data.getData();
@@ -301,7 +264,6 @@ public class EventsFragment extends Fragment {
             eventName.setError("Please enter event name");
             eventName.requestFocus();
             return;
-            //Toast.makeText(getActivity(), "Please enter event name", Toast.LENGTH_SHORT).show();
         }
         if (TextUtils.isEmpty(strDate)) {
             Toast.makeText(getActivity(), "Please enter event date", Toast.LENGTH_SHORT).show();
@@ -310,33 +272,29 @@ public class EventsFragment extends Fragment {
             Toast.makeText(getActivity(), "Please enter event location", Toast.LENGTH_SHORT).show();
         }
 
-            eventName.setText("");
-            eventDate.setText("");
-            eventLocation.setText("");
-            imgSource.setImageResource(R.drawable.select_image);
-            loadingBar.setTitle("Saving Event Information");
-            loadingBar.setMessage("Please wait for a while...");
-            loadingBar.show();
-            loadingBar.setCanceledOnTouchOutside(true);
+        eventName.setText("");
+        eventDate.setText("");
+        eventLocation.setText("");
+        imgSource.setImageResource(R.drawable.ic_insert_photo);
+        loadingBar.setTitle("Saving Event Information");
+        loadingBar.setMessage("Please wait for a while...");
+        loadingBar.show();
+        loadingBar.setCanceledOnTouchOutside(true);
 
-            HashMap<String, String> params = new HashMap<>();
+        HashMap<String, String> params = new HashMap<>();
         params.put("name", strName);
         params.put("date", strDate);
         params.put("loc", strLoc);
         params.put("type", strType);
         params.put("image", strImage);
+        params.put("status","no");
 
-/*        params.put("eventname", strName);
-            params.put("eventdate", strDate);
-            params.put("eventtype", strType);
-            params.put("eventloc", strLoc);
-            params.put("eventsrc", strImage);*/
+        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_EVNT, params, CODE_POST_REQUEST);
+        //PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=createuser",params, CODE_POST_REQUEST);
+        request.execute();
+        loadingBar.dismiss();
 
-            PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_EVNT, params, CODE_POST_REQUEST);
-            request.execute();
-            loadingBar.dismiss();
-
-            //Toast.makeText(getActivity().getApplicationContext(), "Event Information Sent to Admin", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity().getApplicationContext(), "Event Information Sent to Admin", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -395,3 +353,4 @@ public class EventsFragment extends Fragment {
     }
 
 }
+

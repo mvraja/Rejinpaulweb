@@ -48,39 +48,16 @@ public class TimetableFragment extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         sDept = mainActivity.getDept();
 
-        //    PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=gettimetable&category="+sDept, null, CODE_GET_REQUEST);
-        //  request.execute();
-
-//        webView = returnView.findViewById(R.id.webfile);
-//        webView.setWebViewClient(new inlineBrowser());
-//        webView.getSettings().setLoadWithOverviewMode(true);
-//        webView.getSettings().setUseWideViewPort(true);
-//        webView.getSettings().setLoadsImagesAutomatically(true);
-//        webView.getSettings().setJavaScriptEnabled(true);
-//        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//
-//        if (sDept.equalsIgnoreCase("anna university")) {
-//            webView.loadUrl("http://mindvoice.info/rpweb/timetable/AU.pdf");
-//        }
-//        if (sDept.equalsIgnoreCase("jntu")){
-//            webView.loadUrl("http://mindvoice.info/rpweb/timetable/JNTU.pdf");
-//        }
-//
-//        if (sDept.equalsIgnoreCase("school board")){
-//            webView.loadUrl("http://mindvoice.info/rpweb/timetable/SCHOOL.pdf");
-//        }
-//
-//        if (sDept.equalsIgnoreCase("competitive exams")){
-//            webView.loadUrl("http://mindvoice.info/rpweb/timetable/COMP.pdf");
-//        }
-
         viewPager = returnView.findViewById(R.id.viewpager);
         tabLayout = returnView.findViewById(R.id.tabs);
 
-        if (sDept.equalsIgnoreCase("anna university")||sDept.equalsIgnoreCase("jntu")) {
+        if (sDept.equalsIgnoreCase("anna university")) {
             setupViewPagerAU(viewPager);
         }
 
+        if (sDept.equalsIgnoreCase("jntu")){
+            setupViewPagerJNTU(viewPager);
+        }
         if (sDept.equalsIgnoreCase("school board")){
             setupViewPagerSC(viewPager);
         }
@@ -92,8 +69,18 @@ public class TimetableFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
         return returnView;
     }
+
+    private void setupViewPagerJNTU(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
+
+        adapter.addFragment(new UgJntuFragment(), "JNTU UG");
+        adapter.addFragment(new PgJntuFragment(), "JNTU PG");
+        viewPager.setAdapter(adapter);
+
+    }
+
     private void setupViewPagerAU(ViewPager viewPager) {
-        Log.d("Syllabus setup","EntertedAU");
+        Log.d("Timetable setup","EntertedAU");
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
 
         adapter.addFragment(new UgnewtimeFragment(), "UG 2017");

@@ -195,7 +195,7 @@ public class SyllabusActivity extends AppCompatActivity {
             fileShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String url = "http://mindvoice.info/rpweb/pdf/" + material.getName() + ".pdf";
+                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/pdf/" + material.getName() + ".pdf";
                     Log.d("Syllabus fragment", url);
                     new DownloadFile().execute(url);
 
@@ -289,7 +289,7 @@ public class SyllabusActivity extends AppCompatActivity {
                     //Toast.makeText(getContext(),"Clicked download", Toast.LENGTH_LONG).show();
 
 
-                    String url = "http://mindvoice.info/rpweb/pdf/" + material.getName() + ".pdf";
+                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/pdf/" + material.getName() + ".pdf";
                     Log.d("Syllabus fragment", url);
                     new DownloadFile().execute(url);
 

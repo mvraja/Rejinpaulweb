@@ -23,7 +23,8 @@ public class SearchActivity extends AppCompatActivity {
     private Toolbar toolbar;
     String searchkey;
     private WebView webView;
-    String url="https://www.rejinpaul.com/search/max-results=7?q=";
+    //String url="https://www.rejinpaul.com/search/max-results=7?q=";
+    String url = "https://www.rejinpaulnetwork.com/search?search_key=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

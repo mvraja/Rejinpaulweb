@@ -71,6 +71,9 @@
     <string name="thank">Thank you for your interest in Rejinpaul Network application. Please contact us using above Mail Id about your need to help us serve you better.</string>
     <string name="search">Search</string>
     <string name="timetable">Timetable</string>
+    <string name="more_info">For more details visit:</string>
+    <string name="url">https://rejinpaulnetwork.com</string>
+    <string name="srch_url">Enter a keyword to search contents from rejinpaulnetwork.com</string>
 
     <string-array name="ug">
         <item>I</item>

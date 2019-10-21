@@ -74,7 +74,7 @@ public class PgnewFragment extends Fragment {
 //        webView.loadUrl("https://docs.google.com/gview?embedded=true&url="+url);
         listView = rootView.findViewById(R.id.listView);
         Syllabuslist = new ArrayList<>();
-        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getsyllabus&year=%222017%22&course=%22PG%22", null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest("https://rejinpaulnetwork.com/rejinpaulapp/v1/Api.php?apicall=getsyllabus&year=%222017%22&course=%22PG%22", null, CODE_GET_REQUEST);
         request.execute();
         SyllabusAdapter syllabusAdapter = new SyllabusAdapter(getActivity(),Syllabuslist);
         listView.setAdapter(syllabusAdapter);
@@ -189,7 +189,7 @@ public class PgnewFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    String url = "http://mindvoice.info/rpweb/regulations/PG2017/" + syllabus.getName() + ".pdf";
+                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/regulations/PG2017/" + syllabus.getName() + ".pdf";
                     Log.d("UGNewURL", url);
                     new DownloadFile().execute(url);
                 }

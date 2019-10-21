@@ -57,14 +57,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         RegEvent product = regEventList.get(position);
 
 
-        byte [] encodeByte=Base64.decode(product.getImage(), Base64.DEFAULT);
-        Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+        byte[] encodeByte = Base64.decode(product.getImage(), Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 
         holder.imageView.setImageBitmap(bitmap);
-        holder.textViewTitle.setText(product.getTitle());
-        holder.textViewShortDesc.setText(product.getType());
-        holder.textViewRating.setText(product.getDate());
-        holder.textViewPrice.setText(product.getLoc());
+        holder.textViewName.setText(product.getTitle());
+        holder.textViewType.setText(product.getType());
+        holder.textViewDate.setText(product.getDate());
+        holder.textViewLoc.setText(product.getLoc());
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,35 +75,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     }
 
     private void loadImage(View v) {
-        ImageView tempImageView = (ImageView)v;
+        ImageView tempImageView = (ImageView) v;
 
-        View layout = LayoutInflater.from(mCtx).inflate(R.layout.custom_image,null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(mCtx,android.R.style.Theme_Light);
+        View layout = LayoutInflater.from(mCtx).inflate(R.layout.custom_image, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mCtx, android.R.style.Theme_Light);
         builder.setView(layout);
 
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
 
-         image = layout.findViewById(R.id.fullimage);
+        image = layout.findViewById(R.id.fullimage);
         image.setImageDrawable(tempImageView.getDrawable());
-//        ImageButton btnzIn = (ImageButton) layout.findViewById(R.id.btnZoomIn);
-//        ImageButton btnzOut = (ImageButton) layout.findViewById(R.id.btnZoomOut);
-//
-//        btnzIn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Animation animZoomIn = AnimationUtils.loadAnimation(mCtx,R.anim.zoomin);
-//                image.startAnimation(animZoomIn);
-//            }
-//        });
-//        btnzOut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Animation animZoomOut = AnimationUtils.loadAnimation(mCtx,R.anim.zoomout);
-//                image.startAnimation(animZoomOut);
-//            }
-//        });
         PhotoViewAttacher pAttacher;
         pAttacher = new PhotoViewAttacher(image);
         pAttacher.update();
@@ -119,7 +102,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     }
 
 
-
     @Override
     public int getItemCount() {
         return regEventList.size();
@@ -128,18 +110,17 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     class EventViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewTitle, textViewShortDesc, textViewRating, textViewPrice;
+        TextView textViewName, textViewType, textViewDate, textViewLoc;
         ImageView imageView;
 
         public EventViewHolder(View itemView) {
             super(itemView);
 
-            textViewTitle = itemView.findViewById(R.id.textViewTitle);
-            textViewShortDesc = itemView.findViewById(R.id.textViewType);
-            textViewRating = itemView.findViewById(R.id.textViewDate);
-            textViewPrice = itemView.findViewById(R.id.textViewLoc);
+            textViewName = itemView.findViewById(R.id.textViewTitle);
+            textViewType = itemView.findViewById(R.id.textViewType);
+            textViewDate = itemView.findViewById(R.id.textViewDate);
+            textViewLoc = itemView.findViewById(R.id.textViewLoc);
             imageView = itemView.findViewById(R.id.imageView);
         }
     }
-
 }
