@@ -45,7 +45,7 @@ public class UgoldtimeFragment extends Fragment {
 
 
         if (sDept.equalsIgnoreCase("anna university")) {
-            webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/au2013.pdf");
+            webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/aucr2013.pdf");
         }
         if (sDept.equalsIgnoreCase("jntu")) {
             webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");

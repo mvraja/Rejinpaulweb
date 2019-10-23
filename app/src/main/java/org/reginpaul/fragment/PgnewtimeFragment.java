@@ -45,7 +45,7 @@ public class PgnewtimeFragment extends Fragment {
 
 
         if (sDept.equalsIgnoreCase("anna university")) {
-            webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/aupg2017.pdf");
+            webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/memtech2017.pdf");
         }
         if (sDept.equalsIgnoreCase("jntu")) {
             webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");

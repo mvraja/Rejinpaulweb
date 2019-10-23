@@ -45,7 +45,7 @@ public class UgnewtimeFragment  extends Fragment {
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 
         if (sDept.equalsIgnoreCase("anna university")) {
-            webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/au2017.pdf");
+            webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/aucr2017.pdf");
         }
         if (sDept.equalsIgnoreCase("jntu")) {
             webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");
