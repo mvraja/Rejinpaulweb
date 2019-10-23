@@ -288,9 +288,9 @@ public class EventsFragment extends Fragment {
         params.put("type", strType);
         params.put("image", strImage);
         params.put("status","no");
-
-        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_EVNT, params, CODE_POST_REQUEST);
-        //PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=createuser",params, CODE_POST_REQUEST);
+        Log.d("Events",params.keySet().toString());
+        PerformNetworkRequest request = new PerformNetworkRequest("https://www.rejinpaulnetwork.com/rejinpaulapp/v1/Api.php?apicall=createuser",params, CODE_POST_REQUEST);
+//        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=createuser",params, CODE_POST_REQUEST);
         request.execute();
         loadingBar.dismiss();
 
@@ -329,6 +329,7 @@ public class EventsFragment extends Fragment {
             super.onPostExecute(s);
             try {
                 JSONObject object = new JSONObject(s);
+                Log.d("Event fragment",object.toString());
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getActivity().getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                 }
@@ -341,9 +342,11 @@ public class EventsFragment extends Fragment {
         protected String doInBackground(Void... voids) {
             RequestHandler requestHandler = new RequestHandler();
 
-            if (requestCode == CODE_POST_REQUEST)
+            if (requestCode == CODE_POST_REQUEST) {
+                Log.d("Events", url);
+                Log.d("Events",params.toString());
                 return requestHandler.sendPostRequest(url, params);
-
+            }
 
             if (requestCode == CODE_GET_REQUEST)
                 return requestHandler.sendGetRequest(url);

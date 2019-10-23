@@ -27,7 +27,9 @@ public class SplashActivity extends AppCompatActivity {
         HashMap<String, String> params = new HashMap<>();
         if (getIntent().getExtras() != null) {
             Log.d("Bg code", "Entering bg code in splash");
-            for (String key : getIntent().getExtras().keySet())
+
+            for (String key : getIntent().getExtras().keySet()) {
+                Log.d("Bg code", key);
                 if (key.equals("title")) {
 //            title_txt.setText(getIntent().getExtras().getString(key));
                     params.put("msgtype", getIntent().getExtras().getString(key));
@@ -37,12 +39,13 @@ public class SplashActivity extends AppCompatActivity {
                     params.put("msg", getIntent().getExtras().getString(key));
                     Log.d("Bg message", getIntent().getExtras().getString(key));
                 }
+            }
         }
 //        params.put("msgtype", Notify_title);
 //        params.put("msg", Notify_msg);
         Log.d("Bg code", "outside bg code in splash");
 
-        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_MSG , params, CODE_POST_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest("https://www.rejinpaulnetwork.com/rejinpaulapp/v1/Api.php?apicall=createmessage" , params, CODE_POST_REQUEST);
         request.execute();
 
         new Handler().postDelayed(new Runnable() {
@@ -95,6 +98,7 @@ public class SplashActivity extends AppCompatActivity {
             RequestHandler requestHandler = new RequestHandler();
             if (requestCode == CODE_POST_REQUEST) {
                 Log.d("Notification url", url);
+                Log.d("Notification param",params.toString());
                 return requestHandler.sendPostRequest(url, params);
             }
 
