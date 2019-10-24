@@ -1,5 +1,6 @@
 package org.reginpaul.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,7 @@ public class UgoldtimeFragment extends Fragment {
 //        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=gettimetable&category=" + sDept, null, CODE_GET_REQUEST);
 //        request.execute();
 
+
         webView = returnView.findViewById(R.id.webfile);
         webView.setWebViewClient(new inlineBrowser());
         webView.getSettings().setLoadWithOverviewMode(true);
@@ -42,9 +44,9 @@ public class UgoldtimeFragment extends Fragment {
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/soon.pdf");
 
-
-        if (sDept.equalsIgnoreCase("anna university")) {
+     /*   if (sDept.equalsIgnoreCase("anna university")) {
             webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/aucr2013.pdf");
         }
         if (sDept.equalsIgnoreCase("jntu")) {
@@ -57,7 +59,8 @@ public class UgoldtimeFragment extends Fragment {
 
         if (sDept.equalsIgnoreCase("competitive exams")) {
             webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");
-        }   return returnView;
+        }*/
+     return returnView;
     }
     private class inlineBrowser extends WebViewClient {
         @Override

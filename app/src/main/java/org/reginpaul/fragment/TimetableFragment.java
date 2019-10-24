@@ -51,7 +51,8 @@ public class TimetableFragment extends Fragment {
         viewPager = returnView.findViewById(R.id.viewpager);
         tabLayout = returnView.findViewById(R.id.tabs);
 
-        if (sDept.equalsIgnoreCase("anna university")) {
+        setupViewPagerAU(viewPager);
+        /*if (sDept.equalsIgnoreCase("anna university")) {
             setupViewPagerAU(viewPager);
         }
 
@@ -63,35 +64,35 @@ public class TimetableFragment extends Fragment {
         }
         if (sDept.equalsIgnoreCase("competitive exams")){
             setupViewPagerCE(viewPager);
-        }
+        }*/
 
 
         tabLayout.setupWithViewPager(viewPager);
         return returnView;
     }
 
-    private void setupViewPagerJNTU(ViewPager viewPager) {
+    /*private void setupViewPagerJNTU(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
 
         adapter.addFragment(new UgJntuFragment(), "JNTU UG");
         adapter.addFragment(new PgJntuFragment(), "JNTU PG");
         viewPager.setAdapter(adapter);
 
-    }
+    }*/
 
     private void setupViewPagerAU(ViewPager viewPager) {
         Log.d("Timetable setup","EntertedAU");
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
 
-        adapter.addFragment(new UgnewtimeFragment(), "UG 2017");
-        adapter.addFragment(new PgnewtimeFragment(), "PG 2017");
-        adapter.addFragment(new UgoldtimeFragment(), "UG 2013");
-        adapter.addFragment(new PgoldtimeFragment(), "PG 2013");
+        adapter.addFragment(new UgnewtimeFragment(), "ANNA UNIV");
+        adapter.addFragment(new PgnewtimeFragment(), "JNTU");
+        adapter.addFragment(new UgoldtimeFragment(), "SCHOOL");
+        adapter.addFragment(new PgoldtimeFragment(), "TNPSC");
 
         viewPager.setAdapter(adapter);
 
     }
-    private void setupViewPagerSC(ViewPager viewPager) {
+    /*private void setupViewPagerSC(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
         adapter.addFragment(new XFragment(), "Class 10");
         adapter.addFragment(new XIFragment(), "Class 11");
@@ -106,7 +107,7 @@ public class TimetableFragment extends Fragment {
         adapter.addFragment(new BankFragment(), "BANK");
         adapter.addFragment(new UpscFragment(), "UPSC");
         viewPager.setAdapter(adapter);
-    }
+    }*/
 
     public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -154,12 +155,12 @@ public class TimetableFragment extends Fragment {
     }
 
 
-
+/*
     private class inlineBrowser extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
         }
-    }
+    }*/
 }

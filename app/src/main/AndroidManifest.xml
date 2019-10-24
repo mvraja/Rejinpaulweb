@@ -95,10 +95,10 @@
             android:name=".PasswordActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
-        <activity
+        <!--<activity
             android:name=".SyllabusActivity"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" />-->
         <activity
             android:name=".MaterialsActivity"
             android:parentActivityName=".MainActivity"

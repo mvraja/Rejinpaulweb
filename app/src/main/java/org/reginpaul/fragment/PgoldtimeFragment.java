@@ -42,9 +42,10 @@ public class PgoldtimeFragment extends Fragment {
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/soon.pdf");
 
 
-        if (sDept.equalsIgnoreCase("anna university")) {
+        /*if (sDept.equalsIgnoreCase("anna university")) {
             webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/memtech2013.pdf");
         }
         if (sDept.equalsIgnoreCase("jntu")) {
@@ -57,7 +58,8 @@ public class PgoldtimeFragment extends Fragment {
 
         if (sDept.equalsIgnoreCase("competitive exams")) {
             webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");
-        }return returnView;
+        }*/
+        return returnView;
     }
     private class inlineBrowser extends WebViewClient {
         @Override
