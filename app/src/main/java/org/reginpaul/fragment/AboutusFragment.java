@@ -24,7 +24,7 @@ public class AboutusFragment extends Fragment {
         int image[]={R.drawable.ad1,R.drawable.ad2,R.drawable.ad3,R.drawable.ad4,R.drawable.ad5};
         v_flipper=rootView.findViewById(R.id.v_flipper);
         Mail=(ImageView) rootView.findViewById(R.id.mail);
-        Phone=(ImageView) rootView.findViewById(R.id.ph);
+//        Phone=(ImageView) rootView.findViewById(R.id.ph);
         Rate=(ImageView) rootView.findViewById(R.id.rate);
         for(int images : image){
             flipperImages(images);
@@ -38,14 +38,14 @@ public class AboutusFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        Phone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:1234567890"));
-                startActivity(callIntent);
-            }
-        });
+//        Phone.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+//                callIntent.setData(Uri.parse("tel:1234567890"));
+//                startActivity(callIntent);
+//            }
+//        });
 Rate.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {

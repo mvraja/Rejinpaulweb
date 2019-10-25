@@ -51,7 +51,7 @@ public class TimetableFragment extends Fragment {
         viewPager = returnView.findViewById(R.id.viewpager);
         tabLayout = returnView.findViewById(R.id.tabs);
 
-        setupViewPagerAU(viewPager);
+        setupViewPagerall(viewPager);
         /*if (sDept.equalsIgnoreCase("anna university")) {
             setupViewPagerAU(viewPager);
         }
@@ -80,7 +80,7 @@ public class TimetableFragment extends Fragment {
 
     }*/
 
-    private void setupViewPagerAU(ViewPager viewPager) {
+    private void setupViewPagerall(ViewPager viewPager) {
         Log.d("Timetable setup","EntertedAU");
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
 
