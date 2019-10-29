@@ -64,8 +64,8 @@
     <string name="link3">https://aucoe.annauniv.edu</string>
     <string name="link_note">Official links of Anna University Results</string>
     <string name="downlink">&lt;font color="#303F9F">&lt;b>- CLICK HERE TO DOWNLOAD.&lt;/b>&lt;/font></string>
-    <string name="clientMail">rejinpaul&#64;rejinpaul.com</string>
-    <string name="drop">Drop us your queries at</string>
+    <string name="clientMail">nrrejinpaul&#64;gmail.com</string>
+    <string name="drop">Do you have questions on how to advertise your business with us? Please reach out to</string>
     <string name="rating">Rate our application on Google Play Store</string>
     <string name="business">For Business and Advertisement contact 1234567890</string>
     <string name="thank">Thank you for your interest in Rejinpaul Network application. Please contact us using above Mail Id about your need to help us serve you better.</string>
@@ -74,6 +74,8 @@
     <string name="more_info">For more details visit:</string>
     <string name="url">https://rejinpaulnetwork.com</string>
     <string name="srch_url">Enter a keyword to search contents from rejinpaulnetwork.com</string>
+    <string name="About_us_long">Rejinpaul Network is one of Leading Website among the Engineering Student Community since 2010. We provide Study Materials for Undergraduate and Post-Graduate Courses of Anna University. It also provides preparation materials for all competitive exams.</string>
+    <string name="About_us_long1">Study materials For School Board Exam Students are also available in our website. Examinees can get various University Results And all States Board Exam Results. The website also posts Theory and Practical Exams Time Table Notifications, Internal Exam Schedule, Entrance Exam.</string>
 
     <string-array name="ug">
         <item>I</item>

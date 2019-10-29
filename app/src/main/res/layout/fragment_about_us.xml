@@ -9,17 +9,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/textStyle"
-            android:id="@+id/row1"
-            android:gravity="center"
-            android:text="Our Proud Sponsors"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
-
-        <ViewFlipper
-            android:layout_below="@id/row1"
+        <ImageView
+            android:background="@color/fui_transparent"
             android:id="@+id/v_flipper"
+            android:src="@drawable/adv_logo"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_margin="10dp"/>
@@ -34,29 +27,24 @@
             android:orientation="vertical"
             android:layout_marginTop="10dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="@color/colorWhite"
-                android:src="@drawable/email" />
-
             <TextView
+                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
-                android:text="@string/drop"
+                android:text="@string/About_us_long"
+                android:maxLines="5"
                 android:textColor="@color/colorWhite" />
 
             <TextView
-                android:id="@+id/txtview30"
+                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/clientMail"
-                android:textColor="@color/colorYellow" />
-
+                android:text="@string/About_us_long1"
+                android:maxLines="6"
+                android:textColor="@color/colorWhite" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,10 +52,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/row2"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/srow1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -80,16 +69,29 @@
                     android:src="@drawable/ic_email_black_24dp" />
 
                 <TextView
+                    android:id="@+id/strdrop"
+                    android:layout_toEndOf="@id/mail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingEnd="20dp"
                     android:paddingStart="20dp"
-                    android:text="@string/thank"
+                    android:text="@string/drop"
                     android:textColor="@color/colorWhite" />
-            </LinearLayout>
+                <TextView
+                    android:layout_below="@id/strdrop"
+                    android:layout_toEndOf="@id/mail"
+                    android:id="@+id/txtview30"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/clientMail"
+                    android:textColor="@color/colorYellow" />
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/srow2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -99,32 +101,11 @@
                     android:id="@+id/ph"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_phone_black_24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingEnd="20dp"
-                    android:paddingStart="20dp"
-                    android:text="@string/business"
-                    android:textColor="@color/colorWhite" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="20dp">
-
-                <ImageView
-                    android:id="@+id/rate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:src="@drawable/ic_star_black_24dp" />
 
                 <TextView
-                    android:id="@+id/rate_txt"
+                    android:id="@+id/strrate"
+                    android:layout_toEndOf="@id/ph"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -132,8 +113,8 @@
                     android:paddingStart="20dp"
                     android:text="@string/rating"
                     android:textColor="@color/colorWhite" />
+            </RelativeLayout>
 
-            </LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>
