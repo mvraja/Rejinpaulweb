@@ -153,7 +153,7 @@ public class QuestionsActivity extends AppCompatActivity{
             try {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
-                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     Log.d("Questions", object.toString());
                     refreshList(object.getJSONArray("pfiles"));
                 } else
@@ -321,6 +321,7 @@ public class QuestionsActivity extends AppCompatActivity{
 
                     String url = "https://rejinpaulnetwork.com/rejinpaulapp/question/" + material.getName() + ".pdf";
                     Log.d("Materials fragment", url);
+                    Toast.makeText(getContext(),"File Download in Progress",Toast.LENGTH_LONG).show();
                     new DownloadFile().execute(url);
 
 

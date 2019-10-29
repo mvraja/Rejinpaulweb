@@ -121,7 +121,7 @@ public class PgoldFragment extends Fragment {
             try {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
-                    Toast.makeText(getContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     Log.d("Syllabus", object.toString());
                     refreshList(object.getJSONArray("pfiles"));
                 } else
@@ -191,6 +191,7 @@ public class PgoldFragment extends Fragment {
 
                     String url = "https://rejinpaulnetwork.com/rejinpaulapp/regulations/PG2013/" + syllabus.getName() + ".pdf";
                     Log.d("UGNewURL", url);
+                    Toast.makeText(getContext(),"File Download in Progress",Toast.LENGTH_LONG).show();
                     new DownloadFile().execute(url);
                 }
 
