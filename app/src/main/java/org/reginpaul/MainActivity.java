@@ -60,6 +60,7 @@ import org.reginpaul.fragment.AboutusFragment;
 import org.reginpaul.fragment.EventsFragment;
 import org.reginpaul.fragment.EventsRegFragment;
 import org.reginpaul.fragment.HomeFragment;
+import org.reginpaul.fragment.ImpquesFragment;
 import org.reginpaul.fragment.MaterialsFragment;
 import org.reginpaul.fragment.ProfileFragment;
 import org.reginpaul.fragment.ResultFragment;
@@ -535,6 +536,12 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new MaterialsFragment()).commit();
                 getSupportActionBar().setTitle("Study Materials");
                 break;
+
+            case R.id.nav_impques:
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ImpquesFragment()).commit();
+                getSupportActionBar().setTitle("Important Questions");
+                break;
+
 
             case R.id.nav_timetable:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new TimetableFragment()).commit();

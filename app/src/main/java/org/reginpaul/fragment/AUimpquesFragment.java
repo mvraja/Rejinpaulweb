@@ -497,7 +497,7 @@ public class AUimpquesFragment extends Fragment {
 //                        fileName = f_url[0].substring(f_url[0].lastIndexOf('/') + 1, f_url[0].length());
 //                        Log.d("dwnld url fname", fileName);
                         folder = Environment.DIRECTORY_DOWNLOADS + File.separator;
-                        Toast.makeText(getContext(),"File downloaded in File Manager/"+folder,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"File downloaded in File Manager/"+folder+fileName,Toast.LENGTH_SHORT).show();
                         File open = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + impques.getName() + ".pdf");
                         Uri fileURI = FileProvider.getUriForFile(getContext(),
                                 BuildConfig.APPLICATION_ID + ".provider",

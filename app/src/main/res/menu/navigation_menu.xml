@@ -20,6 +20,10 @@
         android:icon="@drawable/study"
         android:title="@string/materials" />
     <item
+        android:id="@+id/nav_impques"
+        android:icon="@drawable/impques"
+        android:title="@string/impquestion" />
+    <item
         android:id="@+id/nav_timetable"
         android:icon="@drawable/time"
         android:title="@string/timetable" />
