@@ -21,8 +21,8 @@ import org.reginpaul.R;
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener{
 
-    String[] title = { "Syllabus","Study materials", "Profile", "Events","Notification","Results","Important Questions"};
-    int[] icon={R.drawable.syllabus,R.drawable.study, R.drawable.profile_home, R.drawable.friends,R.drawable.messages,R.drawable.result,R.drawable.impques};
+    String[] title = { "Syllabus","Study materials", "Profile", "Events","Notification","Results"," Impt Questions","Timetable"};
+    int[] icon={R.drawable.syllabus,R.drawable.study, R.drawable.profile_home, R.drawable.friends,R.drawable.messages,R.drawable.result,R.drawable.impques,R.drawable.time};
     GridView grid;
     AppCompatActivity activity;
     ActionBar actionBar;
@@ -93,6 +93,11 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             case 6:
                 getFragmentManager().beginTransaction().replace(R.id.main_container, new ImpquesFragment()).commit();
                 actionBar.setTitle("  "+"Important Questions");
+                //actionBar.setIcon(R.drawable.logo_small);
+                break;
+            case 7:
+                getFragmentManager().beginTransaction().replace(R.id.main_container, new TimetableFragment()).commit();
+                actionBar.setTitle("  "+"TimeTable");
                 //actionBar.setIcon(R.drawable.logo_small);
                 break;
 
