@@ -43,59 +43,6 @@ import java.util.List;
 
 public class AUtimeFragment extends Fragment {
 
-    /*private WebView webView;
-    String sDept;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-
-    public AUtimeFragment() {
-
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View returnView = inflater.inflate(R.layout.fragment_ugnewtime, container, false);
-
-        MainActivity mainActivity = (MainActivity) getActivity();
-        sDept = mainActivity.getDept();
-
-//        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=gettimetable&category=" + sDept, null, CODE_GET_REQUEST);
-//        request.execute();
-
-        webView = returnView.findViewById(R.id.webfile);
-        webView.setWebViewClient(new inlineBrowser());
-        webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.getSettings().setLoadsImagesAutomatically(true);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-
-        if (sDept.equalsIgnoreCase("anna university")) {
-            webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/aucr2017.pdf");
-        }
-        if (sDept.equalsIgnoreCase("jntu")) {
-            webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");
-        }
-
-        if (sDept.equalsIgnoreCase("school board")) {
-            webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");
-        }
-
-        if (sDept.equalsIgnoreCase("competitive exams")) {
-            webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");
-        }
-        return returnView;
-    }
-    private class inlineBrowser extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-    }*/
-    WebView webView;
     String url;
 
     List<Timetable> timetableList;
