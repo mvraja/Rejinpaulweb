@@ -1,8 +1,5 @@
 package org.reginpaul.fragment;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,18 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.reginpaul.MainActivity;
 import org.reginpaul.R;
-import org.reginpaul.RequestHandler;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -84,10 +74,10 @@ public class TimetableFragment extends Fragment {
         Log.d("Timetable setup","EntertedAU");
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
 
-        adapter.addFragment(new UgnewtimeFragment(), "ANNA UNIV");
-        adapter.addFragment(new PgnewtimeFragment(), "JNTU");
-        adapter.addFragment(new UgoldtimeFragment(), "SCHOOL");
-        adapter.addFragment(new PgoldtimeFragment(), "TNPSC");
+        adapter.addFragment(new AUtimeFragment(), "ANNA UNIV");
+        adapter.addFragment(new JNTUtimeFragment(), "JNTU");
+        adapter.addFragment(new SCHOOLtimeFragment(), "SCHOOL");
+        adapter.addFragment(new TNPSCtimeFragment(), "TNPSC");
 
         viewPager.setAdapter(adapter);
 

@@ -1,24 +1,20 @@
-package org.reginpaul;
+package org.reginpaul.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,6 +23,10 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.reginpaul.Api;
+import org.reginpaul.BuildConfig;
+import org.reginpaul.R;
+import org.reginpaul.RequestHandler;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,96 +40,46 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+public class TNPSCimpquesFragment extends Fragment {
+    String url;
 
-public class QuestionsActivity extends AppCompatActivity{
-
-
+    List<Impques> ImpquesList;
+    ListView listView;
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
-
-    List<Material> materialList;
-    ListView listView;
-
     private View listViewItem;
-
     ProgressBar p;
+    private String fileName,folder;
 
-    private String fileName, folder, category, temp_ctg, stSemester, stCourse, type;
-
-    private Toolbar toolbar;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        toolbar = findViewById(R.id.ques_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        final Drawable upArrow =  ContextCompat.getDrawable(getApplicationContext(), R.drawable.abc_ic_ab_back_material);
-        upArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorBrown), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("  "+"Question Papers");
-
-
-        savedInstanceState = getIntent().getExtras();
-        category = savedInstanceState.getString("strtext");
-
-        category = savedInstanceState.getString("strtext");
-        stSemester = savedInstanceState.getString("strSem");
-        stCourse = savedInstanceState.getString("strCour");
-        type = savedInstanceState.getString("type");
-
-        if (category.equalsIgnoreCase("ece")){
-            temp_ctg = "ECE";
-        }
-        else if (category.equalsIgnoreCase("eee")){
-            temp_ctg = "EEE";
-        }
-        else if (category.equalsIgnoreCase("cse")){
-            temp_ctg = "CSE";
-        }
-        else if (category.equalsIgnoreCase("it")){
-            temp_ctg = "IT";
-        }
-        else if (category.equalsIgnoreCase("auto")){
-            temp_ctg = "AUTO";
-        }
-        else if (category.equalsIgnoreCase("civil")){
-            temp_ctg = "CIV";
-        }
-        else if (category.equalsIgnoreCase("mech")){
-            temp_ctg = "MECH";
-        }
-        else if (category.equalsIgnoreCase("biotech")){
-            temp_ctg = "BIOTECH";
-        }
-
-        else if (category.equalsIgnoreCase("mca")){
-            temp_ctg = "MCA";
-        }
-
-        else if (category.equalsIgnoreCase("mba")){
-            temp_ctg = "MBA";
-        }
-        else {
-            temp_ctg = "CSE";
-        }
-        String sDept1 = "\"" + temp_ctg + "\"";
-        String sSemester = "\"" + stSemester + "\"";
-        String sCourse = "\"" + stCourse + "\"";
-        listView = findViewById(R.id.listView);
-
-        materialList = new ArrayList<>();
-       // PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_QUESTIONS + sDept1, null, CODE_GET_REQUEST);
-        //PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=getquestion&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
-        PerformNetworkRequest request = new PerformNetworkRequest("https://rejinpaulnetwork.com/rejinpaulapp/v1/Api.php?apicall=getquestion&category="+sDept1+"&semester="+sSemester+"&course="+sCourse, null, CODE_GET_REQUEST);
+        View rootView = inflater.inflate(R.layout.fragment_auimpques, container, false);
+        String sDept1 = "%22tnpsc%22";
+        listView = rootView.findViewById(R.id.listView);
+        p = rootView.findViewById(R.id.pbar);
+        ImpquesList = new ArrayList<>();
+        //PerformNetworkRequest request = new PerformNetworkRequest("https://rejinpaulnetwork.com/rejinpaulapp/v1/Api.php?apicall=getimpques&category=%22au%22", null, CODE_GET_REQUEST);
+        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_READ_IMPQUES + sDept1, null, CODE_GET_REQUEST);
         request.execute();
-        MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
-        listView.setAdapter(materialAdapter);
+        ImpquesAdapter impquesAdapter = new ImpquesAdapter(getActivity(), ImpquesList);
+        listView.setAdapter(impquesAdapter);
+
+        return rootView;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
 
     private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
         String url;
@@ -153,11 +103,11 @@ public class QuestionsActivity extends AppCompatActivity{
             try {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
-//                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
-                    Log.d("Questions", object.toString());
+                    //Toast.makeText(getContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    Log.d("timetable", object.toString());
                     refreshList(object.getJSONArray("pfiles"));
                 } else
-                    Log.d("Questions", object.toString());
+                    Log.d("timetable", object.toString());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -173,7 +123,7 @@ public class QuestionsActivity extends AppCompatActivity{
 
 
             if (requestCode == CODE_GET_REQUEST) {
-                Log.d("Questions", url);
+                Log.d("timetable", url);
                 String getstring = requestHandler.sendGetRequest(url);
 
                 return requestHandler.sendGetRequest(url);
@@ -183,25 +133,26 @@ public class QuestionsActivity extends AppCompatActivity{
     }
 
     private void refreshList(JSONArray pfiles) throws JSONException {
-        materialList.clear();
+        ImpquesList.clear();
         for (int i = 0; i < pfiles.length(); i++) {
             JSONObject obj = pfiles.getJSONObject(i);
-            materialList.add(new Material(obj.getInt("id"), obj.getString("name")));
-            Log.d("Questions", new Material(obj.getInt("id"), obj.getString("name")).toString());
+            ImpquesList.add(new Impques(obj.getInt("id"), obj.getString("name")));
+            Log.d("impques", new Impques(obj.getInt("id"), obj.getString("name")).toString());
         }
 
 
-        MaterialAdapter materialAdapter = new MaterialAdapter(materialList);
-        listView.setAdapter(materialAdapter);
+        ImpquesAdapter timetableAdapter = new ImpquesAdapter(getActivity(), ImpquesList);
+        listView.setAdapter(timetableAdapter);
     }
 
-    class MaterialAdapter extends ArrayAdapter<Material> {
+    class ImpquesAdapter extends ArrayAdapter<Impques> {
 
-        List<Material> materialList;
+        List<Impques> impquesList;
 
-        public MaterialAdapter(@NonNull List<Material> materialList) {
-            super(QuestionsActivity.this, R.layout.layout_list, materialList);
-            this.materialList = materialList;
+        public ImpquesAdapter(Activity context, @NonNull List<Impques> impquesList) {
+            super(context, R.layout.layout_list, impquesList);
+
+            this.impquesList = impquesList;
         }
 
         @Override
@@ -211,20 +162,18 @@ public class QuestionsActivity extends AppCompatActivity{
 
             TextView textViewName = listViewItem.findViewById(R.id.textViewName);
 
+            final Impques impques = impquesList.get(position);
+
             ImageView fileShare = listViewItem.findViewById(R.id.imgShare);
             ImageView fileDownload = listViewItem.findViewById(R.id.imgDown);
 
-            final Material material = materialList.get(position);
 
-            textViewName.setText(material.getName());
+            textViewName.setText(impques.getName());
 
             fileShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Toast.makeText(getContext(),"Clicked download", Toast.LENGTH_LONG).show();
-
-
-                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/question/" + material.getName() + ".pdf";
+                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/impquestion/" + impques.getName() + ".pdf";
                     Log.d("Questions fragment", url);
                     new DownloadFile().execute(url);
 
@@ -235,7 +184,6 @@ public class QuestionsActivity extends AppCompatActivity{
                     @Override
                     protected void onPreExecute() {
                         super.onPreExecute();
-                        p = new ProgressBar(QuestionsActivity.this);
                         p.setIndeterminate(false);
                         p.setVisibility(View.VISIBLE);
                     }
@@ -264,8 +212,8 @@ public class QuestionsActivity extends AppCompatActivity{
                                 directory.mkdirs();
                             }
 
-                            OutputStream output = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + material.getName() + ".pdf");
-                            Log.d("Check folder path", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + material.getName() + ".pdf");
+                            OutputStream output = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + impques.getName() + ".pdf");
+                            Log.d("Check folder path", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + impques.getName() + ".pdf");
                             byte data[] = new byte[1024];
 
                             long total = 0;
@@ -282,7 +230,7 @@ public class QuestionsActivity extends AppCompatActivity{
                             input.close();
                             Log.d("Questions fragment", "Downloaded at: " + folder + fileName);
                             File outputFile = new File(Environment.getExternalStoragePublicDirectory
-                                    (Environment.DIRECTORY_DOWNLOADS), material.getName() + ".pdf");
+                                    (Environment.DIRECTORY_DOWNLOADS), impques.getName() + ".pdf");
                             Uri uri = Uri.parse(String.valueOf(outputFile));
 
                             Intent share = new Intent();
@@ -310,28 +258,30 @@ public class QuestionsActivity extends AppCompatActivity{
 
                         p.setVisibility(View.GONE);
 
+
                     }
                 }
             });
+
             fileDownload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Toast.makeText(getContext(),"Clicked download", Toast.LENGTH_LONG).show();
 
-
-                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/question/" + material.getName() + ".pdf";
+                    String url = "https://rejinpaulnetwork.com/rejinpaulapp/impquestion/"+impques.getName()+".pdf";
                     Log.d("Materials fragment", url);
+                    File outputFile = new File(Environment.getExternalStoragePublicDirectory
+                            (Environment.DIRECTORY_DOWNLOADS), impques.getName() + ".pdf");
+
                     Toast.makeText(getContext(),"File Download in Progress",Toast.LENGTH_LONG).show();
                     new DownloadFile().execute(url);
 
-
                 }
+
 
                 class DownloadFile extends AsyncTask<String, String, String> {
                     @Override
                     protected void onPreExecute() {
                         super.onPreExecute();
-                        p = new ProgressBar(QuestionsActivity.this);
                         p.setIndeterminate(false);
                         p.setVisibility(View.VISIBLE);
                     }
@@ -361,8 +311,8 @@ public class QuestionsActivity extends AppCompatActivity{
                                 directory.mkdirs();
                             }
 
-                            OutputStream output = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + material.getName() + ".pdf");
-                            Log.d("Check folder path", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + material.getName() + ".pdf");
+                            OutputStream output = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + impques.getName() + ".pdf");
+                            Log.d("Check folder path", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + impques.getName() + ".pdf");
                             byte data[] = new byte[1024];
 
                             long total = 0;
@@ -393,8 +343,9 @@ public class QuestionsActivity extends AppCompatActivity{
                         super.onPostExecute(message);
 
                         p.setVisibility(View.GONE);
+                        folder = Environment.DIRECTORY_DOWNLOADS + File.separator;
                         Toast.makeText(getContext(),"File downloaded in File Manager/"+folder+fileName,Toast.LENGTH_SHORT).show();
-                        File open = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + material.getName() + ".pdf");
+                        File open = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + impques.getName() + ".pdf");
                         Uri fileURI = FileProvider.getUriForFile(getContext(),
                                 BuildConfig.APPLICATION_ID + ".provider",
                                 open);
@@ -409,9 +360,29 @@ public class QuestionsActivity extends AppCompatActivity{
                     }
                 }
             });
-
             return listViewItem;
         }
     }
+
+    private class Impques {
+
+        private int id;
+        private String name;
+
+        public Impques(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+    }
+
 
 }

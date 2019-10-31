@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -45,29 +44,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class UgoldtimeFragment extends Fragment {
+public class TNPSCtimeFragment extends Fragment {
 //    private WebView webView;
 //    String sDept;
 //    private TabLayout tabLayout;
 //    private ViewPager viewPager;
 //
-//    public UgoldtimeFragment() {
+//    public TNPSCtimeFragment() {
 //
 //    }
-
-    List<Timetable> timetableList;
-    ListView listView;
-    private static final int CODE_GET_REQUEST = 1024;
-    private static final int CODE_POST_REQUEST = 1025;
-    private View listViewItem;
-    ProgressBar p;
-    private String fileName,folder;
-
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+//
+//
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
 //        View returnView = inflater.inflate(R.layout.fragment_ugnewtime, container, false);
 //
 //        MainActivity mainActivity = (MainActivity) getActivity();
@@ -75,7 +65,6 @@ public class UgoldtimeFragment extends Fragment {
 //
 ////        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=gettimetable&category=" + sDept, null, CODE_GET_REQUEST);
 ////        request.execute();
-//
 //
 //        webView = returnView.findViewById(R.id.webfile);
 //        webView.setWebViewClient(new inlineBrowser());
@@ -86,8 +75,9 @@ public class UgoldtimeFragment extends Fragment {
 //        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 //        webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/soon.pdf");
 //
-//     /*   if (sDept.equalsIgnoreCase("anna university")) {
-//            webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/aucr2013.pdf");
+//
+//        /*if (sDept.equalsIgnoreCase("anna university")) {
+//            webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/memtech2013.pdf");
 //        }
 //        if (sDept.equalsIgnoreCase("jntu")) {
 //            webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");
@@ -100,7 +90,7 @@ public class UgoldtimeFragment extends Fragment {
 //        if (sDept.equalsIgnoreCase("competitive exams")) {
 //            webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");
 //        }*/
-//     return returnView;
+//        return returnView;
 //    }
 //    private class inlineBrowser extends WebViewClient {
 //        @Override
@@ -108,8 +98,24 @@ public class UgoldtimeFragment extends Fragment {
 //            view.loadUrl(url);
 //            return true;
 //        }
+//    }
+String url;
+
+    List<Timetable> timetableList;
+    ListView listView;
+    private static final int CODE_GET_REQUEST = 1024;
+    private static final int CODE_POST_REQUEST = 1025;
+    private View listViewItem;
+    ProgressBar p;
+    private String fileName,folder;
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_ugnew, container, false);
-        String sDept1 = "%22school%22";
+        String sDept1 = "%22tnpsc%22";
         listView = rootView.findViewById(R.id.listView);
         p = rootView.findViewById(R.id.pbar);
         timetableList = new ArrayList<>();
@@ -121,6 +127,7 @@ public class UgoldtimeFragment extends Fragment {
 
         return rootView;
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -163,7 +170,7 @@ public class UgoldtimeFragment extends Fragment {
             try {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
-                    Toast.makeText(getContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     Log.d("timetable", object.toString());
                     refreshList(object.getJSONArray("pfiles"));
                 } else
@@ -341,8 +348,6 @@ public class UgoldtimeFragment extends Fragment {
         }
 
     }
-
-
 
 
 }

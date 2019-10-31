@@ -11,6 +11,7 @@ public class Api {
     //public static final String URL_READ_MATERIALS = ROOT_URL + "getpdf&category=\"CSE\"";
     public static final String URL_READ_MATERIALS = ROOT_URL + "getpdf&category=";
     public static final String URL_READ_TIMETABLE = ROOT_URL + "gettimetable&category=";
+    public static final String URL_READ_IMPQUES = ROOT_URL + "getimpques&category=";
     public static final String URL_READ_STUDY = ROOT_URL + "getstudy&category=&semester=";
     public static final String URL_READ_QUESTIONS = ROOT_URL + "getquestion&category=";
     public static final String URL_READ_MSG = ROOT_URL + "getmessage";

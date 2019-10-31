@@ -87,8 +87,8 @@ public class MaterialsActivity extends AppCompatActivity{
         else if (category.equalsIgnoreCase("it")){
             temp_ctg = "IT";
         }
-        else if (category.equalsIgnoreCase("eie")){
-            temp_ctg = "EIE";
+        else if (category.equalsIgnoreCase("auto")){
+            temp_ctg = "AUTO";
         }
         else if (category.equalsIgnoreCase("civil")){
             temp_ctg = "CIV";

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -44,12 +45,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class PgnewtimeFragment extends Fragment {
-    private WebView webView;
-    String sDept;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    String url;
+public class SCHOOLtimeFragment extends Fragment {
+//    private WebView webView;
+//    String sDept;
+//    private TabLayout tabLayout;
+//    private ViewPager viewPager;
+//
+//    public SCHOOLtimeFragment() {
+//
+//    }
 
     List<Timetable> timetableList;
     ListView listView;
@@ -60,22 +64,19 @@ public class PgnewtimeFragment extends Fragment {
     private String fileName,folder;
 
 
-    public PgnewtimeFragment() {
-
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        View returnView = inflater.inflate(R.layout.fragment_ugnew, container, false);
+//        View returnView = inflater.inflate(R.layout.fragment_ugnewtime, container, false);
 //
 //        MainActivity mainActivity = (MainActivity) getActivity();
 //        sDept = mainActivity.getDept();
-
-//        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=gettimetable&category=" + sDept, null, CODE_GET_REQUEST);
-//        request.execute();
-
+//
+////        PerformNetworkRequest request = new PerformNetworkRequest("http://mindvoice.info/rpweb/v1/Api.php?apicall=gettimetable&category=" + sDept, null, CODE_GET_REQUEST);
+////        request.execute();
+//
+//
 //        webView = returnView.findViewById(R.id.webfile);
 //        webView.setWebViewClient(new inlineBrowser());
 //        webView.getSettings().setLoadWithOverviewMode(true);
@@ -85,8 +86,8 @@ public class PgnewtimeFragment extends Fragment {
 //        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 //        webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/soon.pdf");
 //
-//        /*if (sDept.equalsIgnoreCase("anna university")) {
-//            webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/memtech2017.pdf");
+//     /*   if (sDept.equalsIgnoreCase("anna university")) {
+//            webView.loadUrl("https://rejinpaulnetwork.com/rejinpaulapp/timetable/aucr2013.pdf");
 //        }
 //        if (sDept.equalsIgnoreCase("jntu")) {
 //            webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");
@@ -99,7 +100,7 @@ public class PgnewtimeFragment extends Fragment {
 //        if (sDept.equalsIgnoreCase("competitive exams")) {
 //            webView.loadUrl("http://mindvoice.info/rpweb/soon.pdf");
 //        }*/
-//        return returnView;
+//     return returnView;
 //    }
 //    private class inlineBrowser extends WebViewClient {
 //        @Override
@@ -107,9 +108,8 @@ public class PgnewtimeFragment extends Fragment {
 //            view.loadUrl(url);
 //            return true;
 //        }
-//    }
         View rootView = inflater.inflate(R.layout.fragment_ugnew, container, false);
-        String sDept1 = "%22jntu%22";
+        String sDept1 = "%22school%22";
         listView = rootView.findViewById(R.id.listView);
         p = rootView.findViewById(R.id.pbar);
         timetableList = new ArrayList<>();
@@ -120,7 +120,6 @@ public class PgnewtimeFragment extends Fragment {
         listView.setAdapter(timetableAdapter);
 
         return rootView;
-
     }
     @Override
     public void onDestroyView() {
@@ -164,7 +163,7 @@ public class PgnewtimeFragment extends Fragment {
             try {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
-                    Toast.makeText(getContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     Log.d("timetable", object.toString());
                     refreshList(object.getJSONArray("pfiles"));
                 } else
@@ -344,4 +343,7 @@ public class PgnewtimeFragment extends Fragment {
     }
 
 
+
+
 }
+
